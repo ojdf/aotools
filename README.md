@@ -3,6 +3,7 @@ Aotools
 
 Useful tools for Adaptive Optics analysis for the Python Programming Language
 
+[![Build Status](https://travis-ci.org/soapy/aotools.svg?branch=master)](https://travis-ci.org/soapy/aotools)
 
 Required libraries
 ------------------
