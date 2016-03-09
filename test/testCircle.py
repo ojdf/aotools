@@ -2,7 +2,7 @@
 from __future__ import print_function
 
 import unittest
-import pylab; pylab.ion()
+
 import numpy
 
 import logging
