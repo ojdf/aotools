@@ -4,6 +4,7 @@ Aotools
 Useful tools for Adaptive Optics analysis for the Python Programming Language
 
 [![Build Status](https://travis-ci.org/soapy/aotools.svg?branch=master)](https://travis-ci.org/soapy/aotools)
+[![Build status](https://ci.appveyor.com/api/projects/status/hru9gl4jekcwtm6l/branch/master?svg=true)](https://ci.appveyor.com/project/Soapy/aotools/branch/master)
 [![codecov.io](https://codecov.io/github/soapy/aotools/coverage.svg?branch=master)](https://codecov.io/github/soapy/aotools?branch=master)
 
 Required libraries
