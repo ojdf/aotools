@@ -1,0 +1,31 @@
+build: false
+
+environment:
+  matrix:
+    - PYTHON_VERSION: 2.7
+      MINICONDA: C:\Miniconda-x64
+
+    - PYTHON_VERSION: 3.5
+      MINICONDA: C:\Miniconda35-x64
+
+
+branches:
+  only:
+    - master
+
+init:
+  - "ECHO %PYTHON_VERSION% %MINICONDA%"
+
+install:
+  - "set PATH=%MINICONDA%;%MINICONDA%\\Scripts;%PATH%"
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  - conda info -a
+  - "conda create -q -n test-environment python=%PYTHON_VERSION% numpy scipy nose"
+  - activate test-environment
+  - "curl -O %PYFFTW_URL% -o %PYFFTW%"
+  - dir
+  - "pip install %PYFFTW%"
+
+test_script:
+  - nosetests --verbosity=3 test/
