@@ -14,8 +14,7 @@
 
 import sys
 import os
-import mock
-
+from mock import Mock as MagicMock
 
 # Add soapy to path
 AOTOOLS_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../..')
