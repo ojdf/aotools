@@ -11,10 +11,10 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   aotools.circle
-   aotools.phasescreen
-   aotools.centroiders
-
+   circle
+   phasescreen
+   centroiders
+   fft
 
 Indices and tables
 ==================

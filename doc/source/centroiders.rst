@@ -1,13 +1,11 @@
 Centroiders
 ===========
 
-Submodules
-----------
 
 aotools.centroiders module
-----------------------------
+--------------------------
 
-.. automodule:: aotools.centroiders
+.. automodule:: aotools.centroiders.centroiders
     :members:
     :undoc-members:
     :show-inheritance:
