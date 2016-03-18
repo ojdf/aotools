@@ -8,8 +8,8 @@ setup(
                 'aotools.circle',
                 'aotools.centroiders',
                 'aotools.phasescreen',
-                'aotools.fft'
-                ]
+                'aotools.fft',
+                ],
                 
     description='A set of useful functions for Adaptive Optics in Python',
     long_description=open('README.md').read(),
