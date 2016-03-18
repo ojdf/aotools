@@ -14,10 +14,30 @@
 
 import sys
 import os
+import mock
+
 
 # Add soapy to path
 AOTOOLS_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../..')
 sys.path.append(AOTOOLS_DIR)
+
+class Mock(MagicMock):
+    @classmethod
+    def __getattr__(cls, name):
+        return Mock()
+
+
+MOCK_MODULES = ['pyfftw', 'ipython','pyfits', 'PyQt4','IPython.qt.console.rich_ipython_widget',
+                    'IPython.qt.inprocess',
+                    'matplotlib.backends.backend_qt4agg','sip', 'pyqtgraph','pylab', 'OpenGL',
+                    'matplotlib.figure',
+                    'IPython.qt.console.rich_ipython_widget',
+                    'scipy.ndimage','scipy.optimize', 'scipy.lib.blas.fblas','scipy.fftpack','scipy.interpolate','scipy',
+                    'numpy', 'numpy.linalg', 'numpy.random', 'scipy.ndimage.interpolation',
+                    ]
+
+sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
+import aotools
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
