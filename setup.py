@@ -7,7 +7,9 @@ setup(
     packages=[  'aotools',
                 'aotools.circle',
                 'aotools.centroiders',
-                'aotools.phasescreen'],
+                'aotools.phasescreen',
+                'aotools.fft'
+                ]
                 
     description='A set of useful functions for Adaptive Optics in Python',
     long_description=open('README.md').read(),
