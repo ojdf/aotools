@@ -15,6 +15,7 @@ Contents:
    phasescreen
    centroiders
    fft
+   interp
 
 Indices and tables
 ==================
