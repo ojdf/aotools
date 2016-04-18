@@ -10,6 +10,7 @@ setup(
                 'aotools.phasescreen',
                 'aotools.fft',
                 'aotools.interp'
+                'aotools.wfs'
                 ],
 
     description='A set of useful functions for Adaptive Optics in Python',
