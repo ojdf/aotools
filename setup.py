@@ -9,7 +9,7 @@ setup(
                 'aotools.centroiders',
                 'aotools.phasescreen',
                 'aotools.fft',
-                'aotools.interp'
+                'aotools.interp',
                 'aotools.wfs'
                 ],
 
