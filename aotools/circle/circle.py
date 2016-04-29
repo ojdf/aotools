@@ -1,31 +1,5 @@
 import numpy
 
-def circle_old(radius, size, centre_offset=(0,0), origin="middle"):
-    """
-    Create a 2-dimensional array equal to 1 in a circle and 0 outside
-
-    Parameters:
-        radius (float): The radius in pixels of the circle
-        size (int): The size of the the array for the circle
-        centre_offset (tuple): The coords of the centre of the circle
-
-    Returns:
-        ndarray : The circle array 
-    """
-    size = int(numpy.round(size))
-
-    coords = numpy.linspace(-size/2.,size/2.,size)
-    x,y = numpy.meshgrid(coords,coords)
-    x-=centre_offset[0]
-    y-=centre_offset[1]
-
-    radius+=0.5
-
-    mask = x*x + y*y <= radius*radius
-    
-    C = numpy.zeros((size, size))
-    C[mask] = 1
-    return C
 
 
 def circle(radius, size, circle_centre=(0,0), origin="middle"):
