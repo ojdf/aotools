@@ -76,6 +76,9 @@ class PhaseScreen(object):
         """
         Calculates a matrix where each element is the seperation in 
         metres between points in the new phase data and the existing data.
+                
+        Return:
+            ndarray: Array of seperations
         """
         
         # First, find matrix of seperations between all points.
@@ -111,21 +114,24 @@ class PhaseScreen(object):
         """
         r_xz = self.makeXZSeperation()
         
-        self.cov_xz_axis0_forwards = phaseCovariance(r_xz, self.r0, self.L0)
+        self.cov_xz_forwards = phaseCovariance(r_xz, self.r0, self.L0)
                 
         # Make the covariance matrix for adding elements in the other direction.
         # This is the same, except the position of each of the columns is reversed
-        self.cov_xz_axis0_backwards = numpy.zeros_like(self.cov_xz_axis0_forwards)
+        self.cov_xz_backwards = numpy.zeros_like(self.cov_xz_forwards)
         
         totalSize = self.nCol * self.nSize
         for col in range(self.nCol):            
-            self.cov_xz_axis0_backwards[:, col * self.nSize: (col+1) * self.nSize] \
-                    = self.cov_xz_axis0_forwards[:, totalSize-(col+1)*self.nSize: totalSize-col * self.nSize]
+            self.cov_xz_backwards[:, col * self.nSize: (col+1) * self.nSize] \
+                    = self.cov_xz_forwards[:, totalSize-(col+1)*self.nSize: totalSize-col * self.nSize]
 
     def makeZZSeperation(self):
         """
         Calculates a matrix where each element is the seperation in 
         metres between points in the the existing data.
+                
+        Return:
+            ndarray: Array of seperations
         """
         # First, find matrix of seperations between all points.
         r_zz = numpy.zeros((self.nCol*self.nSize, self.nCol*self.nSize))
@@ -176,14 +182,17 @@ class PhaseScreen(object):
         inv_cov_zz = linalg.cho_solve(cf, numpy.identity(self.cov_zz.shape[0]))
         # inv_cov_zz = numpy.linalg.pinv(self.cov_zz)#, 0.001)    
         
-        self.A_mat_axis0_forwards = self.cov_xz_axis0_forwards.dot(inv_cov_zz)
-        self.A_mat_axis0_backwards = self.cov_xz_axis0_backwards.dot(inv_cov_zz) 
+        self.A_mat_forwards = self.cov_xz_forwards.dot(inv_cov_zz)
+        self.A_mat_backwards = self.cov_xz_backwards.dot(inv_cov_zz) 
 
 
     def makeXXSeperation(self): 
         """
         Calculates a matrix where each element is the seperation in metres between 
         points in the new phase data points.
+        
+        Return:
+            ndarray: Array of seperations
         """
         # First, find matrix of seperations between all points.
         r_xx = numpy.zeros((self.nSize, self.nSize))
@@ -224,6 +233,9 @@ class PhaseScreen(object):
         """
         Calculates a matrix where each element is the seperation in metres between points 
         in the existing phase data and the new data.
+                
+        Return:
+            ndarray: Array of seperations
         """
         # First, find matrix of seperations between all points.
         r_xz = numpy.zeros((self.nCol*self.nSize, self.nSize))
@@ -258,20 +270,22 @@ class PhaseScreen(object):
         """
         r_xz = self.makeZXSeperation()
         
-        self.cov_zx_axis0_forwards = phaseCovariance(r_xz, self.r0, self.L0)
+        self.cov_zx_forwards = phaseCovariance(r_xz, self.r0, self.L0)
         
         # Make the covariance matrix for adding elements in the other direction.
         # This is the same, except the position of each of the columns is reversed
-        self.cov_zx_axis0_backwards = numpy.zeros_like(self.cov_zx_axis0_forwards)
+        self.cov_zx_backwards = numpy.zeros_like(self.cov_zx_forwards)
         
         totalSize = self.nCol * self.nSize
         for col in range(self.nCol):            
-            self.cov_zx_axis0_backwards[col * self.nSize: (col+1) * self.nSize] \
-                    = self.cov_zx_axis0_forwards[totalSize-(col+1)*self.nSize: totalSize-col * self.nSize]
+            self.cov_zx_backwards[col * self.nSize: (col+1) * self.nSize] \
+                    = self.cov_zx_forwards[totalSize-(col+1)*self.nSize: totalSize-col * self.nSize]
         
     def makeBMatrix(self):
         """
-        Calculates the "B" matrix, that turns a random vector into a component of the new phase
+        Calculates the "B" matrix, that turns a random vector into a component of the new phase. 
+        
+        Finds a B matrix for the case of generating new data on each side of the phase screen.
         """
         self.makeXXCovMatrix()
         self.makeZXCovMatrix()
@@ -279,17 +293,17 @@ class PhaseScreen(object):
         # Make B matrix for each axis
         
         # Axis 0, forwards
-        self.B_mat_axis0_forwards = self.makeSingleBMatrix(
-                self.cov_xx, self.cov_zx_axis0_forwards, self.A_mat_axis0_forwards)
+        self.B_mat_forwards = self.makeSingleBMatrix(
+                self.cov_xx, self.cov_zx_forwards, self.A_mat_forwards)
         
         # Axis 0, backwards
-        self.B_mat_axis0_backwards = self.makeSingleBMatrix(
-                self.cov_xx, self.cov_zx_axis0_backwards, self.A_mat_axis0_backwards)
+        self.B_mat_backwards = self.makeSingleBMatrix(
+                self.cov_xx, self.cov_zx_backwards, self.A_mat_backwards)
 
         
     def makeSingleBMatrix(self, cov_xx, cov_zx, A_mat):
         """
-        Makes the B matrix for a single axis/direction combination
+        Makes the B matrix for a single direction
         
         Parameters:
             cov_xx: Matrix of XX covariance
@@ -312,7 +326,7 @@ class PhaseScreen(object):
     
     def makeInitialScrn(self):
         """
-        Makes the initial screen to extend 
+        Makes the initial screen usign FFT method that can be extended 
         """
         
         self.scrn = phasescreen.ft_phase_screen(
@@ -332,8 +346,8 @@ class PhaseScreen(object):
         # Find parameters based on axis to add to and direction
         if direction == -1:
             # Forward direction
-            A_mat = self.A_mat_axis0_forwards
-            B_mat = self.B_mat_axis0_forwards
+            A_mat = self.A_mat_forwards
+            B_mat = self.B_mat_forwards
             
             # Coords to cut out to get existing phase
             x1_z = -self.nCol
@@ -346,8 +360,8 @@ class PhaseScreen(object):
                 
         elif direction == 1:
             # Backwards
-            A_mat = self.A_mat_axis0_backwards
-            B_mat = self.B_mat_axis0_backwards
+            A_mat = self.A_mat_backwards
+            B_mat = self.B_mat_backwards
             
             # Coords to cut out to get existing phase
             x1_z = 0
@@ -364,13 +378,13 @@ class PhaseScreen(object):
         if axis not in [0, 1]:
             raise ValueError("Axis: {} not valid".format(axis))
         
-        # Transpose if using other dimension
+        # Transpose if adding to axis 1
         if axis == 1:
             self.scrn = self.scrn.T
                
         for row in range(nRows):
 
-        # Get a vector of values with gaussian stats
+            # Get a vector of values with gaussian stats
             beta = numpy.random.normal(size=self.nSize)
             
             # Get last two rows of previous screen
@@ -383,7 +397,7 @@ class PhaseScreen(object):
             
             self.scrn[newCoord] = X
             
-        # Transpose back again  
+        # Transpose back again 
         if axis == 1:
             self.scrn = self.scrn.T
 
