@@ -11,30 +11,72 @@ from . import phasescreen
 
 class PhaseScreen(object):
     """
+    A "Phase Screen" for use in AO simulation. 
+    
+    This represents the phase addition light experiences when passing through atmospheric 
+    turbulence. Unlike other phase screen generation techniques that translate a large static 
+    screen, this method keeps a small section of phase, and extends it as neccessary for as many 
+    steps as required. This can significantly reduce memory consuption at the expense of more 
+    processing power required.
+    
+    The technique is described in a paper by Assemat and Wilson, 2006. It essentially assumes that
+    there are two matrices, "A" and "B", that can be used to extend an existing phase screen.
+    A single row or column of new phase can be represented by 
+    
+        X = A.Z + B.b
+    
+    where X is the new phase vector, Z is some number of columns of the existing screen, 
+    and b is a random vector with gaussian statistics.
+    
+    This object calculates the A and B matrices using an expression of the phase covariance when it
+    is initialised. Calculating A is straightforward through the relationship:
+        
+        A =  Cov_xz . (Cov_zz)^(-1).
+    
+    B is less trivial.
+    
+        BB^t = Cov_xx - A.Cov_zx
+        
+    (where B^t is the transpose of B) is a symmetric matrix, hence B can be expressed as 
+    
+        B = UL, 
+    
+    where U and L are obtained from the svd for BB^t
+    
+        U, w, U^t = svd(BB^t)
+    
+    L is a diagonal matrix where the diagonal elements are w^(1/2).    
+     
+    On initialisation an initial phase screen is calculated using an FFT based method.
+    When 'addRows' is called, a new vector of phase is added to the phase screen using `nCols`
+    columns of previous phase. Assemat & Wilson claim that two columns are adequate for good
+    atmospheric statistics. The phase in the screen data is always accessed as `<phasescreen>.scrn`.
+    
     Parameters:
-        nSize (int): Size of initial phase screen (NxN)
+        nSize (int): Size of phase screen (NxN)
         pxlScale(float): Size of each phase pixel in metres
         r0 (float): fried parameter (metres)
         L0 (float): Outer scale (metres)
-        nCol (int): Number of columns to use to continue screen
+        nCol (int, optional): Number of columns to use to continue screen, default is 2
     """
     
     def __init__(self, nSize, pxlScale, r0, L0, nCol=2):
-        
+                           
         self.nSize = nSize
         self.pxlScale = pxlScale
         self.r0 = r0
         self.L0 = L0
         self.nCol = nCol
-        
-        self.A_mat = None
-        self.B_mat = None
 
         self.makeAMatrix()
         self.makeBMatrix()
         self.makeInitialScrn()
 
     def makeXZSeperation(self):
+        """
+        Calculates a matrix where each element is the seperation in 
+        metres between points in the new phase data and the existing data.
+        """
         
         # First, find matrix of seperations between all points.
         r_xz = numpy.zeros((self.nSize, self.nCol*self.nSize))
@@ -63,12 +105,28 @@ class PhaseScreen(object):
         return r_xz
         
     def makeXZCovMat(self):
+        """
+        Uses the seperation between new and existing phase points to 
+        calculate the theoretical covariance between them
+        """
         r_xz = self.makeXZSeperation()
         
-        self.cov_xz = phaseCovariance(r_xz, self.r0, self.L0)
-       
+        self.cov_xz_axis0_forwards = phaseCovariance(r_xz, self.r0, self.L0)
+                
+        # Make the covariance matrix for adding elements in the other direction.
+        # This is the same, except the position of each of the columns is reversed
+        self.cov_xz_axis0_backwards = numpy.zeros_like(self.cov_xz_axis0_forwards)
+        
+        totalSize = self.nCol * self.nSize
+        for col in range(self.nCol):            
+            self.cov_xz_axis0_backwards[:, col * self.nSize: (col+1) * self.nSize] \
+                    = self.cov_xz_axis0_forwards[:, totalSize-(col+1)*self.nSize: totalSize-col * self.nSize]
 
     def makeZZSeperation(self):
+        """
+        Calculates a matrix where each element is the seperation in 
+        metres between points in the the existing data.
+        """
         # First, find matrix of seperations between all points.
         r_zz = numpy.zeros((self.nCol*self.nSize, self.nCol*self.nSize))
         
@@ -96,23 +154,37 @@ class PhaseScreen(object):
         return r_zz
         
     def makeZZCovMat(self):
+        """
+        Uses the seperation between the existing phase points to calculate 
+        the theoretical covariance between them
+        """
         r_zz = self.makeZZSeperation()
         
         self.cov_zz = phaseCovariance(r_zz, self.r0, self.L0)
 
+
     def makeAMatrix(self):
-        
+        """
+        Calculates the "A" matrix, that uses the existing data to find a new 
+        component of the new phase vector. This is for propagating in axis 0.
+        """
         self.makeXZCovMat()
         self.makeZZCovMat()
         
-        # Difference inversion methods, not sure which is best
+        # Different inversion methods, not sure which is best
         cf = linalg.cho_factor(self.cov_zz)
         inv_cov_zz = linalg.cho_solve(cf, numpy.identity(self.cov_zz.shape[0]))
-        # inv_cov_zz = numpy.linalg.pinv(self.cov_zz)#, 0.001)
-        self.A_mat = self.cov_xz.dot(inv_cov_zz) 
+        # inv_cov_zz = numpy.linalg.pinv(self.cov_zz)#, 0.001)    
+        
+        self.A_mat_axis0_forwards = self.cov_xz_axis0_forwards.dot(inv_cov_zz)
+        self.A_mat_axis0_backwards = self.cov_xz_axis0_backwards.dot(inv_cov_zz) 
 
 
-    def makeXXSeperation(self):
+    def makeXXSeperation(self): 
+        """
+        Calculates a matrix where each element is the seperation in metres between 
+        points in the new phase data points.
+        """
         # First, find matrix of seperations between all points.
         r_xx = numpy.zeros((self.nSize, self.nSize))
         
@@ -139,13 +211,20 @@ class PhaseScreen(object):
         return r_xx
 
     def makeXXCovMatrix(self):
-        
+        """
+        Uses the seperation between the new phase points to calculate the theoretical 
+        covariance between them
+        """
         r_xx = self.makeXXSeperation()
         
         self.cov_xx = phaseCovariance(r_xx, self.r0, self.L0)
 
         
     def makeZXSeperation(self):
+        """
+        Calculates a matrix where each element is the seperation in metres between points 
+        in the existing phase data and the new data.
+        """
         # First, find matrix of seperations between all points.
         r_xz = numpy.zeros((self.nCol*self.nSize, self.nSize))
         
@@ -173,31 +252,63 @@ class PhaseScreen(object):
         return r_xz
         
     def makeZXCovMatrix(self):
+        """
+        Uses the seperation between the existing and new phase points to calculate the
+        theoretical covariance between them
+        """
         r_xz = self.makeZXSeperation()
         
-        self.cov_zx = phaseCovariance(r_xz, self.r0, self.L0)
-
+        self.cov_zx_axis0_forwards = phaseCovariance(r_xz, self.r0, self.L0)
+        
+        # Make the covariance matrix for adding elements in the other direction.
+        # This is the same, except the position of each of the columns is reversed
+        self.cov_zx_axis0_backwards = numpy.zeros_like(self.cov_zx_axis0_forwards)
+        
+        totalSize = self.nCol * self.nSize
+        for col in range(self.nCol):            
+            self.cov_zx_axis0_backwards[col * self.nSize: (col+1) * self.nSize] \
+                    = self.cov_zx_axis0_forwards[totalSize-(col+1)*self.nSize: totalSize-col * self.nSize]
         
     def makeBMatrix(self):
-        
+        """
+        Calculates the "B" matrix, that turns a random vector into a component of the new phase
+        """
         self.makeXXCovMatrix()
         self.makeZXCovMatrix()
-        
-        if self.A_mat is None:
-            self.makeAMatrix()
 
+        # Make B matrix for each axis
+        
+        # Axis 0, forwards
+        self.B_mat_axis0_forwards = self.makeSingleBMatrix(
+                self.cov_xx, self.cov_zx_axis0_forwards, self.A_mat_axis0_forwards)
+        
+        # Axis 0, backwards
+        self.B_mat_axis0_backwards = self.makeSingleBMatrix(
+                self.cov_xx, self.cov_zx_axis0_backwards, self.A_mat_axis0_backwards)
+
+        
+    def makeSingleBMatrix(self, cov_xx, cov_zx, A_mat):
+        """
+        Makes the B matrix for a single axis/direction combination
+        
+        Parameters:
+            cov_xx: Matrix of XX covariance
+            cov_zx: Matrix of ZX covariance
+            A_mat: Corresponding A matrix
+        """
         # Can make initial BBt matrix first
-        self._BBt = self.cov_xx - self.A_mat.dot(self.cov_zx)
+        BBt = cov_xx - A_mat.dot(cov_zx)
         
         # Then do SVD to get B matrix
-        self._u, self._W, ut = numpy.linalg.svd(self._BBt)
+        u, W, ut = numpy.linalg.svd(BBt)
         
-        self._L_mat = numpy.zeros((self.nSize, self.nSize))
-        numpy.fill_diagonal(self._L_mat, numpy.sqrt(self._W))
+        L_mat = numpy.zeros((self.nSize, self.nSize))
+        numpy.fill_diagonal(L_mat, numpy.sqrt(W))
         
         # Now use sqrt(eigenvalues) to get B matrix
-        self.B_mat = self._u.dot(self._L_mat) 
+        B_mat = u.dot(L_mat) 
         
+        return B_mat
     
     def makeInitialScrn(self):
         """
@@ -207,28 +318,68 @@ class PhaseScreen(object):
         self.scrn = phasescreen.ft_phase_screen(
                 self.r0, self.nSize, self.pxlScale, self.L0, 1e-10
                 )
-            
     
-    def addRow(self, nRows=1):
+    def addRow(self, nRows=1, axis=0, direction=-1):
         """
-        Adds new rows to the phse screen and removes old ones.
+        Adds new rows to the phase screen and removes old ones.
         
         Parameters:
             nRows (int): Number of rows to add
+            axis (int): Axis to add new rows (can be 0 (default) or 1)
+            direction (int): Direction to add row (-1 (default) or 1)
         """
+
+        # Find parameters based on axis to add to and direction
+        if axis == 0:
+            if direction == -1:
+                A_mat = self.A_mat_axis0_forwards
+                B_mat = self.B_mat_axis0_forwards
+                
+                # Coords to cut out to get existing phase
+                x1_z = -self.nCol
+                x2_z = None
+                y1_z = 0
+                y2_z = None
+                
+                # Coords to add in new phase
+                x1_x = -1
+                x2_x = None
+                y1_x = 0
+                y2_x = None
+                
+            elif direction == 1:
+                A_mat = self.A_mat_axis0_backwards
+                B_mat = self.B_mat_axis0_backwards
+                
+                # Coords to cut out to get existing phase
+                x1_z = 0
+                x2_z = self.nCol
+                y1_z = 0
+                y2_z = None
+                
+                # Coords to add in new phase
+                x1_x = 0
+                x2_x = 1
+                y1_x = 0
+                y2_x = None
+        
         for row in range(nRows):
         # Get a vector of values with gaussian stats
             beta = numpy.random.normal(size=self.nSize)
             
             # Get last two rows of previous screen
-            Z = self.scrn[-self.nCol:].flatten()
-            
+            Z = self.scrn[x1_z: x2_z, y1_z: y2_z].flatten()
+                
             # Find new values
-            X = self.A_mat.dot(Z) + self.B_mat.dot(beta)
+            X = A_mat.dot(Z) + B_mat.dot(beta)
             
-            self.scrn = numpy.roll(self.scrn, -1, axis=0)
-            self.scrn[-1] = X
+            self.scrn = numpy.roll(self.scrn, direction, axis=axis)
             
+            self.scrn[x1_x: x2_x, y1_x: y2_x] = X
+             
+    def __repr__(self):
+        return str(self.scrn)
+        
 
 def phaseCovariance(r, r0, L0):
     """
@@ -259,7 +410,7 @@ def phaseCovariance(r, r0, L0):
     cov = A * B1 * B2 * C
     
     return cov
-
+    
     
 if __name__ == "__main__":
     
@@ -271,8 +422,15 @@ if __name__ == "__main__":
     pyplot.figure()
     pyplot.imshow(scrn.scrn)
     pyplot.colorbar()
-    for i in range(100):
+    for i in range(50):
         scrn.addRow(5)
+        pyplot.clf()
+        pyplot.imshow(scrn.scrn)
+        pyplot.draw()
+        pyplot.pause(0.00001)
+        
+    for i in range(50):
+        scrn.addRow(5, direction=1)
         pyplot.clf()
         pyplot.imshow(scrn.scrn)
         pyplot.draw()
