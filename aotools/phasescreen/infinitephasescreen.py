@@ -60,7 +60,7 @@ class PhaseScreen(object):
         nCol (int, optional): Number of columns to use to continue screen, default is 2
     """
     
-    def __init__(self, nSize, pxlScale, r0, L0, nCol=2):
+    def __init__(self, nSize, pxlScale, r0, L0, nCol=2, random_seed=None):
                            
         self.nSize = nSize
         self.pxlScale = pxlScale
@@ -343,6 +343,31 @@ class PhaseScreen(object):
             direction (int): Direction to add row (-1 (default) or 1)
         """
 
+        newPhase = self.makeNewPhase(nRows, axis, direction)
+        
+        self.scrn = numpy.roll(self.scrn, direction * nRows, axis=axis)
+        
+        if axis == 0 and direction == -1:
+            self.scrn[-nRows:] = newPhase
+        elif axis == 0 and direction == 1:
+            self.scrn[:nRows] = newPhase
+        
+        elif axis == 1 and direction == -1:
+            self.scrn[:, -nRows:] = newPhase.T
+        elif axis == 1 and direction == 1:
+            self.scrn[:, :nRows] = newPhase.T
+        
+
+    def makeNewPhase(self, nRows, axis=0, direction=-1):
+        """
+        Makes new rows or columns of phase.
+        
+        Parameters:
+            nRows (int): Number of rows to add
+            axis (int): Axis to add new rows (can be 0 (default) or 1)
+            direction (int): Direction to add row (-1 (default) or 1)
+        """
+
         # Find parameters based on axis to add to and direction
         if direction == -1:
             # Forward direction
@@ -352,11 +377,6 @@ class PhaseScreen(object):
             # Coords to cut out to get existing phase
             x1_z = -self.nCol
             x2_z = None
-            y1_z = 0
-            y2_z = None
-            
-            # Coords to add in new phase
-            newCoord = -1
                 
         elif direction == 1:
             # Backwards
@@ -366,11 +386,6 @@ class PhaseScreen(object):
             # Coords to cut out to get existing phase
             x1_z = 0
             x2_z = self.nCol
-            y1_z = 0
-            y2_z = None
-            
-            # Coords to add in new phase
-            newCoord = 0
 
         else:
             raise ValueError("Direction: {} not valid".format(direction))
@@ -381,25 +396,44 @@ class PhaseScreen(object):
         # Transpose if adding to axis 1
         if axis == 1:
             self.scrn = self.scrn.T
-               
+        
+        newPhase = numpy.zeros((nRows + self.nCol, self.nSize))
+        if direction == -1:
+            newPhase[:self.nCol] = self.scrn[x1_z: x2_z]
+        elif direction == 1:
+            newPhase[-self.nCol:] = self.scrn[x1_z: x2_z]      
+        
         for row in range(nRows):
 
             # Get a vector of values with gaussian stats
             beta = numpy.random.normal(size=self.nSize)
             
             # Get last two rows of previous screen
-            Z = self.scrn[x1_z: x2_z, y1_z: y2_z].flatten()
-                
+            if direction == -1:
+                Z = newPhase[row:row+self.nCol].flatten()
+            elif direction == 1:
+                Z = newPhase[nRows-row:nRows-row+self.nCol].flatten()   
+             
             # Find new values
             X = A_mat.dot(Z) + B_mat.dot(beta)
             
-            self.scrn = numpy.roll(self.scrn, direction, axis=0)
-            
-            self.scrn[newCoord] = X
-            
+            if direction == -1:
+                newPhase[self.nCol+row] = X
+            elif direction == 1:
+                newPhase[-self.nCol - row - 1] = X
+         
         # Transpose back again 
         if axis == 1:
             self.scrn = self.scrn.T
+            
+        # Only return the newly created phase    
+        if direction == -1:
+            newPhase = newPhase[self.nCol:]
+        elif direction == 1:
+            newPhase = newPhase[ : -self.nCol]
+
+        return newPhase
+        
 
     def __repr__(self):
         return str(self.scrn)
@@ -439,7 +473,7 @@ def phaseCovariance(r, r0, L0):
 if __name__ == "__main__":
     
     
-    scrn = PhaseScreen(64, 4./64, 0.2, 50, nCol=4)
+    scrn = PhaseScreen(128, 4./64, 0.2, 50, nCol=4)
     
     from matplotlib import pyplot
     pyplot.ion()
