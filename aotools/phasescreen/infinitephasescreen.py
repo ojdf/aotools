@@ -330,39 +330,66 @@ class PhaseScreen(object):
         """
 
         # Find parameters based on axis to add to and direction
-        if axis == 0:
-            if direction == -1:
-                A_mat = self.A_mat_axis0_forwards
-                B_mat = self.B_mat_axis0_forwards
+        if axis == 0 and direction == -1:
+            # Forward direction
+            A_mat = self.A_mat_axis0_forwards
+            B_mat = self.B_mat_axis0_forwards
+            
+            # Coords to cut out to get existing phase
+            x1_z = -self.nCol
+            x2_z = None
+            y1_z = 0
+            y2_z = None
+            
+            # Coords to add in new phase
+            newCoord = -1
                 
-                # Coords to cut out to get existing phase
-                x1_z = -self.nCol
-                x2_z = None
-                y1_z = 0
-                y2_z = None
+        elif axis == 0 and direction == 1:
+            # Backwards
+            A_mat = self.A_mat_axis0_backwards
+            B_mat = self.B_mat_axis0_backwards
+            
+            # Coords to cut out to get existing phase
+            x1_z = 0
+            x2_z = self.nCol
+            y1_z = 0
+            y2_z = None
+            
+            # Coords to add in new phase
+            newCoord = 0
                 
-                # Coords to add in new phase
-                x1_x = -1
-                x2_x = None
-                y1_x = 0
-                y2_x = None
-                
-            elif direction == 1:
-                A_mat = self.A_mat_axis0_backwards
-                B_mat = self.B_mat_axis0_backwards
-                
-                # Coords to cut out to get existing phase
-                x1_z = 0
-                x2_z = self.nCol
-                y1_z = 0
-                y2_z = None
-                
-                # Coords to add in new phase
-                x1_x = 0
-                x2_x = 1
-                y1_x = 0
-                y2_x = None
+        elif axis == 1 and direction == -1:
+            # Forward direction
+            A_mat = self.A_mat_axis0_forwards
+            B_mat = self.B_mat_axis0_forwards
+            
+            # Coords to cut out to get existing phase
+            x1_z = 0
+            x2_z = None
+            y1_z = -self.nCol
+            y2_z = None
+            
+            # Coords to add in new phase
+            newCoord = -1
+            
+            
+        elif axis == 1 and direction == 1:
+            # Forward direction
+            A_mat = self.A_mat_axis0_backwards
+            B_mat = self.B_mat_axis0_backwards
+            
+            # Coords to cut out to get existing phase
+            x1_z = 0
+            x2_z = None
+            y1_z = 0
+            y2_z = self.nCol
+            
+            # Coords to add in new phase
+            newCoord = 0
         
+        else:
+            raise ValueError("Axis: {}, direction: {} not valid".format(axis, direction))
+            
         for row in range(nRows):
         # Get a vector of values with gaussian stats
             beta = numpy.random.normal(size=self.nSize)
@@ -375,7 +402,10 @@ class PhaseScreen(object):
             
             self.scrn = numpy.roll(self.scrn, direction, axis=axis)
             
-            self.scrn[x1_x: x2_x, y1_x: y2_x] = X
+            if axis == 0:
+                self.scrn[newCoord] = X
+            else:
+                self.scrn[:, newCoord] = X
              
     def __repr__(self):
         return str(self.scrn)
@@ -422,15 +452,29 @@ if __name__ == "__main__":
     pyplot.figure()
     pyplot.imshow(scrn.scrn)
     pyplot.colorbar()
-    for i in range(50):
+    for i in range(20):
         scrn.addRow(5)
         pyplot.clf()
         pyplot.imshow(scrn.scrn)
         pyplot.draw()
         pyplot.pause(0.00001)
         
-    for i in range(50):
+    for i in range(20):
         scrn.addRow(5, direction=1)
+        pyplot.clf()
+        pyplot.imshow(scrn.scrn)
+        pyplot.draw()
+        pyplot.pause(0.00001)
+        
+    for i in range(20):
+        scrn.addRow(5, axis=1)
+        pyplot.clf()
+        pyplot.imshow(scrn.scrn)
+        pyplot.draw()
+        pyplot.pause(0.00001)
+        
+    for i in range(20):
+        scrn.addRow(5, direction=1, axis=1)
         pyplot.clf()
         pyplot.imshow(scrn.scrn)
         pyplot.draw()
