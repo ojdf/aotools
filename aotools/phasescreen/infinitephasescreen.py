@@ -102,8 +102,8 @@ class PhaseScreen(object):
                     r_xz[xCoord, yCoord] = r
                     # print("Point ({}) = {}".format((xCoord, yCoord), r))
                     
-        return r_xz
-        
+        return r_xz 
+    
     def makeXZCovMat(self):
         """
         Uses the seperation between new and existing phase points to 
@@ -330,7 +330,7 @@ class PhaseScreen(object):
         """
 
         # Find parameters based on axis to add to and direction
-        if axis == 0 and direction == -1:
+        if direction == -1:
             # Forward direction
             A_mat = self.A_mat_axis0_forwards
             B_mat = self.B_mat_axis0_forwards
@@ -344,7 +344,7 @@ class PhaseScreen(object):
             # Coords to add in new phase
             newCoord = -1
                 
-        elif axis == 0 and direction == 1:
+        elif direction == 1:
             # Backwards
             A_mat = self.A_mat_axis0_backwards
             B_mat = self.B_mat_axis0_backwards
@@ -357,40 +357,19 @@ class PhaseScreen(object):
             
             # Coords to add in new phase
             newCoord = 0
-                
-        elif axis == 1 and direction == -1:
-            # Forward direction
-            A_mat = self.A_mat_axis0_forwards
-            B_mat = self.B_mat_axis0_forwards
-            
-            # Coords to cut out to get existing phase
-            x1_z = 0
-            x2_z = None
-            y1_z = -self.nCol
-            y2_z = None
-            
-            # Coords to add in new phase
-            newCoord = -1
-            
-            
-        elif axis == 1 and direction == 1:
-            # Forward direction
-            A_mat = self.A_mat_axis0_backwards
-            B_mat = self.B_mat_axis0_backwards
-            
-            # Coords to cut out to get existing phase
-            x1_z = 0
-            x2_z = None
-            y1_z = 0
-            y2_z = self.nCol
-            
-            # Coords to add in new phase
-            newCoord = 0
-        
+
         else:
-            raise ValueError("Axis: {}, direction: {} not valid".format(axis, direction))
-            
+            raise ValueError("Direction: {} not valid".format(direction))
+        
+        if axis not in [0, 1]:
+            raise ValueError("Axis: {} not valid".format(axis))
+        
+        # Transpose if using other dimension
+        if axis == 1:
+            self.scrn = self.scrn.T
+               
         for row in range(nRows):
+
         # Get a vector of values with gaussian stats
             beta = numpy.random.normal(size=self.nSize)
             
@@ -400,13 +379,14 @@ class PhaseScreen(object):
             # Find new values
             X = A_mat.dot(Z) + B_mat.dot(beta)
             
-            self.scrn = numpy.roll(self.scrn, direction, axis=axis)
+            self.scrn = numpy.roll(self.scrn, direction, axis=0)
             
-            if axis == 0:
-                self.scrn[newCoord] = X
-            else:
-                self.scrn[:, newCoord] = X
-             
+            self.scrn[newCoord] = X
+            
+        # Transpose back again  
+        if axis == 1:
+            self.scrn = self.scrn.T
+
     def __repr__(self):
         return str(self.scrn)
         
