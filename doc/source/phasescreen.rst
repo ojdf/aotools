@@ -12,7 +12,11 @@ aotools.phasescreen.phasescreen module
     :undoc-members:
     :show-inheritance:
 
-
+.. automodule:: aotools.phasescreen.infinitephasescreen
+    :members:
+    :undoc-members:
+    :show-inheritance:
+    
 Module contents
 ---------------
 

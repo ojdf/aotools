@@ -404,7 +404,7 @@ class PhaseScreen(object):
     def __repr__(self):
         return str(self.scrn)
         
-
+        
 def phaseCovariance(r, r0, L0):
     """
     Calculate the phase covariance between two points seperated by `r`, 
