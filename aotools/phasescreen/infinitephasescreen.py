@@ -463,7 +463,7 @@ class PhaseScreen(object):
                 signs[i] = -1
         
         # Find number of phase points needing to be added to the screen in each dimension
-        nPoints = abs(translation) / self.pxlScale
+        nPoints = translation / self.pxlScale
         nPoints_int = numpy.ceil(abs(translation) / self.pxlScale).astype('int')
         nPoints_int *= signs
           
@@ -471,11 +471,12 @@ class PhaseScreen(object):
         # Get new phase
         new_phase = self.makeNewPhase(nPoints_int[0], axis=0)
         
+        scrn_data = self.scrn.copy()
         # Add to screen
         if nPoints[0] > 0:
-            self.scrn = numpy.append(self.scrn, new_phase, axis=0)
+            scrn_data = numpy.append(scrn_data, new_phase, axis=0)
         else:
-            self.scrn = numpy.append(new_phase, self.scrn, axis=0)
+            scrn_data = numpy.append(new_phase, scrn_data, axis=0)
             
         # Interpolate if translation not integer points
         scrn_coords = numpy.arange(self.nSize)
@@ -483,11 +484,32 @@ class PhaseScreen(object):
             coords = scrn_coords +  nPoints[0]
         else:
             coords = scrn_coords + (nPoints[0] - nPoints_int[0])
+                
+        scrnx_coords = numpy.arange(self.nSize + abs(nPoints_int[0]))
+        interp_obj = interp2d(scrn_coords, scrnx_coords, scrn_data, copy=False)
+        scrn_data = interp_obj(scrn_coords, coords)    
+        self.scrn = scrn_data
         
-        scrnx_coords = numpy.arange(self.nSize + nPoints_int[0])
-        print(self.scrn.shape)
-        interp_obj = interp2d(scrn_coords, scrnx_coords, self.scrn, copy=False)
-        self.scrn = interp_obj(coords, scrn_coords)    
+        # Do axis 1 ...
+        # Get new phase
+        new_phase = self.makeNewPhase(nPoints_int[1], axis=1)
+        
+        # Add to screen
+        if nPoints[1] > 0:
+            scrn_data = numpy.append(scrn_data, new_phase.T, axis=1)
+        else:
+            scrn_data = numpy.append(new_phase.T, scrn_data, axis=1)
+            
+        # Interpolate if translation not integer points
+        scrn_coords = numpy.arange(self.nSize)
+        if nPoints[1] > 0:
+            coords = scrn_coords +  nPoints[1]
+        else:
+            coords = scrn_coords + (nPoints[1] - nPoints_int[1])
+        
+        scrny_coords = numpy.arange(self.nSize + abs(nPoints_int[1]))
+        interp_obj = interp2d(scrny_coords, scrn_coords, scrn_data, copy=False)
+        self.scrn = interp_obj(coords, scrn_coords) 
         
     def __repr__(self):
         return str(self.scrn)
