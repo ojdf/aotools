@@ -350,17 +350,17 @@ class PhaseScreen(object):
 
         newPhase = self.makeNewPhase(nRows, axis)
         
-        self.scrn = numpy.roll(self.scrn, nRows, axis=axis)
+        self.scrn = numpy.roll(self.scrn, -1*nRows, axis=axis)
         nRows = abs(nRows)
         if axis == 0 and direction == -1:
-            self.scrn[:-nRows] = newPhase
+            self.scrn[-nRows:] = newPhase
         elif axis == 0 and direction == 1:
-            self.scrn[:-nRows] = newPhase
+            self.scrn[:nRows] = newPhase
         
         elif axis == 1 and direction == -1:
             self.scrn[:, -nRows:] = newPhase.T
         elif axis == 1 and direction == 1:
-            self.scrn[:, :-nRows] = newPhase.T
+            self.scrn[:, :nRows] = newPhase.T
         
 
     def makeNewPhase(self, nRows, axis=0):#, direction=-1):
