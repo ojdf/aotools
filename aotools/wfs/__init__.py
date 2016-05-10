@@ -1,1 +1,1 @@
-from wfslib import *
+from .wfslib import *
