@@ -4,6 +4,7 @@ An implementation of the "infinite phase screen", as deduced by Francois Assemat
 
 from scipy.special import gamma, kv
 from scipy import linalg
+from scipy.interpolate import interp2d
 import numpy
 from numpy import pi
 
@@ -333,40 +334,49 @@ class PhaseScreen(object):
                 self.r0, self.nSize, self.pxlScale, self.L0, 1e-10
                 )
     
-    def addRow(self, nRows=1, axis=0, direction=-1):
+    def addRow(self, nRows=1, axis=0):
         """
         Adds new rows to the phase screen and removes old ones.
         
         Parameters:
             nRows (int): Number of rows to add
             axis (int): Axis to add new rows (can be 0 (default) or 1)
-            direction (int): Direction to add row (-1 (default) or 1)
         """
+        
+        if nRows > 0:
+            direction = -1
+        else:
+            direction = 1
 
-        newPhase = self.makeNewPhase(nRows, axis, direction)
+        newPhase = self.makeNewPhase(nRows, axis)
         
-        self.scrn = numpy.roll(self.scrn, direction * nRows, axis=axis)
-        
+        self.scrn = numpy.roll(self.scrn, nRows, axis=axis)
+        nRows = abs(nRows)
         if axis == 0 and direction == -1:
-            self.scrn[-nRows:] = newPhase
+            self.scrn[:-nRows] = newPhase
         elif axis == 0 and direction == 1:
-            self.scrn[:nRows] = newPhase
+            self.scrn[:-nRows] = newPhase
         
         elif axis == 1 and direction == -1:
             self.scrn[:, -nRows:] = newPhase.T
         elif axis == 1 and direction == 1:
-            self.scrn[:, :nRows] = newPhase.T
+            self.scrn[:, :-nRows] = newPhase.T
         
 
-    def makeNewPhase(self, nRows, axis=0, direction=-1):
+    def makeNewPhase(self, nRows, axis=0):#, direction=-1):
         """
         Makes new rows or columns of phase.
         
         Parameters:
-            nRows (int): Number of rows to add
+            nRows (int): Number of rows to add (can be positive or negative)
             axis (int): Axis to add new rows (can be 0 (default) or 1)
-            direction (int): Direction to add row (-1 (default) or 1)
         """
+        if nRows > 0:
+            direction = -1
+        else:
+            direction = 1
+            nRows = abs(nRows)
+
 
         # Find parameters based on axis to add to and direction
         if direction == -1:
@@ -434,7 +444,51 @@ class PhaseScreen(object):
 
         return newPhase
         
-
+    def moveScrn(self, translation):
+        """
+        Translates the phase screen a given distance in metres. Interpolates if required.
+        
+        Parameters:
+            translation (tuple): Distance to translate screen in axis 0 and 1, in metres.
+        """
+        # To make the maths operations easier
+        translation = numpy.array(translation)
+        
+        # Need sign of translation in each axis
+        signs = numpy.zeros(2).astype('int')
+        for i in [0, 1]:
+            if translation[i] >= 0:
+                signs[i] = 1
+            else:
+                signs[i] = -1
+        
+        # Find number of phase points needing to be added to the screen in each dimension
+        nPoints = abs(translation) / self.pxlScale
+        nPoints_int = numpy.ceil(abs(translation) / self.pxlScale).astype('int')
+        nPoints_int *= signs
+          
+        # Do axis 0 first...
+        # Get new phase
+        new_phase = self.makeNewPhase(nPoints_int[0], axis=0)
+        
+        # Add to screen
+        if nPoints[0] > 0:
+            self.scrn = numpy.append(self.scrn, new_phase, axis=0)
+        else:
+            self.scrn = numpy.append(new_phase, self.scrn, axis=0)
+            
+        # Interpolate if translation not integer points
+        scrn_coords = numpy.arange(self.nSize)
+        if nPoints[0] > 0:
+            coords = scrn_coords +  nPoints[0]
+        else:
+            coords = scrn_coords + (nPoints[0] - nPoints_int[0])
+        
+        scrnx_coords = numpy.arange(self.nSize + nPoints_int[0])
+        print(self.scrn.shape)
+        interp_obj = interp2d(scrn_coords, scrnx_coords, self.scrn, copy=False)
+        self.scrn = interp_obj(coords, scrn_coords)    
+        
     def __repr__(self):
         return str(self.scrn)
         
@@ -488,7 +542,7 @@ if __name__ == "__main__":
         pyplot.pause(0.00001)
         
     for i in range(20):
-        scrn.addRow(5, direction=1)
+        scrn.addRow(-5)
         pyplot.clf()
         pyplot.imshow(scrn.scrn)
         pyplot.draw()
@@ -502,7 +556,7 @@ if __name__ == "__main__":
         pyplot.pause(0.00001)
         
     for i in range(20):
-        scrn.addRow(5, direction=1, axis=1)
+        scrn.addRow(-5, axis=1)
         pyplot.clf()
         pyplot.imshow(scrn.scrn)
         pyplot.draw()
