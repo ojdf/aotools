@@ -560,6 +560,7 @@ if __name__ == "__main__":
         scrn.addRow(5)
         pyplot.clf()
         pyplot.imshow(scrn.scrn)
+        pyplot.colorbar()
         pyplot.draw()
         pyplot.pause(0.00001)
         
@@ -567,6 +568,7 @@ if __name__ == "__main__":
         scrn.addRow(-5)
         pyplot.clf()
         pyplot.imshow(scrn.scrn)
+        pyplot.colorbar()
         pyplot.draw()
         pyplot.pause(0.00001)
         
@@ -574,6 +576,7 @@ if __name__ == "__main__":
         scrn.addRow(5, axis=1)
         pyplot.clf()
         pyplot.imshow(scrn.scrn)
+        pyplot.colorbar()
         pyplot.draw()
         pyplot.pause(0.00001)
         
@@ -581,6 +584,7 @@ if __name__ == "__main__":
         scrn.addRow(-5, axis=1)
         pyplot.clf()
         pyplot.imshow(scrn.scrn)
+        pyplot.colorbar()
         pyplot.draw()
         pyplot.pause(0.00001)
         
