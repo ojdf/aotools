@@ -17,8 +17,10 @@ def r0fromSlopes(slopes, wavelength, subapDiam):
         float: An estimate of r0 for that dataset.
 
     """
-    onedSlopes = (slopes[0]**2 + slopes[1]**2)**0.5
-    sVar = onedSlopes.var()
-    r0 = ((0.162*(wavelength**2) * subapDiam**(-1./3)) / sVar)**(3./5)
+    slopeVar = slopes.var(axis=(-1))
+
+    r0 = ((0.162*(wavelength**2) * subapDiam**(-1./3)) / slopeVar)**(3./5)
     
+    r0 = r0.mean()
+
     return r0
