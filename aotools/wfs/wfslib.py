@@ -24,3 +24,14 @@ def r0fromSlopes(slopes, wavelength, subapDiam):
     r0 = r0.mean()
 
     return r0
+
+
+def slopeVarfromR0(r0, wavelength, subapDiam):
+    """Returns the expected slope variance for a given r0 ValueError
+    
+
+    """
+
+    slope_var = 0.162 * (wavelength**2) * r0**(-5./3) * subapDiam**(-1./3)
+
+    return slope_var
