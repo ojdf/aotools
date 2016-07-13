@@ -6,7 +6,7 @@ def r0fromSlopes(slopes, wavelength, subapDiam):
     """
     Measures the value of R0 from a set of WFS slopes.
     
-    Uses the equation in Saint Jaques, 1998, PhD Thesis, Appendix A to calculate the value of atmospheric seeing parameter, r0, that would result in the variance of the given slopes. The slopes should represent only the X or Y directions.
+    Uses the equation in Saint Jaques, 1998, PhD Thesis, Appendix A to calculate the value of atmospheric seeing parameter, r0, that would result in the variance of the given slopes.
 
     Parameters:
         slopes (ndarray): A 3-d set of slopes in radians, of shape (dimension, nSubaps, nFrames)
@@ -28,7 +28,8 @@ def r0fromSlopes(slopes, wavelength, subapDiam):
 
 def slopeVarfromR0(r0, wavelength, subapDiam):
     """Returns the expected slope variance for a given r0 ValueError
-    
+
+    Uses the equation in Saint Jaques, 1998, PhD Thesis, Appendix A to calculate the slope variance resulting from a value of r0.    
 
     """
 
