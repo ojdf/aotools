@@ -6,7 +6,7 @@ of optical proagation
 '''
 
 import numpy
-from .. import fft
+from . import fft
 
 def angularSpectrum(Uin, wvl, d1, d2, z):
     """
