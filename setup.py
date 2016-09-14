@@ -7,7 +7,7 @@ setup(
     packages=[  'aotools',
                 'aotools.circle',
                 'aotools.centroiders',
-                'aotools.phasescreen',
+                'aotools.turbulence',
                 'aotools.fft',
                 'aotools.interp',
                 'aotools.wfs'
