@@ -40,7 +40,7 @@ def image_contrast(image):
 
     Parameters:
         image (ndarray): Image array
-
+ 
     Returns:
         float: Contrast value
     """
@@ -48,3 +48,18 @@ def image_contrast(image):
     contrast = (image.max() - image.min()) / (image.max() + image.min())
 
     return contrast
+
+def rms_contrast(image):
+    """
+    Calculates the RMS contrast - basically the standard deviation of the image
+
+    Parameters:
+        image (ndarray): Image array
+
+    Returns:
+        float: Contrast value
+    """
+    
+    image /= image.max()
+    
+    return image.std()
