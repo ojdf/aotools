@@ -284,46 +284,24 @@ def phaseCovariance(r, r0, L0):
     
 if __name__ == "__main__":
     
-    
-    scrn = PhaseScreen(128, 4./64, 0.2, 50, nCol=4)
-    
+
     from matplotlib import pyplot
+
+    screen = PhaseScreen(64, 8./32, 0.2, 40)
+
     pyplot.ion()
+    pyplot.imshow(screen.stencil)
+
     pyplot.figure()
-    pyplot.imshow(scrn.scrn)
+    pyplot.imshow(screen.scrn)
     pyplot.colorbar()
-    for i in range(20):
-        scrn.addRow(5)
+    for i in range(100):
+        screen.addRow()
+
         pyplot.clf()
-        pyplot.imshow(scrn.scrn)
+        pyplot.imshow(screen.scrn)
         pyplot.colorbar()
         pyplot.draw()
-        pyplot.pause(0.00001)
-        
-    for i in range(20):
-        scrn.addRow(-5)
-        pyplot.clf()
-        pyplot.imshow(scrn.scrn)
-        pyplot.colorbar()
-        pyplot.draw()
-        pyplot.pause(0.00001)
-        
-    for i in range(20):
-        scrn.addRow(5, axis=1)
-        pyplot.clf()
-        pyplot.imshow(scrn.scrn)
-        pyplot.colorbar()
-        pyplot.draw()
-        pyplot.pause(0.00001)
-        
-    for i in range(20):
-        scrn.addRow(-5, axis=1)
-        pyplot.clf()
-        pyplot.imshow(scrn.scrn)
-        pyplot.colorbar()
-        pyplot.draw()
-        pyplot.pause(0.00001)
-        
-        
-    
+        pyplot.pause(0.01)
+
     
