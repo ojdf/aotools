@@ -4,14 +4,15 @@ import versioneer
 setup(
     name='aotools',
     author_email='a.p.reeves@durham.ac.uk',
-    packages=[  'aotools',
-                'aotools.circle',
-                'aotools.centroiders',
-                'aotools.turbulence',
-                'aotools.fft',
-                'aotools.interp',
-                'aotools.wfs'
-                ],
+    packages=['aotools',
+              'aotools.astronomy',
+              'aotools.fft',
+              'aotools.functions',
+              'aotools.image_processing',
+              'aotools.interp',
+              'aotools.turbulence',
+              'aotools.wfs',
+              ],
 
     description='A set of useful functions for Adaptive Optics in Python',
     long_description=open('README.md').read(),
