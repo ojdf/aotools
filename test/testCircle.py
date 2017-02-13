@@ -6,7 +6,7 @@ import unittest
 import numpy
 
 import logging
-from aotools import circle
+from aotools.functions import pupil
 
 # Get the logger:
 logging.basicConfig()
@@ -26,7 +26,7 @@ class TestCircle(unittest.TestCase):
                           [ 0.,  0.,  1.,  0.,  0.],
                           [ 0.,  0.,  0.,  0.,  0.],
                           [ 0.,  0.,  0.,  0.,  0.]])
-        c = circle.circle(0, 5)
+        c = pupil.circle(0, 5)
         self.assertEqual( c.tolist(), ce.tolist() )
         self.assertTrue( (c == ce).all() )
 
@@ -36,7 +36,7 @@ class TestCircle(unittest.TestCase):
                           [ 0.,  1.,  1.,  1.,  0.],
                           [ 0.,  0.,  1.,  0.,  0.],
                           [ 0.,  0.,  0.,  0.,  0.]])
-        c = circle.circle(1, 5)
+        c = pupil.circle(1, 5)
         self.assertEqual( c.tolist(), ce.tolist() )
         self.assertTrue( (c == ce).all() )
 
@@ -46,7 +46,7 @@ class TestCircle(unittest.TestCase):
                           [ 1.,  1.,  1.,  1.,  1.],
                           [ 0.,  1.,  1.,  1.,  0.],
                           [ 0.,  0.,  1.,  0.,  0.]])
-        c = circle.circle(2, 5)
+        c = pupil.circle(2, 5)
         self.assertEqual( c.tolist(), ce.tolist() )
         self.assertTrue( (c == ce).all() )
 
@@ -57,7 +57,7 @@ class TestCircle(unittest.TestCase):
                           [ 0.,  0.,  0.,  0.,  0.,  0.],
                           [ 0.,  0.,  0.,  0.,  0.,  0.],
                           [ 0.,  0.,  0.,  0.,  0.,  0.]])
-        c = circle.circle(0, 6)
+        c = pupil.circle(0, 6)
         self.assertEqual( c.tolist(), ce.tolist() )
         self.assertTrue( (c == ce).all() )
 
@@ -68,7 +68,7 @@ class TestCircle(unittest.TestCase):
                           [ 0.,  0.,  1.,  1.,  0.,  0.],
                           [ 0.,  0.,  0.,  0.,  0.,  0.],
                           [ 0.,  0.,  0.,  0.,  0.,  0.]])
-        c = circle.circle(1, 6)
+        c = pupil.circle(1, 6)
         self.assertEqual( c.tolist(), ce.tolist() )
         self.assertTrue( (c == ce).all() )
 
@@ -79,7 +79,7 @@ class TestCircle(unittest.TestCase):
                           [ 0.,  1.,  1.,  1.,  1.,  0.],
                           [ 0.,  0.,  1.,  1.,  0.,  0.],
                           [ 0.,  0.,  0.,  0.,  0.,  0.]])
-        c = circle.circle(2, 6)
+        c = pupil.circle(2, 6)
         self.assertEqual( c.tolist(), ce.tolist() )
         self.assertTrue( (c == ce).all() )
 
@@ -90,7 +90,7 @@ class TestCircle(unittest.TestCase):
                           [ 1.,  1.,  1.,  1.,  1.,  1.],
                           [ 1.,  1.,  1.,  1.,  1.,  1.],
                           [ 0.,  1.,  1.,  1.,  1.,  0.]])
-        c = circle.circle(3, 6)
+        c = pupil.circle(3, 6)
         self.assertEqual( c.tolist(), ce.tolist() )
         self.assertTrue( (c == ce).all() )
 
@@ -129,39 +129,39 @@ class TestCircle(unittest.TestCase):
              [0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0],
              [0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0],
              [0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0]])
-        c = circle.circle(15.5, 31) - circle.circle(3.7, 31)
+        c = pupil.circle(15.5, 31) - pupil.circle(3.7, 31)
         self.assertEqual( c.tolist(), ce.tolist() )
         self.assertTrue( (c == ce).all() )
 
         log.info("Create circles with (2,6,(0.5,0.5)), (1,5,(0.5,0.5)), etc.")
-        c1 = circle.circle(2, 6, (0.5,0.5))[1:,1:]
-        c2 = circle.circle(2, 5)
+        c1 = pupil.circle(2, 6, (0.5,0.5))[1:,1:]
+        c2 = pupil.circle(2, 5)
         self.assertEqual( c1.tolist(), c2.tolist() )
         self.assertTrue( (c1 == c2).all() )
 
-        c1 = circle.circle(1, 6, (0.5,0.5))[1:,1:]
-        c2 = circle.circle(1, 5)
+        c1 = pupil.circle(1, 6, (0.5,0.5))[1:,1:]
+        c2 = pupil.circle(1, 5)
         self.assertEqual( c1.tolist(), c2.tolist() )
         self.assertTrue( (c1 == c2).all() )
 
-        c1 = circle.circle(0, 6, (0.5,0.5))[1:,1:]
-        c2 = circle.circle(0, 5)
+        c1 = pupil.circle(0, 6, (0.5,0.5))[1:,1:]
+        c2 = pupil.circle(0, 5)
         self.assertEqual( c1.tolist(), c2.tolist() )
         self.assertTrue( (c1 == c2).all() )
 
-        c1 = circle.circle(0, 5, (0.5, 0.5))[1:, 1:]
-        c2 = circle.circle(0, 6)[1:-1, 1:-1]
+        c1 = pupil.circle(0, 5, (0.5, 0.5))[1:, 1:]
+        c2 = pupil.circle(0, 6)[1:-1, 1:-1]
         self.assertEqual( c1.tolist(), c2.tolist() )
         self.assertTrue( (c1 == c2).all() )
 
-        c1 = circle.circle(1, 5, (0.5, 0.5))[1:, 1:]
-        c2 = circle.circle(1, 6)[1:-1, 1:-1]
+        c1 = pupil.circle(1, 5, (0.5, 0.5))[1:, 1:]
+        c2 = pupil.circle(1, 6)[1:-1, 1:-1]
         #c2[3,2] = 3.0 # to test the testing
         self.assertEqual( c1.tolist(), c2.tolist() )
         self.assertTrue( (c1 == c2).all() )
 
-        c1 = circle.circle(2, 5, (0.5, 0.5))[1:, 1:]
-        c2 = circle.circle(2, 6)[1:-1, 1:-1]
+        c1 = pupil.circle(2, 5, (0.5, 0.5))[1:, 1:]
+        c2 = pupil.circle(2, 6)[1:-1, 1:-1]
         self.assertEqual( c1.tolist(), c2.tolist() )
         self.assertTrue( (c1 == c2).all() )
 
@@ -172,8 +172,8 @@ class TestCircle(unittest.TestCase):
         if False:
             import pylab; pylab.ion()
 
-            c = circle.circle(2, 5, (0.5, 0.5))
+            c = pupil.circle(2, 5, (0.5, 0.5))
             pylab.imshow(c, interpolation="nearest")
 
-            c1 = circle.circle(1, 5)
+            c1 = pupil.circle(1, 5)
             #pylab.imshow(c-c1, interpolation="nearest")

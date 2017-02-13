@@ -1,3 +1,6 @@
+import numpy
+
+
 def circle(radius, size, circle_centre=(0, 0), origin="middle"):
     """
     Create a 2-D array: elements equal 1 within a circle and 0 outside.
