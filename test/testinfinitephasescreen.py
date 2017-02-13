@@ -1,5 +1,4 @@
 from aotools.turbulence import infinitephasescreen, infinitephasescreen_fried
-from importlib import reload
 
 def testInitScreen():
 
@@ -68,8 +67,7 @@ if __name__ == "__main__":
 
     from matplotlib import pyplot
 
-    reload(infinitephasescreen_fried)
-    screen = infinitephasescreen_fried.PhaseScreen(64, 8./32, 0.2, 40, 2)
+    sreen = infinitephasescreen_fried.PhaseScreen(64, 8./32, 0.2, 40, 2)
 
     pyplot.ion()
     pyplot.imshow(screen.stencil)
