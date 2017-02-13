@@ -1,5 +1,3 @@
-from .aotools import *
-
 from . import astronomy, fft, functions, image_processing, interp, turbulence, wfs
 
 from ._version import get_versions
