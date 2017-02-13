@@ -63,11 +63,20 @@ def testMoveDiagonal2():
     scrn.moveScrn((0.3, -0.3))
 
 
+# Test of Fried screen
+def test_fried_init():
+    screen = infinitephasescreen_fried.PhaseScreen(64, 8./32, 0.2, 40)
+
+def test_fried_add_row():
+    screen = infinitephasescreen_fried.PhaseScreen(64, 8./32, 0.2, 40)
+
+    screen.addRow()
+
 if __name__ == "__main__":
 
     from matplotlib import pyplot
 
-    sreen = infinitephasescreen_fried.PhaseScreen(64, 8./32, 0.2, 40, 2)
+    screen = infinitephasescreen_fried.PhaseScreen(64, 8./32, 0.2, 40, 2)
 
     pyplot.ion()
     pyplot.imshow(screen.stencil)
