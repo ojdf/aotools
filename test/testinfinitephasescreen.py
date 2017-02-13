@@ -1,4 +1,5 @@
-from aotools.turbulence import infinitephasescreen
+from aotools.turbulence import infinitephasescreen, infinitephasescreen_fried
+from importlib import reload
 
 def testInitScreen():
 
@@ -61,3 +62,26 @@ def testMoveDiagonal2():
 
     scrn = infinitephasescreen.PhaseScreen(128, 4./64, 0.2, 50, nCol=4)
     scrn.moveScrn((0.3, -0.3))
+
+
+if __name__ == "__main__":
+
+    from matplotlib import pyplot
+
+    reload(infinitephasescreen_fried)
+    screen = infinitephasescreen_fried.PhaseScreen(64, 8./32, 0.2, 40, 2)
+
+    pyplot.ion()
+    pyplot.imshow(screen.stencil)
+
+    pyplot.figure()
+    pyplot.imshow(screen.scrn)
+    pyplot.colorbar()
+    for i in range(100):
+        screen.addRow()
+
+        pyplot.clf()
+        pyplot.imshow(screen.scrn)
+        pyplot.colorbar()
+        pyplot.draw()
+        pyplot.pause(0.01)
