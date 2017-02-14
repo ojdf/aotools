@@ -1,5 +1,8 @@
-from . import astronomy, fft, functions, image_processing, interp, turbulence, wfs
+from . import astronomy, functions, image_processing, turbulence, wfs
+
 from .functions import *
+from .fouriertransform import *
+from .interpolation import *
 
 from ._version import get_versions
 __version__ = get_versions()['version']
