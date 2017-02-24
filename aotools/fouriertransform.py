@@ -3,6 +3,7 @@ Module containing useful FFT based function and classes
 """
 import numpy
 
+
 def ft(data, delta):
     """
     A properly scaled 1-D FFT
