@@ -27,6 +27,7 @@ def phaseFromZernikes(zCoeffs, size, norm="noll"):
 
     return phase
 
+
 def zernike(j, N):
     """
      Creates the Zernike polynomial with mode index j,
@@ -41,6 +42,7 @@ def zernike(j, N):
 
     n, m = zernIndex(j)
     return zernike_nm(n, m, N)
+
 
 def zernike_nm(n, m, N):
     """
@@ -66,9 +68,10 @@ def zernike_nm(n, m, N):
             m = abs(m)
             Z = numpy.sqrt(2*(n+1)) * zernikeRadialFunc(n, m, R) * numpy.sin(m * theta)
 
+    # clip
+    Z = Z*numpy.less_equal(R, 1.0)
 
     return Z*circle(N/2., N)
-
 
 
 def zernikeRadialFunc(n, m, r):
@@ -90,7 +93,6 @@ def zernikeRadialFunc(n, m, r):
         R += r**(n-2*i) * (((-1)**(i))*numpy.math.factorial(n-i)) / ( numpy.math.factorial(i) * numpy.math.factorial(0.5*(n+m)-i) * numpy.math.factorial(0.5*(n-m)-i) )
 
     return R
-
 
 
 def zernIndex(j):
