@@ -544,7 +544,51 @@ def phaseCovariance(r, r0, L0):
     cov = A * B1 * B2 * C
     
     return cov
-    
+
+from . import infinitephasescreen_fried
+
+class PhaseScreen2(infinitephasescreen_fried.PhaseScreen):
+
+    def __init__(self, nx_size, pixel_scale, r0, L0, random_seed=None, n_columns=2):
+
+        self.n_columns = n_columns
+
+
+        self.requested_nx_size = nx_size
+        self.nx_size = nx_size
+        self.pixel_scale = pixel_scale
+        self.r0 = r0
+        self.L0 = L0
+        self.stencil_length_factor = 1
+        self.stencil_length = self.nx_size
+
+
+        if random_seed is not None:
+            numpy.random.seed(random_seed)
+
+        # Coordinate of Fried's "reference point" that stops the screen diverging
+        self.reference_coord = (nx_size//2, n_columns+1)
+
+        self.set_X_coords()
+        self.set_stencil_coords()
+
+        self.calc_seperations()
+        self.make_covmats()
+
+        self.makeAMatrix()
+        self.makeBMatrix()
+        self.makeInitialScrn()
+
+
+    def set_stencil_coords(self):
+        self.stencil = numpy.zeros((self.stencil_length, self.nx_size))
+        self.stencil[:self.n_columns] = 1
+
+        self.stencil_coords = numpy.array(numpy.where(self.stencil==1)).T
+        self.stencil_positions = self.stencil_coords * self.pixel_scale
+
+        self.n_stencils = len(self.stencil_coords)
+
     
 if __name__ == "__main__":
     
