@@ -166,7 +166,7 @@ class PhaseScreen(object):
         """
         Makes the covariance matrices required for adding new phase
         """
-        self.cov_mat = phaseCovariance(self.seperations, self.r0, self.L0)
+        self.cov_mat = phase_covariance(self.seperations, self.r0, self.L0)
 
         self.cov_mat_zz = self.cov_mat[:self.n_stencils, :self.n_stencils]
         self.cov_mat_xx = self.cov_mat[self.n_stencils:, self.n_stencils:]
@@ -240,7 +240,7 @@ class PhaseScreen(object):
 
 
         
-def phaseCovariance(r, r0, L0):
+def phase_covariance(r, r0, L0):
     """
     Calculate the phase covariance between two points seperated by `r`, 
     in turbulence with a given `r0 and `L0`.
