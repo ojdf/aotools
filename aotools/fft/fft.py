@@ -2,6 +2,7 @@
 Module containing useful FFT based function and classes
 """
 import numpy
+import numpy as np
 
 def ft(data, delta):
     """
@@ -74,10 +75,9 @@ def ift2(DATA, delta_f):
     N = DATA.shape[0]
     g = numpy.fft.ifftshift(
             numpy.fft.ifft2(
-                    numpy.fft.ifftshift(DATA))) * (N * delta_f)*2
+                    numpy.fft.ifftshift(DATA))) * (N * delta_f)**2
 
     return g
-
 
 def rft(data, delta):
     """
