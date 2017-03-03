@@ -2,7 +2,6 @@
 Module containing useful FFT based function and classes
 """
 import numpy
-import numpy as np
 
 def ft(data, delta):
     """
