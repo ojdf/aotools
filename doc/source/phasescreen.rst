@@ -4,23 +4,14 @@ Phase Screen Creation
 Submodules
 ----------
 
-aotools.phasescreen.phasescreen module
---------------------------------------
-
-.. automodule:: aotools.phasescreen.phasescreen
+Phase Screen Creation
+----------------------
+.. automodule:: aotools.turbulence.phasescreen
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: aotools.phasescreen.infinitephasescreen
-    :members:
-    :undoc-members:
-    :show-inheritance:
-    
-Module contents
----------------
-
-.. automodule:: aotools.phasescreen
+.. automodule:: aotools.turbulence.infinitephasescreen
     :members:
     :undoc-members:
     :show-inheritance:

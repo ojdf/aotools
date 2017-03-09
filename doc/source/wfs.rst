@@ -1,8 +1,8 @@
 Wavefront Sensor Analysis
 =========================
 
-aotools.wfs module
-------------------
+WFS module
+-----------
 
 .. automodule:: aotools.wfs
     :members:

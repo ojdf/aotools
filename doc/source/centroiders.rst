@@ -2,10 +2,10 @@ Centroiders
 ===========
 
 
-aotools.centroiders module
+Centroider module
 --------------------------
 
-.. automodule:: aotools.centroiders.centroiders
+.. automodule:: aotools.image_processing.centroiders
     :members:
     :undoc-members:
     :show-inheritance:
