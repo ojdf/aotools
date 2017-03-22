@@ -1,10 +1,10 @@
 Normalised Fourier Transforms
 =============================
 
-aotools.fft module
+aotools.fouriertransform module
 ------------------
 
-.. automodule:: aotools.fft.fft
+.. automodule:: aotools.fouriertransform
     :members:
     :undoc-members:
     :show-inheritance:

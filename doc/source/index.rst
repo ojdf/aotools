@@ -11,11 +11,10 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   circle
    phasescreen
    centroiders
    fft
-   interp
+   wfs
 
 Indices and tables
 ==================
