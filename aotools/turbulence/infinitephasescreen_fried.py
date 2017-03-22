@@ -211,6 +211,17 @@ class PhaseScreen(object):
 
         self._scrn = self._scrn[:, :self.nx_size]
 
+    def get_new_row(self):
+        random_data = numpy.random.normal(0, 1, size=self.nx_size)
+
+        stencil_data = self._scrn[(self.stencil_coords[:, 0], self.stencil_coords[:, 1])]
+
+        reference_value = self._scrn[self.reference_coord]
+
+        new_row = self.A_mat.dot(stencil_data - reference_value) + self.B_mat.dot(random_data) + reference_value
+        new_row.shape = (1, self.nx_size)
+        return new_row
+
     def addRow(self):
         """
         Adds new rows to the phase screen and removes old ones.
@@ -220,14 +231,7 @@ class PhaseScreen(object):
             axis (int): Axis to add new rows (can be 0 (default) or 1)
         """
 
-        random_data = numpy.random.normal(0, 1, size=self.nx_size)
-
-        stencil_data = self._scrn[(self.stencil_coords[:, 0], self.stencil_coords[:, 1])]
-
-        reference_value = self._scrn[self.reference_coord]
-
-        new_row = self.A_mat.dot(stencil_data - reference_value) + self.B_mat.dot(random_data) + reference_value
-        new_row.shape = (1, self.nx_size)
+        new_row = self.get_new_row()
 
         self._scrn = numpy.append(new_row, self._scrn, axis=0)[:self.stencil_length, :self.nx_size]
 
@@ -291,6 +295,6 @@ if __name__ == "__main__":
         pyplot.imshow(screen.scrn)
         pyplot.colorbar()
         pyplot.draw()
-        pyplot.pause(0.01)
+        pyplot.pause(0.001)
 
     
