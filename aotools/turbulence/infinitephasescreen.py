@@ -549,7 +549,7 @@ from . import infinitephasescreen_fried
 
 class PhaseScreen2(infinitephasescreen_fried.PhaseScreen):
 
-    def __init__(self, nx_size, pixel_scale, r0, L0, random_seed=None, n_columns=2):
+    def __init__(self, nx_size, pixel_scale, r0, L0, random_seed=None, n_columns=2, remove_ref=False):
 
         self.n_columns = n_columns
 
@@ -561,7 +561,7 @@ class PhaseScreen2(infinitephasescreen_fried.PhaseScreen):
         self.L0 = L0
         self.stencil_length_factor = 1
         self.stencil_length = self.nx_size
-
+        self.remove_ref = remove_ref
 
         if random_seed is not None:
             numpy.random.seed(random_seed)
