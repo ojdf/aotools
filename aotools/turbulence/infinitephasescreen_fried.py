@@ -74,7 +74,7 @@ class PhaseScreen(object):
         stencil_length_factor (int, optional): How much longer is the stencil than the desired phase? default is 4
     """
     
-    def __init__(self, nx_size, pixel_scale, r0, L0, random_seed=None, stencil_length_factor=4):
+    def __init__(self, nx_size, pixel_scale, r0, L0, random_seed=None, stencil_length_factor=4, remove_ref=False):
 
 
         self.requested_nx_size = nx_size
@@ -86,6 +86,7 @@ class PhaseScreen(object):
         self.stencil_length_factor = stencil_length_factor
         self.stencil_length = stencil_length_factor * self.nx_size
 
+        self.remove_ref = remove_ref
 
         if random_seed is not None:
             numpy.random.seed(random_seed)
@@ -216,9 +217,13 @@ class PhaseScreen(object):
 
         stencil_data = self._scrn[(self.stencil_coords[:, 0], self.stencil_coords[:, 1])]
 
-        reference_value = self._scrn[self.reference_coord]
+        # reference_value = self._scrn[self.reference_coord]
 
-        new_row = self.A_mat.dot(stencil_data - reference_value) + self.B_mat.dot(random_data) + reference_value
+        if self.remove_ref:
+            new_row = self.A_mat.dot(stencil_data - reference_value) + self.B_mat.dot(random_data) + reference_value
+        else:
+            new_row = self.A_mat.dot(stencil_data) + self.B_mat.dot(random_data)
+
         new_row.shape = (1, self.nx_size)
         return new_row
 
