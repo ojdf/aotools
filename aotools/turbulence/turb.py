@@ -4,6 +4,8 @@ General equations and definitions describing turbulence statistics
 import numpy
 from scipy.special import gamma, kv
 
+__all__ = ["phase_covariance"]
+
 def phase_covariance(r, r0, L0):
     """
     Calculate the phase covariance between two points seperated by `r`, 

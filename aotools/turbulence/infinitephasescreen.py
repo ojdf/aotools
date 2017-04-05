@@ -8,7 +8,7 @@ from scipy.interpolate import interp2d
 import numpy
 from numpy import pi
 
-from . import phasescreen, turbulence
+from . import phasescreen, turb
 
 __all__ = ["PhaseScreenVonKarman", "PhaseScreenKolmogorov"]
 
@@ -118,7 +118,7 @@ class PhaseScreen(object):
         """
         Makes the covariance matrices required for adding new phase
         """
-        self.cov_mat = turbulence.phase_covariance(self.seperations, self.r0, self.L0)
+        self.cov_mat = turb.phase_covariance(self.seperations, self.r0, self.L0)
 
         self.cov_mat_zz = self.cov_mat[:self.n_stencils, :self.n_stencils]
         self.cov_mat_xx = self.cov_mat[self.n_stencils:, self.n_stencils:]
@@ -528,7 +528,7 @@ class PhaseScreenOld(object):
         """
         r_xz = self.makeXZSeperation()
 
-        self.cov_xz_forwards = turbulence.phase_covariance(r_xz, self.r0, self.L0)
+        self.cov_xz_forwards = turb.phase_covariance(r_xz, self.r0, self.L0)
 
         # Make the covariance matrix for adding elements in the other direction.
         # This is the same, except the position of each of the columns is reversed
@@ -580,7 +580,7 @@ class PhaseScreenOld(object):
         """
         r_zz = self.makeZZSeperation()
 
-        self.cov_zz = turbulence.phase_covariance(r_zz, self.r0, self.L0)
+        self.cov_zz = turb.phase_covariance(r_zz, self.r0, self.L0)
 
 
     def makeAMatrix(self):
@@ -640,7 +640,7 @@ class PhaseScreenOld(object):
         """
         r_xx = self.makeXXSeperation()
 
-        self.cov_xx = turbulence.phase_covariance(r_xx, self.r0, self.L0)
+        self.cov_xx = turb.phase_covariance(r_xx, self.r0, self.L0)
 
 
     def makeZXSeperation(self):
@@ -684,7 +684,7 @@ class PhaseScreenOld(object):
         """
         r_xz = self.makeZXSeperation()
 
-        self.cov_zx_forwards = turbulence.phase_covariance(r_xz, self.r0, self.L0)
+        self.cov_zx_forwards = turb.phase_covariance(r_xz, self.r0, self.L0)
 
         # Make the covariance matrix for adding elements in the other direction.
         # This is the same, except the position of each of the columns is reversed
