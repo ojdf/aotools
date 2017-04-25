@@ -1,4 +1,4 @@
-from . import astronomy, functions, image_processing, turbulence, wfs
+from . import astronomy, functions, image_processing, wfs, turbulence
 
 from .functions import *
 from .fouriertransform import *
