@@ -7,11 +7,11 @@ def centreOfGravity(img, threshold=0, **kwargs):
     Sets all values under "threshold*max_value" to zero before centroiding
 
     Parameters:
-        img (ndarray): 2d or greater rank array of imgs to centroid
+        img (ndarray): ([n, ]y, x) 2d or greater rank array of imgs to centroid
         threshold (float): Percentage of max value under which pixels set to 0
 
     Returns:
-        ndarray: Array of centroid values
+        ndarray: Array of centroid values (2[, n])
 
     '''
     if threshold!=0:
@@ -48,7 +48,7 @@ def brightestPxl(img, threshold, **kwargs):
 
     Parameters:
         img (ndarray): 2d or greater rank array of imgs to centroid
-        threshold (float): Percentage of pixels to use for centroid
+        threshold (float): Fraction of pixels to use for centroid
 
     Returns:
         ndarray: Array of centroid values
