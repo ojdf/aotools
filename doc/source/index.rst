@@ -12,9 +12,11 @@ Contents:
    :maxdepth: 2
 
    phasescreen
+   slope_analysis
    centroiders
    fft
    wfs
+   zernike
 
 Indices and tables
 ==================

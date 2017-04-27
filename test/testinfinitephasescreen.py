@@ -1,82 +1,31 @@
-from aotools.turbulence import infinitephasescreen, infinitephasescreen_fried
+from aotools.turbulence import infinitephasescreen
 
-def testInitScreen():
+def testVKInitScreen():
 
-    scrn = infinitephasescreen.PhaseScreen(128, 4./64, 0.2, 50, nCol=4)
+    scrn = infinitephasescreen.PhaseScreenVonKarman(128, 4./64, 0.2, 50, nCol=4)
 
-def testAddRow_axis0_forward():
+def testVKAddRowd():
 
-    scrn = infinitephasescreen.PhaseScreen(128, 4./64, 0.2, 50, nCol=4)
-    scrn.addRow(1, axis=0)
-
-def testAddRow_axis0_backward():
-
-    scrn = infinitephasescreen.PhaseScreen(128, 4./64, 0.2, 50, nCol=4)
-    scrn.addRow(-1, axis=0)
-
-def testAddRow_axis1_forward():
-
-    scrn = infinitephasescreen.PhaseScreen(128, 4./64, 0.2, 50, nCol=4)
-    scrn.addRow(1, axis=1)
-
-def testAddRow_axis1_backward():
-
-    scrn = infinitephasescreen.PhaseScreen(128, 4./64, 0.2, 50, nCol=4)
-    scrn.addRow(-1, axis=0)
+    scrn = infinitephasescreen.PhaseScreenVonKarman(128, 4./64, 0.2, 50, nCol=4)
+    scrn.add_row()
 
 
-def testAddMultipleRows():
 
-    scrn = infinitephasescreen.PhaseScreen(128, 4./64, 0.2, 50, nCol=4)
-    scrn.addRow(10, axis=0)
+# Test of Kolmogoroc screen
+def testVKInitScreen():
 
-def testMoveScrn_axis0_forward():
+    scrn = infinitephasescreen.PhaseScreenKolmogorov(128, 4./64, 0.2, 50, stencil_length_factor=4)
 
-    scrn = infinitephasescreen.PhaseScreen(128, 4./64, 0.2, 50, nCol=4)
-    scrn.moveScrn((0.3, 0))
+def testVKAddRowd():
 
-def testMoveScrn_axis0_backward():
-
-    scrn = infinitephasescreen.PhaseScreen(128, 4./64, 0.2, 50, nCol=4)
-    scrn.moveScrn((-0.3, 0))
-
-def testMoveScrn_axis1_forward():
-
-    scrn = infinitephasescreen.PhaseScreen(128, 4./64, 0.2, 50, nCol=4)
-    scrn.moveScrn((0, 0.3))
-
-def testMoveScrn_axis1_backward():
-
-    scrn = infinitephasescreen.PhaseScreen(128, 4./64, 0.2, 50, nCol=4)
-    scrn.moveScrn((0, -0.3))
-
-
-def testMoveDiagonal1():
-
-    scrn = infinitephasescreen.PhaseScreen(128, 4./64, 0.2, 50, nCol=4)
-    scrn.moveScrn((0.3, 0.3))
-
-
-def testMoveDiagonal2():
-
-    scrn = infinitephasescreen.PhaseScreen(128, 4./64, 0.2, 50, nCol=4)
-    scrn.moveScrn((0.3, -0.3))
-
-
-# Test of Fried screen
-def test_fried_init():
-    screen = infinitephasescreen_fried.PhaseScreen(64, 8./32, 0.2, 40)
-
-def test_fried_add_row():
-    screen = infinitephasescreen_fried.PhaseScreen(64, 8./32, 0.2, 40)
-
-    screen.addRow()
+    scrn = infinitephasescreen.PhaseScreenKolmogorov(128, 4./64, 0.2, 50, stencil_length_factor=4)
+    scrn.add_row()
 
 if __name__ == "__main__":
 
     from matplotlib import pyplot
 
-    screen = infinitephasescreen_fried.PhaseScreen(64, 8./32, 0.2, 40, 2)
+    screen = infinitephasescreen.PhaseScreenVonKarman(64, 8./32, 0.2, 40, 2)
 
     pyplot.ion()
     pyplot.imshow(screen.stencil)

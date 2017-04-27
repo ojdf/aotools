@@ -5,7 +5,7 @@ Submodules
 ----------
 
 Phase Screen Creation
-----------------------
+---------------------
 .. automodule:: aotools.turbulence.phasescreen
     :members:
     :undoc-members:

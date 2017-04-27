@@ -64,3 +64,4 @@ target/
 *.DS_Store
 # pycharm config
 *.idea
+MANIFEST
