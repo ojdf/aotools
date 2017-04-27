@@ -49,7 +49,8 @@ def zernike_nm(n, m, N):
      Creates the Zernike polynomial with radial index, n, and azimuthal index, m.
 
      Args:
-        j (int): The noll j number of the zernike mode
+        n (int): The radial order of the zernike mode
+        m (int): The azimuthal order of the zernike mode
         N (int): The diameter of the zernike more in pixels
      Returns:
         ndarray: The Zernike mode
@@ -274,8 +275,4 @@ def makegammas(nzrad):
             else:
                 pass    # line 4
 
-
-
-#    FITS.Write(gamx, 'gamma_x.fits')
-#    FITS.Write(gamy, 'gamma_y.fits')
     return numpy.array([gamx,gamy])
