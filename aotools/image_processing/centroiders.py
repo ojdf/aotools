@@ -7,11 +7,11 @@ def centreOfGravity(img, threshold=0, **kwargs):
     Sets all values under "threshold*max_value" to zero before centroiding
 
     Parameters:
-        img (ndarray): 2d or greater rank array of imgs to centroid
+        img (ndarray): ([n, ]y, x) 2d or greater rank array of imgs to centroid
         threshold (float): Percentage of max value under which pixels set to 0
 
     Returns:
-        ndarray: Array of centroid values
+        ndarray: Array of centroid values (2[, n])
 
     '''
     if threshold!=0:
@@ -48,7 +48,7 @@ def brightestPxl(img, threshold, **kwargs):
 
     Parameters:
         img (ndarray): 2d or greater rank array of imgs to centroid
-        threshold (float): Percentage of pixels to use for centroid
+        threshold (float): Fraction of pixels to use for centroid
 
     Returns:
         ndarray: Array of centroid values
@@ -87,33 +87,40 @@ def corrConvolve(x, y):
     m, n = fr.shape
 
     cc = (numpy.fft.ifft2(fr*fr2)).real
-    cc = numpy.roll(cc, -m/2+1, axis=0)
-    cc = numpy.roll(cc, -n/2+1, axis=1)
+    cc = numpy.roll(cc, int(-m/2+1), axis=0)
+    cc = numpy.roll(cc, int(-n/2+1), axis=1)
 
     return cc
 
 
-def correlation(im, threshold, ref):
+def correlation(im, ref, threshold):
     '''
     Correlation Centroider, currently only works for 3d im shape.
     Performs a simple thresholded COM on the correlation.
 
     Args:
-        im: subap images (t, y, x)
-        threshold_fac: threshold for COM (0=all pixels, 1=brightest pixel)
-        ref: reference image (t, y, x)
+        im: sub-aperture images (t, y, x)
+        ref: reference image (y, x)
+        threshold: fractional threshold for COM (0=all pixels, 1=brightest pixel)
     Returns:
         ndarray: centroids of im, given as x, y
     '''
-    nt, ny, nx = im.shape
+    if len(im.shape) == 3:
+        nt, ny, nx = im.shape
+        # Remove min from each sub-ap to increase contrast
+        im = (im.T - im.min((1, 2))).T
+    elif len(im.shape) == 2:
+        ny, nx = im.shape
+        nt = 1
+        im -= im.min()
+        im.shape = (1, ny, nx)
 
-    # Remove min from each sub-ap to increase contrast
-    im = (im.T - im.min((1,2))).T
+    ref -= ref.min()
 
     cents = numpy.zeros((2, nt))
     for frame in range(nt):
         # Correlate frame with reference image
-        corr = corrConvolve(im[frame], ref[frame])
+        corr = corrConvolve(im[frame], ref)
 
         # Find brightest pixel.
         index_y, index_x = numpy.unravel_index(
@@ -138,7 +145,7 @@ def correlation(im, threshold, ref):
         cx = (corr * XRAMP).sum() / si
         cy = (corr * YRAMP).sum() / si
 
-        cents[:, frame] =  cy, cx
+        cents[:, frame] = cy, cx
 
     return cents
 
