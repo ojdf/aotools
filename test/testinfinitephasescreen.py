@@ -4,7 +4,7 @@ def testVKInitScreen():
 
     scrn = infinitephasescreen.PhaseScreenVonKarman(128, 4./64, 0.2, 50, n_columns=4)
 
-def testVKAddRowd():
+def testVKAddRow():
 
     scrn = infinitephasescreen.PhaseScreenVonKarman(128, 4./64, 0.2, 50, n_columns=4)
     scrn.add_row()
@@ -16,7 +16,7 @@ def testKInitScreen():
 
     scrn = infinitephasescreen.PhaseScreenKolmogorov(128, 4./64, 0.2, 50, stencil_length_factor=4)
 
-def testKAddRowd():
+def testKAddRow():
 
     scrn = infinitephasescreen.PhaseScreenKolmogorov(128, 4./64, 0.2, 50, stencil_length_factor=4)
     scrn.add_row()
@@ -34,7 +34,7 @@ if __name__ == "__main__":
     pyplot.imshow(screen.scrn)
     pyplot.colorbar()
     for i in range(100):
-        screen.addRow()
+        screen.add_row()
 
         pyplot.clf()
         pyplot.imshow(screen.scrn)

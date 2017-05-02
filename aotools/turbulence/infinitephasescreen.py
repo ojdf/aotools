@@ -640,13 +640,6 @@ class PhaseScreenKolmogorov(PhaseScreen):
         self.n_stencils = len(self.stencil_coords)
 
 
-    def get_new_row(self):
-        random_data = numpy.random.normal(0, 1, size=self.nx_size)
-
-        stencil_data = self._scrn[(self.stencil_coords[:, 0], self.stencil_coords[:, 1])]
-
-        reference_value = self._scrn[self.reference_coord]
-
     def __repr__(self):
         return str(self.scrn)
     
