@@ -11,6 +11,7 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
+   introduction
    phasescreen
    slope_analysis
    centroiders
