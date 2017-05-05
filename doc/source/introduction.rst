@@ -1,5 +1,5 @@
-AOtools
-=======
+Introduction
+============
 
 AOtools is an attempt to gather together many common tools, equations and functions for Adaptive Optics.
 The idea is to provide an alternative to the current model, where a new AO researcher must write their own library
