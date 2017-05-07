@@ -135,7 +135,7 @@ class PhaseScreen(object):
             cf = linalg.cho_factor(self.cov_mat_zz)
             inv_cov_zz = linalg.cho_solve(cf, numpy.identity(self.cov_mat_zz.shape[0]))
         except linalg.LinAlgError:
-            inv_cov_zz = linalg.inv(self.cov_mat_zz)
+            raise linalg.LinAlgError("Could not invert Covariance Matrix to for A and B Matrices. Try with a larger pixel scale")
 
         self.A_mat = self.cov_mat_xz.dot(inv_cov_zz)
 
