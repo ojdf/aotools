@@ -1,5 +1,5 @@
 '''
-A library of optical propagation methods.
+A library of useful optical propagation methods.
 
 Many extracted from the book by Schmidt, 2010: Numerical Methods
 of optical proagation
