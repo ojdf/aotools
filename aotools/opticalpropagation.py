@@ -6,7 +6,7 @@ of optical proagation
 '''
 
 import numpy
-from .. import fouriertransform
+from . import fouriertransform
 
 def angularSpectrum(inputComplexAmp, wvl, inputSpacing, outputSpacing, z):
     """
