@@ -18,6 +18,7 @@ Contents:
    fft
    wfs
    zernike
+   opticalpropagation
 
 Indices and tables
 ==================
