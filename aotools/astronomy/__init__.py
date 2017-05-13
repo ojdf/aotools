@@ -1,1 +1,1 @@
-from .astronomy import *
+from ._astronomy import *
