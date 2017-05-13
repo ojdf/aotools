@@ -8,8 +8,8 @@ import unittest
 import numpy
 
 import logging
-from aotools.turbulence import opticalpropagation, phasescreen
-from aotools import circle
+from aotools.turbulence import phasescreen
+from aotools import circle, opticalpropagation
 
 logging.basicConfig()
 

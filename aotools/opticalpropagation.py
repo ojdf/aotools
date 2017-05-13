@@ -1,12 +1,12 @@
 '''
-A library of optical propagation methods.
+A library of useful optical propagation methods.
 
 Many extracted from the book by Schmidt, 2010: Numerical Methods
 of optical proagation
 '''
 
 import numpy
-from .. import fouriertransform
+from . import fouriertransform
 
 def angularSpectrum(inputComplexAmp, wvl, inputSpacing, outputSpacing, z):
     """
