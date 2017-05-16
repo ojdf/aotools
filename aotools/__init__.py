@@ -1,5 +1,6 @@
 from . import astronomy, functions, image_processing, wfs, turbulence
 
+from .astronomy import *
 from .functions import *
 from .fouriertransform import *
 from .interpolation import *
