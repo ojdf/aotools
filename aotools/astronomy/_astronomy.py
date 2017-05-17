@@ -25,7 +25,7 @@ def photonsPerMag(mag, mask, pixel_scale, wvlBand, exposure_time):
 
     photonPerSec = photonPerSecPerArea * area
 
-    photons = photonPerSec * exposure_time
+    photons = float(photonPerSec * exposure_time)
 
     return photons
 
@@ -89,5 +89,5 @@ def flux_to_magnitude(flux, waveband='V'):
                        'z': [0.91, 0.13, 4810]}
 
     flux_Jy = flux / (1.51E7 * flux_dictionary[waveband][1])
-    magnitude = -2.5 * numpy.log10(flux_Jy / flux_dictionary[waveband][2])
+    magnitude = float(-2.5 * numpy.log10(flux_Jy / flux_dictionary[waveband][2]))
     return magnitude
