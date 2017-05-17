@@ -19,6 +19,7 @@ Contents:
    wfs
    zernike
    opticalpropagation
+   astronomy
 
 Indices and tables
 ==================
