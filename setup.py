@@ -14,6 +14,7 @@ setup(
 
     install_requires=['numpy',
                       'scipy',
+                      'matplotlib',
                      ],
 
     description='A set of useful functions for Adaptive Optics in Python',
