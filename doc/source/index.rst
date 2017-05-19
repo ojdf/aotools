@@ -11,12 +11,14 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
+   introduction
    phasescreen
    slope_analysis
    centroiders
    fft
    wfs
    zernike
+   opticalpropagation
 
 Indices and tables
 ==================
