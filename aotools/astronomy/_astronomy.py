@@ -1,3 +1,4 @@
+import numpy
 
 # Dictionary of flux values at the top of the atmosphere
 #                 band, lamda, dLamda, m=0 flux (Jy)
