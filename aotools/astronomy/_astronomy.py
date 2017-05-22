@@ -1,7 +1,21 @@
-import numpy
+
+# Dictionary of flux values at the top of the atmosphere
+#                 band, lamda, dLamda, m=0 flux (Jy)
+FLUX_DICTIONARY = {'U': [0.36, 0.15, 1810],
+                'B': [0.44, 0.22, 4260],
+                'V': [0.55, 0.16, 3640],
+                'R': [0.64, 0.23, 3080],
+                'I': [1.0, 0.19, 2550],
+                'J': [1.26, 0.16, 1600],
+                'H': [1.60, 0.23, 1080],
+                'K': [2.22, 0.23, 670],
+                'g': [0.52, 0.14, 3730],
+                'r': [0.67, 0.14, 4490],
+                'i': [0.79, 0.16, 4760],
+                'z': [0.91, 0.13, 4810]}
 
 
-def photonsPerMag(mag, mask, pixel_scale, wvlBand, exposure_time):
+def photons_per_mag(mag, mask, pixel_scale, wvlBand, exposure_time):
     """
     Calculates the photon flux for a given aperture, star magnitude and wavelength band
 
@@ -29,6 +43,32 @@ def photonsPerMag(mag, mask, pixel_scale, wvlBand, exposure_time):
 
     return photons
 
+def photons_per_band(mag, mask, pxlScale, expTime, waveband='V'):
+        '''
+        Calculates the photon flux for a given aperture, star magnitude and wavelength band
+
+        Parameters:
+            mag (float): Star apparent magnitude
+            mask (ndarray): 2-d pupil mask array, 1 is transparent, 0 opaque
+            pxlScale (float): size in metres of each pixel in mask
+            expTime (float): Exposure time in seconds
+            waveband (string): Waveband
+
+        Returns:
+            float: number of photons
+        '''
+
+        #Area defined m
+        area = mask.sum() * pxlScale**2
+
+        # Flux density photons s^-1 m^-2
+        flux_photons = magnitude_to_flux(mag,waveband)
+
+        # Total photons
+        photons = flux_photons * expTime * area
+
+        return photons
+
 
 def magnitude_to_flux(magnitude, waveband='V'):
     """
@@ -42,23 +82,9 @@ def magnitude_to_flux(magnitude, waveband='V'):
         float: Number of photons emitted by the object per second per meter squared
 
     """
-    # Dictionary of flux values at the top of the atmosphere
-    #                 band, lamda, dLamda, m=0 flux (Jy)
-    flux_dictionary = {'U': [0.36, 0.15, 1810],
-                       'B': [0.44, 0.22, 4260],
-                       'V': [0.55, 0.16, 3640],
-                       'R': [0.64, 0.23, 3080],
-                       'I': [1.0, 0.19, 2550],
-                       'J': [1.26, 0.16, 1600],
-                       'H': [1.60, 0.23, 1080],
-                       'K': [2.22, 0.23, 670],
-                       'g': [0.52, 0.14, 3730],
-                       'r': [0.67, 0.14, 4490],
-                       'i': [0.79, 0.16, 4760],
-                       'z': [0.91, 0.13, 4810]}
 
-    flux_Jy = flux_dictionary[waveband][2] * 10 ** (-0.4 * magnitude)
-    flux_photons = flux_Jy * 1.51E7 * flux_dictionary[waveband][1]  # photons sec^-1 m^-2
+    flux_Jy = FLUX_DICTIONARY[waveband][2] * 10 ** (-0.4 * magnitude)
+    flux_photons = flux_Jy * 1.51E7 * FLUX_DICTIONARY[waveband][1]  # photons sec^-1 m^-2
     return flux_photons
 
 
@@ -73,21 +99,7 @@ def flux_to_magnitude(flux, waveband='V'):
     Returns:
         float: Apparent magnitude
     """
-    # Dictionary of flux values at the top of the atmosphere
-    #                 band, lamda, dLamda, m=0 flux (Jy)
-    flux_dictionary = {'U': [0.36, 0.15, 1810],
-                       'B': [0.44, 0.22, 4260],
-                       'V': [0.55, 0.16, 3640],
-                       'R': [0.64, 0.23, 3080],
-                       'I': [1.0, 0.19, 2550],
-                       'J': [1.26, 0.16, 1600],
-                       'H': [1.60, 0.23, 1080],
-                       'K': [2.22, 0.23, 670],
-                       'g': [0.52, 0.14, 3730],
-                       'r': [0.67, 0.14, 4490],
-                       'i': [0.79, 0.16, 4760],
-                       'z': [0.91, 0.13, 4810]}
 
-    flux_Jy = flux / (1.51E7 * flux_dictionary[waveband][1])
-    magnitude = float(-2.5 * numpy.log10(flux_Jy / flux_dictionary[waveband][2]))
+    flux_Jy = flux / (1.51E7 * FLUX_DICTIONARY[waveband][1])
+    magnitude = float(-2.5 * numpy.log10(flux_Jy / FLUX_DICTIONARY[waveband][2]))
     return magnitude
