@@ -1,9 +1,9 @@
 from aotools import astronomy, circle
 
 
-def test_photonsPerMag():
+def test_photons_per_mag():
     mask = circle(2, 5)
-    photons = astronomy.photonsPerMag(5.56, mask, 0.5, 0.3, 10)
+    photons = astronomy.photons_per_mag(5.56, mask, 0.5, 0.3, 10)
     assert type(photons) == float
 
 
