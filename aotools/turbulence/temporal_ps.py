@@ -32,7 +32,7 @@ def calc_slope_temporalps(slope_data):
     n_frames = slope_data.shape[-2]
 
     # Only take half result, as FFT mirrors
-    tps = abs(numpy.fft.fft(slope_data, axis=-2)[..., :n_frames/2, :])**2
+    tps = abs(numpy.fft.fft(slope_data, axis=-2)[..., :int(n_frames/2), :])**2
 
     # Find mean across all sub-aps
     tps = (abs(tps)**2)
@@ -52,7 +52,7 @@ def get_tps_time_axis(frame_rate, n_frames):
         ndarray: Time values for temporal power spectra plots
     """
 
-    t_vals = numpy.fft.fftfreq(n_frames, 1./frame_rate)[:n_frames/2.]
+    t_vals = numpy.fft.fftfreq(n_frames, 1./frame_rate)[:int(n_frames/2)]
 
     return t_vals
 

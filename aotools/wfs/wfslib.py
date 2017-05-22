@@ -12,9 +12,9 @@ except:
 
 
 def findActiveSubaps(subaps, mask, threshold, returnFill=False):
-    '''
+    """
     Finds the subapertures which are "seen" be through the
-    pupil function. Returns the coords of those subaps
+    pupil function. Returns the coords of those subapertures
 
     Parameters:
         subaps (int): The number of subaps in x (assumes square)
@@ -24,7 +24,7 @@ def findActiveSubaps(subaps, mask, threshold, returnFill=False):
 
     Returns:
         ndarray: An array of active subap coords
-    '''
+    """
 
     subapCoords = []
     xSpacing = mask.shape[0]/float(subaps)
