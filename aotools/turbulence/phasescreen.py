@@ -9,7 +9,7 @@ try:
 except NameError:
     xrange = range
 
-def ft_sh_phase_screen(r0, N, delta, L0, l0, FFT=None):
+def ft_sh_phase_screen(r0, N, delta, L0, l0, FFT=None, seed=None):
     '''
     Creates a random phase screen with Von Karmen statistics with added
     sub-harmonics to augment tip-tilt modes.
@@ -26,12 +26,13 @@ def ft_sh_phase_screen(r0, N, delta, L0, l0, FFT=None):
         ndarray: numpy array representing phase screen
     '''
     R = random.SystemRandom(time.time())
-    seed = int(R.random()*100000)
+    if seed is None:
+        seed = int(R.random()*100000)
     numpy.random.seed(seed)
 
     D = N*delta
     # high-frequency screen from FFT method
-    phs_hi = ft_phase_screen(r0, N, delta, L0, l0, FFT)
+    phs_hi = ft_phase_screen(r0, N, delta, L0, l0, FFT, seed=seed)
 
     # spatial grid [m]
     coords = numpy.arange(-N/2,N/2)*delta
@@ -101,7 +102,7 @@ def ift2(G, delta_f ,FFT=None):
 
     return g
 
-def ft_phase_screen(r0, N, delta, L0, l0, FFT=None):
+def ft_phase_screen(r0, N, delta, L0, l0, FFT=None, seed=None):
     '''
     Creates a random phase screen with Von Karmen statistics.
     (Schmidt 2010)
@@ -122,7 +123,8 @@ def ft_phase_screen(r0, N, delta, L0, l0, FFT=None):
     l0 = float(l0)
 
     R = random.SystemRandom(time.time())
-    seed = int(R.random()*100000)
+    if seed is None:
+        seed = int(R.random()*100000)
     numpy.random.seed(seed)
 
     del_f = 1./(N*delta)
