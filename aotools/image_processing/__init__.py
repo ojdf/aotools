@@ -1,2 +1,2 @@
 from .centroiders import *
-from .image_processing import *
+from ._image_processing import *

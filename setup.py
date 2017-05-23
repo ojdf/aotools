@@ -12,6 +12,11 @@ setup(
               'aotools.wfs',
               ],
 
+    install_requires=['numpy',
+                      'scipy',
+                      'matplotlib',
+                     ],
+
     description='A set of useful functions for Adaptive Optics in Python',
     long_description=open('README.md').read(),
     version=versioneer.get_version(),
