@@ -10,7 +10,7 @@ def test_zoom():
 
 def test_zoom_with_order():
     image = numpy.random.random((10, 10))
-    zoomed_image = interpolation.zoom(image, (50, 50), order=2)
+    zoomed_image = interpolation.zoom(image, (50, 50), order=5)
     assert zoomed_image.shape == (50, 50)
 
 
