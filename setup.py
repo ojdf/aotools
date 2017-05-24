@@ -7,9 +7,9 @@ import versioneer
 # right place.
 try:
    import pypandoc
-   description = pypandoc.convert('README.md', 'rst')
+   long_description = pypandoc.convert('README.md', 'rst')
 except (IOError, ImportError):
-   description = ''
+   long_description = ''
 
 setup(
     name='aotools',
@@ -28,7 +28,7 @@ setup(
                      ],
 
     description='A set of useful functions for Adaptive Optics in Python',
-    long_description=open('README.md').read(),
+    long_description=long_description,
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass()
 )
