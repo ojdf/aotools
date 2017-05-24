@@ -21,12 +21,6 @@ setup(
               'aotools.turbulence',
               'aotools.wfs',
               ],
-
-    install_requires=['numpy',
-                      'scipy',
-                      'matplotlib',
-                     ],
-
     description='A set of useful functions for Adaptive Optics in Python',
     long_description=long_description,
     version=versioneer.get_version(),
