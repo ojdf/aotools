@@ -13,7 +13,7 @@ def zoom(array, newSize, order=3):
     Parameters:
         array (ndarray): 2-dimensional array to zoom
         newSize (tuple): the new size of the required array
-        order (int, optional): Order of interpolation to use. default is 3
+        order (int, optional): Order of interpolation to use (1, 3, 5). default is 3
 
     Returns:
         ndarray : zoom array of new size.

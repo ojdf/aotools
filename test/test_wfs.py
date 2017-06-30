@@ -2,15 +2,6 @@ from aotools import wfs, circle
 import numpy
 
 
-# def test_computeFillFactor():
-#     mask =
-#     sub_aperture_positions =
-#     sub_aperture_spacing =
-#     wfs.computeFillFactor(mask, sub_aperture_positions, sub_aperture_spacing)
-#
-#     assert
-
-
 def test_findActiveSubaps():
     subapertures = 10
     mask = circle(4, 10)
@@ -33,3 +24,11 @@ def test_make_subaps_2d():
     mask = circle(4, 10)
     sub_apertures_2d = wfs.make_subaps_2d(data, mask)
     assert sub_apertures_2d.shape == (10, 2, 10, 10)
+
+
+def test_computeFillFactor():
+    mask = circle(49, 100)
+    sub_aperture_positions = numpy.array(([[10, 10], [10, 0]]))
+    sub_aperture_spacing = 10
+    fill_factor = wfs.computeFillFactor(mask, sub_aperture_positions, sub_aperture_spacing)
+    assert len(fill_factor) == 2
