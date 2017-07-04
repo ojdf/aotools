@@ -481,4 +481,3 @@ def create_tomographic_covariance_reconstructor(covariance_matrix, n_onaxis_suba
     tomo_recon = cov_onoff.dot(icov_offoff)
 
     return tomo_recon
-kra
