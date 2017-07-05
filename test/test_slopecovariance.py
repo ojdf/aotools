@@ -155,7 +155,7 @@ def test_slopecovmat_makecovmat_multithreaded():
 
 if __name__ == "__main__":
     N = 1
-    threads = 2
+    threads = 20
 
     n_wfs = 6
     telescope_diameter = 8.
@@ -198,6 +198,6 @@ if __name__ == "__main__":
     print("Time for 1 Covariance Matrix: {}s".format(time_taken))
     print("Covariance Matrics per second: {} cps".format(covmat_per_sec))
 
-    from matplotlib import pyplot
-    pyplot.imshow(cov_mat.covariance_matrix)
-    pyplot.show()
+    # from matplotlib import pyplot
+    # pyplot.imshow(cov_mat.covariance_matrix)
+    # pyplot.show()
