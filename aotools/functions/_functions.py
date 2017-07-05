@@ -1,4 +1,5 @@
 import numpy
+from . import pupil
 
 
 def gaussian2d(size, width, amplitude=1., cent=None):
@@ -7,31 +8,31 @@ def gaussian2d(size, width, amplitude=1., cent=None):
 
 
     Args:
-        size (tuple, float): Dimensions of Array to place gaussian
+        size (tuple, float): Dimensions of Array to place gaussian (y, x)
         width (tuple, float): Width of distribution.
-                                Accepts tuple for x and y values.
+                                Accepts tuple for x and y values in order (y, x).
         amplitude (float): Amplitude of guassian distribution
-        cent (tuple): Centre of distribution on grid.
+        cent (tuple): Centre of distribution on grid in order (y, x).
     '''
 
     try:
-        xSize = size[0]
-        ySize = size[1]
+        ySize = size[0]
+        xSize = size[1]
     except (TypeError, IndexError):
         xSize = ySize = size
 
     try:
-        xWidth = float(width[0])
-        yWidth = float(width[1])
+        yWidth = float(width[0])
+        xWidth = float(width[1])
     except (TypeError, IndexError):
         xWidth = yWidth = float(width)
 
     if not cent:
-        xCent = size[0] / 2.
-        yCent = size[1] / 2.
+        xCent = xSize/2.
+        yCent = ySize/2.
     else:
-        xCent = cent[0]
-        yCent = cent[1]
+        yCent = cent[0]
+        xCent = cent[1]
 
     X, Y = numpy.meshgrid(range(0, xSize), range(0, ySize))
 
@@ -55,7 +56,7 @@ def aziAvg(data):
     size = data.shape[0]
     avg = numpy.empty(size / 2, dtype="float")
     for i in range(size / 2):
-        ring = circle(i + 1, size) - circle(i, size)
+        ring = pupil.circle(i + 1, size) - pupil.circle(i, size)
         avg[i] = (ring * data).sum() / (ring.sum())
 
     return avg
