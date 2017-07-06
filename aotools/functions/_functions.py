@@ -54,8 +54,8 @@ def aziAvg(data):
     """
 
     size = data.shape[0]
-    avg = numpy.empty(size / 2, dtype="float")
-    for i in range(size / 2):
+    avg = numpy.empty(int(size / 2), dtype="float")
+    for i in range(int(size / 2)):
         ring = pupil.circle(i + 1, size) - pupil.circle(i, size)
         avg[i] = (ring * data).sum() / (ring.sum())
 
