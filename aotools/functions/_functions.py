@@ -106,7 +106,7 @@ def encircledEnergy(data,
     rad = numpy.append(0, rad)
     ee = numpy.append(0, ee)
     ee /= numpy.sum(data)
-    xi = numpy.linspace(0, dim / 2, int(2 * dim))
+    xi = numpy.linspace(0, dim, int(2 * dim))
     yi = numpy.interp(xi, rad, ee)
 
     if eeDiameter is False:
