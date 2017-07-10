@@ -201,3 +201,19 @@ if __name__ == "__main__":
     # from matplotlib import pyplot
     # pyplot.imshow(cov_mat.covariance_matrix)
     # pyplot.show()
+
+
+def test_structure_function_kolmogorov():
+    seps = numpy.arange(0, 10, 0.1)
+    r0 = 0.16
+    sf = aotools.structure_function_kolmogorov(seps, r0)
+
+    assert len(sf) == len(seps)
+    assert all(numpy.isnan(sf)) is False
+
+
+def test_calculate_structure_function():
+    phase = numpy.random.randn(32, 32)
+    sf = aotools.calculate_structure_function(phase)
+    assert all(numpy.isnan(sf)) is False
+    assert len(sf) == int(phase.shape[1] / 4)
