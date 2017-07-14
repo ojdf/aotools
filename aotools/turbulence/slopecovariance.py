@@ -415,6 +415,53 @@ def structure_function_vk(seperation, r0, L0):
 
     return D_vk
 
+
+def structure_function_kolmogorov(separation, r0):
+    '''
+        Compute the Kolmogorov phase structure function
+
+        Parameters:
+            separation (ndarray, float): float or array of data representing
+                separations between points
+            r0 (float): Fried parameter for atmosphere
+
+        Returns:
+            ndarray, float: Structure function for separation(s)
+    '''
+    return 6.88 * (separation / r0)**(5. / 3.)
+
+
+def calculate_structure_function(phase, nbOfPoint=None, step=None):
+    '''
+        Compute the structure function of an 2D array, along the first
+         dimension.
+        SF defined as sf[j]= < (phase - phase_shifted_by_j)^2 >
+        Translated from a YAO function.
+
+        Parameters:
+            phase (ndarray, 2d): 2d-array
+            nbOfPoint (int): final size of the structure function vector
+                Default is phase.shape[1] / 4
+            step (int): step in pixel when computing the sf.
+                (step * sampling_phase) gives the sf sampling in meters.
+                Default is 1
+
+        Returns:
+            ndarray, float: values for the structure function of the data.
+    '''
+    if nbOfPoint is None:
+        nbOfPoint = phase.shape[1] / 4
+    if step is None:
+        step = 1
+    step = int(step)
+    xm = int(numpy.min([nbOfPoint, phase.shape[1] / step - 1]))
+    sf_x = numpy.empty(xm)
+    for i in range(step, xm * step, step):
+        sf_x[int(i / step)] = numpy.mean((phase[0:-i, :] - phase[i:, :])**2)
+
+    return sf_x
+
+
 def mirror_covariance_matrix(cov_mat, n_subaps):
     """
     Mirrors a covariance matrix around the axis of the diagonal.
