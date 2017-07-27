@@ -86,7 +86,8 @@ def encircledEnergy(data,
 
     """
     dim = data.shape[0] // 2
-    center = [dim, dim]
+    if center is None:
+        center = [dim, dim]
     xc = center[0]
     yc = center[1]
     e = 1.9
@@ -97,8 +98,7 @@ def encircledEnergy(data,
     for i in range(npt):
         pup = pupil.circle(rad[i],
                            int(dim) * 2,
-                           circle_centre=(xc + 0.5,
-                                          yc + 0.5),
+                           circle_centre=(xc, yc),
                            origin='corner')
         rad[i] = numpy.sqrt(numpy.sum(pup) * 4 / numpy.pi)  # diameter
         ee[i] = numpy.sum(pup * data)
@@ -106,7 +106,7 @@ def encircledEnergy(data,
     rad = numpy.append(0, rad)
     ee = numpy.append(0, ee)
     ee /= numpy.sum(data)
-    xi = numpy.linspace(0, dim, int(2 * dim))
+    xi = numpy.linspace(0, dim, int(4 * dim))
     yi = numpy.interp(xi, rad, ee)
 
     if eeDiameter is False:
