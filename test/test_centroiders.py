@@ -1,5 +1,6 @@
 from aotools import image_processing
 import numpy
+from nose.tools import raises
 
 
 def test_centreOfGravity_single():
@@ -44,22 +45,30 @@ def test_quadCell_many():
 def test_convolution():
     im = numpy.random.random((10, 10))
     ref = numpy.random.random((10, 10))
-    corr = image_processing.corrConvolve(im, ref)
+    corr = image_processing.cross_correlate(im, ref)
     assert(corr.shape == im.shape)
 
 
 def test_correlation_single():
     im = numpy.random.random((10, 10))
     ref = numpy.random.random((10, 10))
-    com = image_processing.correlation(im, ref, 0.3)
+    com = image_processing.correlation_centroid(im, ref, 0.3)
     assert(com.shape[0] == 2)
 
 
 def test_correlation_many():
     im = numpy.random.random((5, 10, 10))
     ref = numpy.random.random((10, 10))
-    com = image_processing.correlation(im, ref, 0.3)
+    com = image_processing.correlation_centroid(im, ref, 0.3)
     assert (com.shape[0] == 2)
     assert(com.shape[1] == 5)
+
+
+@raises(ValueError)
+def test_correlation_error():
+    im = numpy.random.random((10))
+    ref = numpy.random.random((10, 10))
+    com = image_processing.correlation_centroid(im, ref, threshold=0.3)
+
 
 

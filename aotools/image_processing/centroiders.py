@@ -1,10 +1,50 @@
 import numpy
 
+
+def correlation_centroid(im, ref, threshold):
+    '''
+    Correlation Centroider, currently only works for 3d im shape.
+    Performs a simple thresholded COM on the correlation.
+
+    Args:
+        im: sub-aperture images (t, y, x)
+        ref: reference image (y, x)
+        threshold: fractional threshold for COM (0=all pixels, 1=brightest pixel)
+    Returns:
+        ndarray: centroids of im, given as x, y
+    '''
+    if len(im.shape) == 3:
+        nt, ny, nx = im.shape
+        # Remove min from each sub-ap to increase contrast
+        im = (im.T - im.min((1, 2))).T
+    elif len(im.shape) == 2:
+        ny, nx = im.shape
+        nt = 1
+        im -= im.min()
+        im.shape = (1, ny, nx)
+    else:
+        raise ValueError("Incorrect number of dimensions in image array")
+
+    ref -= ref.min()
+
+    centroids = numpy.zeros((2, nt))
+    for frame in range(nt):
+        # Correlate frame with reference image
+        corr = cross_correlate(im[frame], ref)
+
+        cx, cy = centreOfGravity(corr, threshold=threshold)
+
+        centroids[:, frame] = cx, cy
+
+    return centroids
+
+
 def centreOfGravity(img, threshold=0, **kwargs):
     '''
     Centroids an image, or an array of images.
     Centroids over the last 2 dimensions.
     Sets all values under "threshold*max_value" to zero before centroiding
+    Origin at 0,0 index of img.
 
     Parameters:
         img (ndarray): ([n, ]y, x) 2d or greater rank array of imgs to centroid
@@ -71,8 +111,8 @@ def brightestPxl(img, threshold, **kwargs):
     return centreOfGravity(img)
 
 
-def corrConvolve(x, y):
-    '''
+def cross_correlate(x, y):
+    """
     2D convolution using FFT, use to generate cross-correlations.
 
     Args:
@@ -80,74 +120,14 @@ def corrConvolve(x, y):
         y (array): reference image
     Returns:
         ndarray: cross-correlation of x and y
-    '''
+    """
+    reference_image = numpy.conjugate(numpy.fft.fft2(y))
 
-    fr = numpy.fft.fft2(x)
-    fr2 = numpy.fft.fft2(y[::-1, ::-1])
-    m, n = fr.shape
+    frame = numpy.fft.fft2(x)
+    cross_correlation = frame * reference_image
+    cross_correlation = numpy.fft.fftshift(numpy.abs(numpy.fft.ifft2(cross_correlation)))
 
-    cc = (numpy.fft.ifft2(fr*fr2)).real
-    cc = numpy.roll(cc, int(-m/2+1), axis=0)
-    cc = numpy.roll(cc, int(-n/2+1), axis=1)
-
-    return cc
-
-
-def correlation(im, ref, threshold):
-    '''
-    Correlation Centroider, currently only works for 3d im shape.
-    Performs a simple thresholded COM on the correlation.
-
-    Args:
-        im: sub-aperture images (t, y, x)
-        ref: reference image (y, x)
-        threshold: fractional threshold for COM (0=all pixels, 1=brightest pixel)
-    Returns:
-        ndarray: centroids of im, given as x, y
-    '''
-    if len(im.shape) == 3:
-        nt, ny, nx = im.shape
-        # Remove min from each sub-ap to increase contrast
-        im = (im.T - im.min((1, 2))).T
-    elif len(im.shape) == 2:
-        ny, nx = im.shape
-        nt = 1
-        im -= im.min()
-        im.shape = (1, ny, nx)
-
-    ref -= ref.min()
-
-    cents = numpy.zeros((2, nt))
-    for frame in range(nt):
-        # Correlate frame with reference image
-        corr = corrConvolve(im[frame], ref)
-
-        # Find brightest pixel.
-        index_y, index_x = numpy.unravel_index(
-                corr.argmax(), corr.shape)
-
-        # Apply threshold
-        corr -= corr.min()
-        mx = corr.max()
-        bg = threshold*mx
-        corr = numpy.clip(corr, bg, mx) - bg
-
-        # Centroid
-        s_y, s_x = corr.shape
-        XRAMP = numpy.arange(s_x)
-        YRAMP = numpy.arange(s_y)
-        XRAMP.shape = (1, s_x)
-        YRAMP.shape = (s_y,  1)
-
-        si = corr.sum()
-        if si == 0:
-            si = 1
-        cx = (corr * XRAMP).sum() / si
-        cy = (corr * YRAMP).sum() / si
-
-        cents[:, frame] = cy, cx
-
-    return cents
+    return cross_correlation
 
 
 def quadCell(img, **kwargs):
