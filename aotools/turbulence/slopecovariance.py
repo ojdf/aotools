@@ -184,7 +184,7 @@ class CovarianceMatrix(object):
                     self.covariance_matrix[
                             cov_mat_coord_x1: cov_mat_coord_x2,
                             cov_mat_coord_y1 + self.n_subaps[wfs_j]: cov_mat_coord_y2 + self.n_subaps[wfs_j]
-                            ] += cov_xy.T * r0_scale
+                            ] += numpy.fliplr(numpy.flipud(cov_xy)) * r0_scale
                     self.covariance_matrix[
                             cov_mat_coord_x1 + self.n_subaps[wfs_i]: cov_mat_coord_x2 + self.n_subaps[wfs_i],
                             cov_mat_coord_y1 + self.n_subaps[wfs_j]: cov_mat_coord_y2 + self.n_subaps[wfs_j]
@@ -239,7 +239,7 @@ class CovarianceMatrix(object):
                     self.covariance_matrix[
                             cov_mat_coord_x1: cov_mat_coord_x2,
                             cov_mat_coord_y1 + self.n_subaps[wfs_j]: cov_mat_coord_y2 + self.n_subaps[wfs_j]
-                            ] += cov_xy.T * r0_scale
+                            ] += numpy.fliplr(numpy.flipud(cov_xy)) * r0_scale
                     self.covariance_matrix[
                             cov_mat_coord_x1 + self.n_subaps[wfs_i]: cov_mat_coord_x2 + self.n_subaps[wfs_i],
                             cov_mat_coord_y1 + self.n_subaps[wfs_j]: cov_mat_coord_y2 + self.n_subaps[wfs_j]
@@ -488,7 +488,7 @@ def mirror_covariance_matrix(cov_mat, n_subaps):
                 mm2 = mm1 + 2 * n_subaps[m]
 
                 cov_mat[nn1: nn2, mm1: mm2] = (
-                    numpy.swapaxes(cov_mat[n1: n2, m1: m2], 1, 0)
+                    numpy.flipud(numpy.fliplr(cov_mat[n1: n2, m1: m2]))
                 )
 
                 m1 += 2 * n_subaps[m]
