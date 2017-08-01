@@ -2,7 +2,7 @@ import numpy
 
 
 def correlation_centroid(im, ref, threshold):
-    '''
+    """
     Correlation Centroider, currently only works for 3d im shape.
     Performs a simple thresholded COM on the correlation.
 
@@ -11,8 +11,8 @@ def correlation_centroid(im, ref, threshold):
         ref: reference image (y, x)
         threshold: fractional threshold for COM (0=all pixels, 1=brightest pixel)
     Returns:
-        ndarray: centroids of im, given as x, y
-    '''
+        ndarray: centroids of im (2, t), given in order x, y
+    """
     if len(im.shape) == 3:
         nt, ny, nx = im.shape
         # Remove min from each sub-ap to increase contrast
