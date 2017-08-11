@@ -139,7 +139,7 @@ class CovarianceMatrix(object):
 
             self._make_covariance_matrix_mp(self.threads)
 
-        self.covariance_matrix = mirror_covariance_matrix(self.covariance_matrix, self.n_subaps)
+        self.covariance_matrix = mirror_covariance_matrix(self.covariance_matrix)
 
         return self.covariance_matrix
 
