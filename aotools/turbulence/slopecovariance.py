@@ -462,7 +462,7 @@ def calculate_structure_function(phase, nbOfPoint=None, step=None):
     return sf_x
 
 
-def mirror_covariance_matrix(cov_mat, n_subaps):
+def mirror_covariance_matrix(cov_mat):
     """
     Mirrors a covariance matrix around the axis of the diagonal.
 
@@ -470,30 +470,8 @@ def mirror_covariance_matrix(cov_mat, n_subaps):
         cov_mat (ndarray): The covariance matrix to mirror
         n_subaps (ndarray): Number of sub-aperture in each WFS
     """
-    total_slopes = cov_mat.shape[0]
-    n_wfs = n_subaps.shape[0]
 
-    n1 = 0
-    for n in range(n_wfs):
-        m1 = 0
-        for m in range(n + 1):
-            if n != m:
-                n2 = n1 + 2 * n_subaps[n]
-                m2 = m1 + 2 * n_subaps[m]
-
-                nn1 = total_slopes - 2 * n_subaps[n] - n1
-                nn2 = nn1 + 2 * n_subaps[n]
-
-                mm1 = total_slopes - 2 * n_subaps[m] - m1
-                mm2 = mm1 + 2 * n_subaps[m]
-
-                cov_mat[nn1: nn2, mm1: mm2] = (
-                    numpy.flipud(numpy.fliplr(cov_mat[n1: n2, m1: m2]))
-                )
-
-                m1 += 2 * n_subaps[m]
-        n1 += 2 * n_subaps[n]
-    return cov_mat
+    return numpy.bitwise_or(cov_mat.view("int32"), cov_mat.T.view("int32")).view("float32")
 
 def create_tomographic_covariance_reconstructor(covariance_matrix, n_onaxis_subaps, svd_conditioning=0):
     """
