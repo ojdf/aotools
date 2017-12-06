@@ -55,7 +55,6 @@ def zernike_nm(n, m, N):
      Returns:
         ndarray: The Zernike mode
      """
-    # coords = numpy.linspace(-1.1, 1.1, N)
     coords = (numpy.arange(N) - N / 2. + 0.5) / (N / 2.)
     X, Y = numpy.meshgrid(coords, coords)
     R = numpy.sqrt(X**2 + Y**2)
