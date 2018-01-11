@@ -55,8 +55,8 @@ def zernike_nm(n, m, N):
      Returns:
         ndarray: The Zernike mode
      """
-    coords = numpy.linspace(-1, 1, N)
-    X,Y = numpy.meshgrid(coords, coords)
+    coords = (numpy.arange(N) - N / 2. + 0.5) / (N / 2.)
+    X, Y = numpy.meshgrid(coords, coords)
     R = numpy.sqrt(X**2 + Y**2)
     theta = numpy.arctan2(Y, X)
 
@@ -89,10 +89,14 @@ def zernikeRadialFunc(n, m, r):
     """
 
     R = numpy.zeros(r.shape)
-    for i in xrange(0,int((n-m)/2)+1):
+    for i in xrange(0, int((n - m) / 2) + 1):
 
-        R += r**(n-2*i) * (((-1)**(i))*numpy.math.factorial(n-i)) / ( numpy.math.factorial(i) * numpy.math.factorial(0.5*(n+m)-i) * numpy.math.factorial(0.5*(n-m)-i) )
-
+        R += numpy.array(r**(n - 2 * i) * (((-1)**(i)) *
+                         numpy.math.factorial(n - i)) /
+                         (numpy.math.factorial(i) *
+                          numpy.math.factorial(0.5 * (n + m) - i) *
+                          numpy.math.factorial(0.5 * (n - m) - i)),
+                         dtype='float')
     return R
 
 

@@ -52,6 +52,7 @@ def test_slopecovmat_makecovmat():
     asterism_radius = 10
 
     subap_diameters = [telescope_diameter / nx_subaps] * n_wfs
+
     pupil_masks = [aotools.circle(nx_subaps / 2., nx_subaps)] * n_wfs
     gs_altitudes = [90000] * n_wfs
     gs_positions = [
@@ -72,6 +73,41 @@ def test_slopecovmat_makecovmat():
 
     covariance_matrix = cov_mat.make_covariance_matrix()
 
+
+def test_slopecovmat_makecovmat_uneven():
+    threads = 1
+
+    n_wfs = 3
+    telescope_diameter = 8.
+    nx_subaps = 10
+
+    n_layers = 3
+    layer_altitudes = numpy.linspace(0, 20000, n_layers)
+    layer_r0s = [1] * n_layers
+    layer_L0s = [25.] * n_layers
+
+    asterism_radius = 10
+    # What if all WFSs don't have the same number of subaps?
+    pupil_masks = [aotools.circle(4.5, nx_subaps), aotools.circle(nx_subaps / 2., nx_subaps), aotools.circle(nx_subaps / 2., nx_subaps)]
+    subap_diameters = [telescope_diameter / nx_subaps] * n_wfs
+    gs_altitudes = [90000] * n_wfs
+    gs_positions = [
+        [asterism_radius, 0],
+        [numpy.sin(numpy.pi / 3.) * asterism_radius, numpy.cos(numpy.pi / 3.) * asterism_radius],
+        [numpy.sin(numpy.pi / 3.) * asterism_radius, -numpy.cos(numpy.pi / 3.) * asterism_radius],
+        [-numpy.sin(numpy.pi / 3.) * asterism_radius, numpy.cos(numpy.pi / 3.) * asterism_radius],
+        [-numpy.sin(numpy.pi / 3.) * asterism_radius, -numpy.cos(numpy.pi / 3.) * asterism_radius],
+        [-asterism_radius, 0]]
+    wfs_magnifications = [1.] * n_wfs
+    pupil_offsets = [[0, 0]] * n_wfs
+    wfs_rotations = [0] * n_wfs
+    wfs_wavelengths = [550e-9] * n_wfs
+
+    cov_mat = aotools.CovarianceMatrix(n_wfs, pupil_masks, telescope_diameter, subap_diameters, gs_altitudes, gs_positions,
+                                    wfs_wavelengths,
+                                    n_layers, layer_altitudes, layer_r0s, layer_L0s, threads)
+
+    covariance_matrix = cov_mat.make_covariance_matrix()
 
 def test_covtomorecon():
     threads = 1
@@ -155,7 +191,7 @@ def test_slopecovmat_makecovmat_multithreaded():
 
 if __name__ == "__main__":
     N = 1
-    threads = 2
+    threads = 20
 
     n_wfs = 6
     telescope_diameter = 8.
@@ -198,6 +234,22 @@ if __name__ == "__main__":
     print("Time for 1 Covariance Matrix: {}s".format(time_taken))
     print("Covariance Matrics per second: {} cps".format(covmat_per_sec))
 
-    from matplotlib import pyplot
-    pyplot.imshow(cov_mat.covariance_matrix)
-    pyplot.show()
+    # from matplotlib import pyplot
+    # pyplot.imshow(cov_mat.covariance_matrix)
+    # pyplot.show()
+
+
+def test_structure_function_kolmogorov():
+    seps = numpy.arange(0, 10, 0.1)
+    r0 = 0.16
+    sf = aotools.structure_function_kolmogorov(seps, r0)
+
+    assert len(sf) == len(seps)
+    assert all(numpy.isnan(sf)) is False
+
+
+def test_calculate_structure_function():
+    phase = numpy.random.randn(32, 32)
+    sf = aotools.calculate_structure_function(phase)
+    assert all(numpy.isnan(sf)) is False
+    assert len(sf) == int(phase.shape[1] / 4)

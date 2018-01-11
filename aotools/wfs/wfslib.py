@@ -54,6 +54,18 @@ def findActiveSubaps(subaps, mask, threshold, returnFill=False):
 
 
 def computeFillFactor(mask, subapPos, subapSpacing):
+    """
+    Calculate the fill factor of a set of sub-aperture co-ordinates with a given
+    pupil mask.
+
+    Parameters:
+        mask (ndarray): Pupil mask
+        subapPos (ndarray): Set of n sub-aperture co-ordinates (n, 2)
+        subapSpacing: Number of mask pixels between sub-apertures
+
+    Returns:
+        list: fill factor of sub-apertures
+    """
 
     fills = numpy.zeros(len(subapPos))
     for i, (x, y) in enumerate(subapPos):

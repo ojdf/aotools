@@ -139,7 +139,7 @@ class CovarianceMatrix(object):
 
             self._make_covariance_matrix_mp(self.threads)
 
-        self.covariance_matrix = mirror_covariance_matrix(self.covariance_matrix, self.n_subaps)
+        self.covariance_matrix = mirror_covariance_matrix(self.covariance_matrix)
 
         return self.covariance_matrix
 
@@ -184,7 +184,7 @@ class CovarianceMatrix(object):
                     self.covariance_matrix[
                             cov_mat_coord_x1: cov_mat_coord_x2,
                             cov_mat_coord_y1 + self.n_subaps[wfs_j]: cov_mat_coord_y2 + self.n_subaps[wfs_j]
-                            ] += cov_xy.T * r0_scale
+                            ] += numpy.fliplr(numpy.flipud(cov_xy)) * r0_scale
                     self.covariance_matrix[
                             cov_mat_coord_x1 + self.n_subaps[wfs_i]: cov_mat_coord_x2 + self.n_subaps[wfs_i],
                             cov_mat_coord_y1 + self.n_subaps[wfs_j]: cov_mat_coord_y2 + self.n_subaps[wfs_j]
@@ -239,7 +239,7 @@ class CovarianceMatrix(object):
                     self.covariance_matrix[
                             cov_mat_coord_x1: cov_mat_coord_x2,
                             cov_mat_coord_y1 + self.n_subaps[wfs_j]: cov_mat_coord_y2 + self.n_subaps[wfs_j]
-                            ] += cov_xy.T * r0_scale
+                            ] += numpy.fliplr(numpy.flipud(cov_xy)) * r0_scale
                     self.covariance_matrix[
                             cov_mat_coord_x1 + self.n_subaps[wfs_i]: cov_mat_coord_x2 + self.n_subaps[wfs_i],
                             cov_mat_coord_y1 + self.n_subaps[wfs_j]: cov_mat_coord_y2 + self.n_subaps[wfs_j]
@@ -415,7 +415,54 @@ def structure_function_vk(seperation, r0, L0):
 
     return D_vk
 
-def mirror_covariance_matrix(cov_mat, n_subaps):
+
+def structure_function_kolmogorov(separation, r0):
+    '''
+        Compute the Kolmogorov phase structure function
+
+        Parameters:
+            separation (ndarray, float): float or array of data representing
+                separations between points
+            r0 (float): Fried parameter for atmosphere
+
+        Returns:
+            ndarray, float: Structure function for separation(s)
+    '''
+    return 6.88 * (separation / r0)**(5. / 3.)
+
+
+def calculate_structure_function(phase, nbOfPoint=None, step=None):
+    '''
+        Compute the structure function of an 2D array, along the first
+         dimension.
+        SF defined as sf[j]= < (phase - phase_shifted_by_j)^2 >
+        Translated from a YAO function.
+
+        Parameters:
+            phase (ndarray, 2d): 2d-array
+            nbOfPoint (int): final size of the structure function vector
+                Default is phase.shape[1] / 4
+            step (int): step in pixel when computing the sf.
+                (step * sampling_phase) gives the sf sampling in meters.
+                Default is 1
+
+        Returns:
+            ndarray, float: values for the structure function of the data.
+    '''
+    if nbOfPoint is None:
+        nbOfPoint = phase.shape[1] / 4
+    if step is None:
+        step = 1
+    step = int(step)
+    xm = int(numpy.min([nbOfPoint, phase.shape[1] / step - 1]))
+    sf_x = numpy.empty(xm)
+    for i in range(step, xm * step, step):
+        sf_x[int(i / step)] = numpy.mean((phase[0:-i, :] - phase[i:, :])**2)
+
+    return sf_x
+
+
+def mirror_covariance_matrix(cov_mat):
     """
     Mirrors a covariance matrix around the axis of the diagonal.
 
@@ -423,30 +470,8 @@ def mirror_covariance_matrix(cov_mat, n_subaps):
         cov_mat (ndarray): The covariance matrix to mirror
         n_subaps (ndarray): Number of sub-aperture in each WFS
     """
-    total_slopes = cov_mat.shape[0]
-    n_wfs = n_subaps.shape[0]
 
-    n1 = 0
-    for n in range(n_wfs):
-        m1 = 0
-        for m in range(n + 1):
-            if n != m:
-                n2 = n1 + 2 * n_subaps[n]
-                m2 = m1 + 2 * n_subaps[m]
-
-                nn1 = total_slopes - 2 * n_subaps[n] - n1
-                nn2 = nn1 + 2 * n_subaps[n]
-
-                mm1 = total_slopes - 2 * n_subaps[m] - m1
-                mm2 = mm1 + 2 * n_subaps[m]
-
-                cov_mat[nn1: nn2, mm1: mm2] = (
-                    numpy.swapaxes(cov_mat[n1: n2, m1: m2], 1, 0)
-                )
-
-                m1 += 2 * n_subaps[m]
-        n1 += 2 * n_subaps[n]
-    return cov_mat
+    return numpy.bitwise_or(cov_mat.view("int32"), cov_mat.T.view("int32")).view("float32")
 
 def create_tomographic_covariance_reconstructor(covariance_matrix, n_onaxis_subaps, svd_conditioning=0):
     """
@@ -481,53 +506,3 @@ def create_tomographic_covariance_reconstructor(covariance_matrix, n_onaxis_suba
     tomo_recon = cov_onoff.dot(icov_offoff)
 
     return tomo_recon
-
-if __name__ == "__main__":
-
-    N = 1
-    threads = 20
-
-    n_wfs = 6
-    telescope_diameter = 4.2
-    nx_subaps = 10
-
-    n_layers = 3
-    layer_altitudes = numpy.linspace(0, 20000, 35)
-    layer_r0s = [1] * n_layers
-    layer_L0s = [25.] * n_layers
-
-    asterism_radius = 60
-    
-    subap_diameters = [telescope_diameter / nx_subaps] * n_wfs
-    pupil_masks = [circle(nx_subaps/2., nx_subaps)] * n_wfs
-    gs_altitudes = [90000] * n_wfs
-    gs_positions = [
-            [asterism_radius, 0], 
-            [numpy.sin(numpy.pi/3.) * asterism_radius, numpy.cos(numpy.pi/3.) * asterism_radius], 
-            [numpy.sin(numpy.pi/3.) * asterism_radius, -numpy.cos(numpy.pi/3.) * asterism_radius],
-            [-numpy.sin(numpy.pi/3.) * asterism_radius, numpy.cos(numpy.pi/3.) * asterism_radius], 
-            [-numpy.sin(numpy.pi/3.) * asterism_radius, -numpy.cos(numpy.pi/3.) * asterism_radius], 
-            [-asterism_radius, 0]]
-    wfs_magnifications = [1.] * n_wfs
-    pupil_offsets = [[0, 0]] * n_wfs
-    wfs_rotations = [0] * n_wfs
-    wfs_wavelengths = [550e-9] * n_wfs
-
-    t1 = time.time()
-    for i in range(N):
-        print("\nIteration {}".format(i))
-        cov_mat = CovarianceMatrix(n_wfs, pupil_masks, telescope_diameter, subap_diameters, gs_altitudes, gs_positions, wfs_wavelengths,
-        n_layers, layer_altitudes, layer_r0s, layer_L0s, wfs_magnifications, pupil_offsets, wfs_rotations, threads)
-        cov_mat.make_covariance_matrix()
-
-    t2 = time.time()
-
-    time_taken = (t2 - t1)/N
-    covmat_per_sec = 1./time_taken
-    print("Time for 1 Covariance Matrix: {}s".format(time_taken))
-    print("Covariance Matrics per second: {} cps".format(covmat_per_sec))
-
-
-    # from matplotlib import pyplot
-    # pyplot.imshow(cov_mat.covariance_matrix)
-    # pyplot.show()

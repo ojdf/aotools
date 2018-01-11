@@ -20,6 +20,9 @@ def test_zenikeRadialFunc():
     r = numpy.sqrt(x ** 2 + y ** 2)
 
     radial_function = functions.zernikeRadialFunc(5, 3, r)
+    # test no casting error for high order modes
+    _ = functions.zernikeRadialFunc(21, 1, r)
+    _ = functions.zernikeRadialFunc(50, 16, r)
     assert(radial_function.shape == (32, 32))
 
 
