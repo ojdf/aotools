@@ -1,4 +1,7 @@
 """
+Temporal Power Spectra
+----------------------
+
 Turbulence gradient temporal power spectra calculation and plotting
 
 :author: Andrew Reeves

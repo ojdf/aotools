@@ -12,13 +12,13 @@ Contents:
    :maxdepth: 2
 
    introduction
-   phasescreen
-   slope_analysis
+   turbulence
    centroiders
    fft
    wfs
    zernike
    opticalpropagation
+   image_processing
    astronomy
 
 Indices and tables
