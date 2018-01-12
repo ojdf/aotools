@@ -21,12 +21,23 @@ def test_r0_to_seeing():
 
 
 def test_conversion_consistency():
+    """
+    Test internal consistency of conversion by comparing with intermediate steps
+    """
     cn2 = 5e-13
     r0 = atmos_conversions.cn2_to_r0(cn2)
     seeing_1 = atmos_conversions.r0_to_seeing(r0)
     seeing_2 = atmos_conversions.cn2_to_seeing(cn2)
     assert seeing_1 == seeing_2
 
+def test_conversion_consistency_inverse():
+    """
+    Test that the conversions invert correctly
+    """
+    seeing1 = 1.0
+    cn2 = atmos_conversions.seeing_to_cn2(seeing1)
+    seeing2 = atmos_conversions.cn2_to_seeing(cn2)
+    assert seeing1 == seeing2
 
 def test_coherenceTime():
     cn2 = numpy.array((5e-13, 1e-14))
