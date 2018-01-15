@@ -34,6 +34,3 @@ Alternatively, to install the tools to your system python distribution from sour
     python setup.py install
 
 (which may require admin or root privileges) from the `aotools` directory.
-
-This package includes contributions from [Urban Bitenc](https://www.dur.ac.uk/physics/staff/profiles/?id=11418) and
-[James Osborn](https://www.dur.ac.uk/physics/staff/profiles/?id=11091)at the CfAI, Durham University.
