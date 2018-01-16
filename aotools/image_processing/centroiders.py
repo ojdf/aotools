@@ -1,3 +1,11 @@
+"""
+Centroiders
+-----------
+
+Functions for centroiding images.
+
+"""
+
 import numpy
 
 

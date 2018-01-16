@@ -44,6 +44,7 @@ def photons_per_mag(mag, mask, pixel_scale, wvlBand, exposure_time):
 
     return photons
 
+
 def photons_per_band(mag, mask, pxlScale, expTime, waveband='V'):
         '''
         Calculates the photon flux for a given aperture, star magnitude and wavelength band
@@ -67,6 +68,8 @@ def photons_per_band(mag, mask, pxlScale, expTime, waveband='V'):
 
         # Total photons
         photons = flux_photons * expTime * area
+
+        photons = float(photons)
 
         return photons
 

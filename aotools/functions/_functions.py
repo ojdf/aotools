@@ -1,5 +1,6 @@
 import numpy
 from . import pupil
+import warnings
 
 
 def gaussian2d(size, width, amplitude=1., cent=None):
@@ -52,6 +53,8 @@ def aziAvg(data):
     Returns:
         ndarray: A 1-d vector of the azimuthal average
     """
+    warnings.warn("This function will be removed in version 0.5, instead use aotools.image_processing.azimuthal_average",
+                  DeprecationWarning)
 
     size = data.shape[0]
     avg = numpy.empty(int(size / 2), dtype="float")
@@ -85,6 +88,10 @@ def encircledEnergy(data,
             2 vectors: diameters and encircled energies
 
     """
+    warnings.warn(
+        "This function will be removed in version 0.5, instead use aotools.image_processing.encircled_energy",
+        DeprecationWarning)
+
     dim = data.shape[0] // 2
     if center is None:
         center = [dim, dim]
