@@ -1,9 +1,12 @@
-Image Processing Routines
-=========================
+Image Processing
+================
 
-.. automodule:: aotools.image_processing
+.. automodule:: aotools.image_processing.centroiders
     :members:
-    :imported-members:
     :undoc-members:
-    :exclude-members: numpy
+    :show-inheritance:
+
+.. automodule:: aotools.image_processing.contrast
+    :members:
+    :undoc-members:
     :show-inheritance:

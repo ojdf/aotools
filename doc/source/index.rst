@@ -13,12 +13,11 @@ Contents:
 
    introduction
    turbulence
-   centroiders
+   image_processing
+   zernike
    fft
    wfs
-   zernike
    opticalpropagation
-   image_processing
    astronomy
 
 Indices and tables
