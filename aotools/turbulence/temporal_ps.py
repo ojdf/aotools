@@ -116,13 +116,3 @@ def fit_tps(tps, t_axis, D, V_guess=10, f_noise_guess=20, A_guess=9, tps_err=Non
             method="COBYLA")
 
     print(opt_result)
-
-
-if __name__ == "__main__":
-
-    from astropy.io import fits
-
-    data = fits.getdata("t0_5ms_canary_slopes.fits")
-
-    tps, tps_err, t_data = plot_tps(data, 150)
-    fit_tps(tps[0], t_data, D=4.2/7, V_guess=20, f_noise_guess=50, A_guess=9, tps_err=tps_err[0], plot=True)
