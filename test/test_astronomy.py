@@ -21,3 +21,8 @@ def test_magnitude_to_flux_and_flux_to_magnitude():
     flux = astronomy.magnitude_to_flux(5.56, 'V')
     magnitude = astronomy.flux_to_magnitude(flux, 'V')
     assert magnitude == 5.56
+
+
+def test_photons_per_band():
+    photons = astronomy.photons_per_band(5.56, circle(2, 5), 0.5, 0.001)
+    assert type(photons) == float
