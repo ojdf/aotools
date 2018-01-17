@@ -6,6 +6,10 @@ Functions for analysing PSFs.
 
 """
 
+import numpy
+from .. import functions
+
+
 def azimuthal_average(data):
     """
     Measure the azimuthal average of a 2d array
