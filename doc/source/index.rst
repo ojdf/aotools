@@ -15,10 +15,12 @@ Contents:
    turbulence
    image_processing
    zernike
-   fft
+   pupil
    wfs
    opticalpropagation
    astronomy
+   fft
+   interpolation
 
 Indices and tables
 ==================

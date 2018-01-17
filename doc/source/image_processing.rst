@@ -10,3 +10,8 @@ Image Processing
     :members:
     :undoc-members:
     :show-inheritance:
+
+.. automodule:: aotools.image_processing.psf
+    :members:
+    :undoc-members:
+    :show-inheritance:

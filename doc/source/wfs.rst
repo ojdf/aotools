@@ -1,5 +1,5 @@
-Wavefront Sensor Analysis
-=========================
+Wavefront Sensors
+=================
 
 .. automodule:: aotools.wfs
     :members:
