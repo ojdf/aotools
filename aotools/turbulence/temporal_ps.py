@@ -60,7 +60,6 @@ def get_tps_time_axis(frame_rate, n_frames):
     return t_vals
 
 
-
 def plot_tps(slope_data, frame_rate):
     """
     Generates a plot of the temporal power spectrum/a for a data set of phase gradients
