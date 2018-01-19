@@ -27,3 +27,10 @@ def test_encircledEnergy_func():
     assert len(x) == len(y)
     assert numpy.max(y) <= 1
     assert numpy.min(y) >= 0
+
+
+def test_aziAvg():
+    data = numpy.random.rand(32, 32)
+    azi = functions.aziAvg(data)
+    print(azi.shape)
+    assert azi.shape == (16,)
