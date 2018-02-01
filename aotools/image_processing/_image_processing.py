@@ -17,7 +17,7 @@ def r0fromSlopes(slopes, wavelength, subapDiam):
 
     r0 = ((0.162 * (wavelength ** 2) * subapDiam ** (-1. / 3)) / slopeVar) ** (3. / 5)
 
-    r0 = r0.mean()
+    r0 = float(r0.mean())
 
     return r0
 
@@ -50,7 +50,7 @@ def image_contrast(image):
 
     contrast = (image.max() - image.min()) / (image.max() + image.min())
 
-    return contrast
+    return float(contrast)
 
 
 def rms_contrast(image):
@@ -66,4 +66,4 @@ def rms_contrast(image):
 
     image /= image.max()
 
-    return image.std()
+    return float(image.std())
