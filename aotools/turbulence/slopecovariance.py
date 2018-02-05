@@ -7,9 +7,11 @@ of uses, though they are especially useful for creating 'tomographic reconstruct
 WFS measurements in a required direction (where there might be an interesting science target but no guide stars),
 given some actual measurements in other directions (where the some suitable guide stars are).
 
-NOTE: THIS CODE HAS BEEN TESTED QUALITIVELY AND SEEMS OK...NEEDS MORE RIGOROUS TESTING!
+.. note::
+    This code has been tested qualitatively and seems OK, but needs more rigorous testing.
 
-.. codeauthor:: Andrew Reeves <a.p.reeves@durham.ac.uk>
+.. codeauthor::
+    Andrew Reeves <a.p.reeves@durham.ac.uk>
 
 """
 
@@ -433,18 +435,14 @@ def structure_function_kolmogorov(separation, r0):
 
 def calculate_structure_function(phase, nbOfPoint=None, step=None):
     '''
-        Compute the structure function of an 2D array, along the first
-         dimension.
+        Compute the structure function of an 2D array, along the first dimension.
         SF defined as sf[j]= < (phase - phase_shifted_by_j)^2 >
         Translated from a YAO function.
 
         Parameters:
             phase (ndarray, 2d): 2d-array
-            nbOfPoint (int): final size of the structure function vector
-                Default is phase.shape[1] / 4
-            step (int): step in pixel when computing the sf.
-                (step * sampling_phase) gives the sf sampling in meters.
-                Default is 1
+            nbOfPoint (int): final size of the structure function vector. Default is phase.shape[1] / 4
+            step (int): step in pixel when computing the sf. (step * sampling_phase) gives the sf sampling in meters. Default is 1
 
         Returns:
             ndarray, float: values for the structure function of the data.
