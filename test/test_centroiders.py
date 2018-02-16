@@ -19,7 +19,8 @@ def test_centreOfGravity_value():
     img = numpy.zeros((1, 5, 5))
     img[0, 1:3, 2:4] = 1.
     centroid = image_processing.centreOfGravity(img)
-    numpy.testing.assert_almost_equal(centroid, numpy.array([[2.5], [1.5]])
+    numpy.testing.assert_almost_equal(centroid, numpy.array([[2.5], [1.5]]))
+
 def test_brightestPxl_single():
     img = numpy.random.random((10, 10))
     com = image_processing.brightestPxl(img, 0.3)
