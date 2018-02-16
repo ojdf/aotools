@@ -80,8 +80,6 @@ def centreOfGravity(img, threshold=0, **kwargs):
         y_centroid = (y_cent*img).sum(-1).sum(-1)/img.sum(-1).sum(-1)
         x_centroid = (x_cent*img).sum(-1).sum(-1)/img.sum(-1).sum(-1)
 
-    # y_centroid+=0.5
-    # x_centroid+=0.5
     return numpy.array([x_centroid, y_centroid])
 
 
