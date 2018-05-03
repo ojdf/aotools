@@ -22,7 +22,9 @@ setup(
               'aotools.wfs',
               ],
     description='A set of useful functions for Adaptive Optics in Python',
+    install_requires=['numpy',
+                      ],
     long_description=long_description,
     version=versioneer.get_version(),
-    cmdclass=versioneer.get_cmdclass()
+    cmdclass=versioneer.get_cmdclass(),
 )
