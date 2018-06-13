@@ -104,14 +104,14 @@ def brightestPxl(img, threshold, **kwargs):
     if len(img.shape)==2:
         pxlValue = numpy.sort(img.flatten())[-nPxls]
         img-=pxlValue
-        img.clip(0, img.max())
+        img = img.clip(0, img.max())
 
     elif len(img.shape)==3:
         pxlValues = numpy.sort(
                         img.reshape(img.shape[0], img.shape[-1]*img.shape[-2])
                         )[:,-nPxls]
         img[:]  = (img.T - pxlValues).T
-        img.clip(0, img.max(), out=img)
+        img = img.clip(0, img.max(), out=img)
 
     return centreOfGravity(img)
 
