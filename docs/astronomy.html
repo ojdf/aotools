@@ -1,0 +1,352 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Astronomical Functions &mdash; AOtools 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="AOtools 0.1.0 documentation" href="index.html"/>
+        <link rel="next" title="Normalised Fourier Transforms" href="fft.html"/>
+        <link rel="prev" title="Optical Propagation" href="opticalpropagation.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> AOtools
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="turbulence.html">Atmospheric Turbulence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="image_processing.html">Image Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zernike.html">Zernike Modes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pupil.html">Telescope Pupils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wfs.html">Wavefront Sensors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="opticalpropagation.html">Optical Propagation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Astronomical Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-aotools.astronomy">Magnitude and Flux Calculations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fft.html">Normalised Fourier Transforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interpolation.html">Interpolation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AOtools</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Astronomical Functions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/astronomy.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="astronomical-functions">
+<h1>Astronomical Functions<a class="headerlink" href="#astronomical-functions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-aotools.astronomy">
+<span id="magnitude-and-flux-calculations"></span><h2>Magnitude and Flux Calculations<a class="headerlink" href="#module-aotools.astronomy" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aotools.astronomy.flux_to_magnitude">
+<code class="descclassname">aotools.astronomy.</code><code class="descname">flux_to_magnitude</code><span class="sig-paren">(</span><em>flux</em>, <em>waveband='V'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/astronomy/_astronomy.html#flux_to_magnitude"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.astronomy.flux_to_magnitude" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts incident flux of photons to the apparent magnitude</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>flux</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Number of photons received from an object per second per meter squared</li>
+<li><strong>waveband</strong> (<em>string</em>) – Waveband of the measured flux, can be U, B, V, R, I, J, H, K, g, r, i, z</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Apparent magnitude</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="aotools.astronomy.magnitude_to_flux">
+<code class="descclassname">aotools.astronomy.</code><code class="descname">magnitude_to_flux</code><span class="sig-paren">(</span><em>magnitude</em>, <em>waveband='V'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/astronomy/_astronomy.html#magnitude_to_flux"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.astronomy.magnitude_to_flux" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts apparent magnitude to a flux of photons</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>magnitude</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Star apparent magnitude</li>
+<li><strong>waveband</strong> (<em>string</em>) – Waveband of the stellar magnitude, can be U, B, V, R, I, J, H, K, g, r, i, z</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Number of photons emitted by the object per second per meter squared</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="aotools.astronomy.photons_per_band">
+<code class="descclassname">aotools.astronomy.</code><code class="descname">photons_per_band</code><span class="sig-paren">(</span><em>mag</em>, <em>mask</em>, <em>pxlScale</em>, <em>expTime</em>, <em>waveband='V'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/astronomy/_astronomy.html#photons_per_band"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.astronomy.photons_per_band" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the photon flux for a given aperture, star magnitude and wavelength band</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Star apparent magnitude</li>
+<li><strong>mask</strong> (<em>ndarray</em>) – 2-d pupil mask array, 1 is transparent, 0 opaque</li>
+<li><strong>pxlScale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – size in metres of each pixel in mask</li>
+<li><strong>expTime</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Exposure time in seconds</li>
+<li><strong>waveband</strong> (<em>string</em>) – Waveband</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">number of photons</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="aotools.astronomy.photons_per_mag">
+<code class="descclassname">aotools.astronomy.</code><code class="descname">photons_per_mag</code><span class="sig-paren">(</span><em>mag</em>, <em>mask</em>, <em>pixel_scale</em>, <em>wvlBand</em>, <em>exposure_time</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/astronomy/_astronomy.html#photons_per_mag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.astronomy.photons_per_mag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the photon flux for a given aperture, star magnitude and wavelength band</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Star apparent magnitude</li>
+<li><strong>mask</strong> (<em>ndarray</em>) – 2-d pupil mask array, 1 is transparent, 0 opaque</li>
+<li><strong>pixel_scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – size in metres of each pixel in mask</li>
+<li><strong>wvlBand</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – length of wavelength band in nanometres</li>
+<li><strong>exposure_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Exposure time in seconds</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">number of photons</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="fft.html" class="btn btn-neutral float-right" title="Normalised Fourier Transforms" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="opticalpropagation.html" class="btn btn-neutral" title="Optical Propagation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Centre for Advanced Instrumentation.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
