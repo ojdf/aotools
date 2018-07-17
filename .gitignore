@@ -65,3 +65,6 @@ target/
 # pycharm config
 *.idea
 MANIFEST
+
+# Microsoft Visual Studio Code
+.vscode/

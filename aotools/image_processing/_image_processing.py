@@ -1,3 +1,8 @@
+import warnings
+import numpy
+from .. import functions
+
+
 def r0fromSlopes(slopes, wavelength, subapDiam):
     """
     Measures the value of R0 from a set of WFS slopes.
@@ -13,6 +18,8 @@ def r0fromSlopes(slopes, wavelength, subapDiam):
         float: An estimate of r0 for that dataset.
 
     """
+    warnings.warn("This function will be removed in version 0.5, instead use aotools.turbulence.r0_from_slopes", DeprecationWarning)
+
     slopeVar = slopes.var(axis=(-1))
 
     r0 = ((0.162 * (wavelength ** 2) * subapDiam ** (-1. / 3)) / slopeVar) ** (3. / 5)
@@ -28,42 +35,9 @@ def slopeVarfromR0(r0, wavelength, subapDiam):
     Uses the equation in Saint Jaques, 1998, PhD Thesis, Appendix A to calculate the slope variance resulting from a value of r0.
 
     """
+    warnings.warn("This function will be removed in version 0.5, instead use aotools.turbulence.slope_variance_from_r0",
+                  DeprecationWarning)
 
     slope_var = 0.162 * (wavelength ** 2) * r0 ** (-5. / 3) * subapDiam ** (-1. / 3)
 
     return slope_var
-
-
-def image_contrast(image):
-    """
-    Calculates the 'Michelson' contrast.
-
-    Uses a method by Michelson (Michelson, A. (1927). Studies in Optics. U. of Chicago Press.), to calculate the contrast ratio of an image. Uses the formula:
-        (img_max - img_min)/(img_max + img_min)
-
-    Parameters:
-        image (ndarray): Image array
-
-    Returns:
-        float: Contrast value
-    """
-
-    contrast = (image.max() - image.min()) / (image.max() + image.min())
-
-    return float(contrast)
-
-
-def rms_contrast(image):
-    """
-    Calculates the RMS contrast - basically the standard deviation of the image
-
-    Parameters:
-        image (ndarray): Image array
-
-    Returns:
-        float: Contrast value
-    """
-
-    image /= image.max()
-
-    return float(image.std())

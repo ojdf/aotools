@@ -1,3 +1,11 @@
+"""
+Pupil Maps
+----------
+
+Functions for the creation of pupil maps and masks.
+
+"""
+
 import numpy
 
 
@@ -13,23 +21,24 @@ def circle(radius, size, circle_centre=(0, 0), origin="middle"):
 
     origin = "corner" is used e.g. by psfAnalysis:radialAvg()
 
-    Examples:
-    circle(1,5) circle(0,5) circle(2,5) circle(0,4) circle(0.8,4) circle(2,4)
-      00000       00000       00100       0000        0000          0110
-      00100       00000       01110       0000        0110          1111
-      01110       00100       11111       0000        0110          1111
-      00100       00000       01110       0000        0000          0110
-      00000       00000       00100
+    Examples: ::
 
-    circle(1,5,(0.5,0.5))   circle(1,4,(0.5,0.5))
-       .-->+
-       |  00000               0000
-       |  00000               0010
-      +V  00110               0111
-          00110               0010
-          00000
+        circle(1,5) circle(0,5) circle(2,5) circle(0,4) circle(0.8,4) circle(2,4)
+          00000       00000       00100       0000        0000          0110
+          00100       00000       01110       0000        0110          1111
+          01110       00100       11111       0000        0110          1111
+          00100       00000       01110       0000        0000          0110
+          00000       00000       00100
 
-    Args:
+        circle(1,5,(0.5,0.5))   circle(1,4,(0.5,0.5))
+           .-->+
+           |  00000               0000
+           |  00000               0010
+          +V  00110               0111
+              00110               0010
+              00000
+
+    Parameters:
         radius (float)       : radius of the circle
         size (int)           : size of the 2-D array in which the circle lies
         circle_centre (tuple): coords of the centre of the circle
@@ -39,10 +48,6 @@ def circle(radius, size, circle_centre=(0, 0), origin="middle"):
 
     Returns:
         ndarray (float64) : the circle array
-
-    Raises:
-        TypeError if input is of wrong type
-        Exception if a bug in generation of coordinates is detected (see code)
     """
     # (2) Generate the output array:
     C = numpy.zeros((size, size))
