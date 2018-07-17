@@ -1,5 +1,5 @@
 '''
-Collection of routines related to Karhunen-Loève modes.
+Collection of routines related to Karhunen-Loeve modes.
 
 The theory is based on the paper
 "Optimal bases for wave-front simulation and
@@ -26,7 +26,7 @@ TO FIX
  - make_kl with von Karman stf fails:
     -> implemented but KL generation failed in 'while loop' of gkl_fcom...
 
-@author: Gilles Orban de Xivry (ULiège)
+@author: Gilles Orban de Xivry (ULiege)
 @date: November 2017
 
 '''
