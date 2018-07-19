@@ -136,7 +136,7 @@ def gkl_kernel(ri, nr, rad, stfunc='kolmogorov', outerscale=None):
     kernel = np.zeros((nr, nr, nth))
 
     # 1/2 because Lp and not Kp
-    fnorm = 1 / 2 * (-1) / (2 * np.pi * (1 - ri**2))
+    fnorm = 1. / 2. * (-1) / (2 * np.pi * (1 - ri**2))
 
     for i in range(nr):
         for j in range(i + 1):
