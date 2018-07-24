@@ -36,7 +36,7 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="AOtools 0.1.0 documentation" href="index.html"/>
-        <link rel="next" title="Zernike Modes" href="zernike.html"/>
+        <link rel="next" title="Circular Functions" href="zernike.html"/>
         <link rel="prev" title="Atmospheric Turbulence" href="turbulence.html"/> 
 
   
@@ -99,7 +99,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#psf-analysis">PSF Analysis</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="zernike.html">Zernike Modes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zernike.html">Circular Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pupil.html">Telescope Pupils</a></li>
 <li class="toctree-l1"><a class="reference internal" href="wfs.html">Wavefront Sensors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="opticalpropagation.html">Optical Propagation</a></li>
@@ -230,7 +230,7 @@ Origin at 0,0 index of img.</p>
 
 <dl class="function">
 <dt id="aotools.image_processing.centroiders.correlation_centroid">
-<code class="descclassname">aotools.image_processing.centroiders.</code><code class="descname">correlation_centroid</code><span class="sig-paren">(</span><em>im</em>, <em>ref</em>, <em>threshold=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/image_processing/centroiders.html#correlation_centroid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.image_processing.centroiders.correlation_centroid" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">aotools.image_processing.centroiders.</code><code class="descname">correlation_centroid</code><span class="sig-paren">(</span><em>im</em>, <em>ref</em>, <em>threshold=0.0</em>, <em>padding=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/image_processing/centroiders.html#correlation_centroid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.image_processing.centroiders.correlation_centroid" title="Permalink to this definition">¶</a></dt>
 <dd><p>Correlation Centroider, currently only works for 3d im shape.
 Performs a simple thresholded COM on the correlation.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -241,6 +241,7 @@ Performs a simple thresholded COM on the correlation.</p>
 <li><strong>im</strong> – sub-aperture images (t, y, x)</li>
 <li><strong>ref</strong> – reference image (y, x)</li>
 <li><strong>threshold</strong> – fractional threshold for COM (0=all pixels, 1=brightest pixel)</li>
+<li><strong>padding</strong> – factor to zero-pad arrays in Fourier transforms</li>
 </ul>
 </td>
 </tr>
@@ -256,7 +257,7 @@ Performs a simple thresholded COM on the correlation.</p>
 
 <dl class="function">
 <dt id="aotools.image_processing.centroiders.cross_correlate">
-<code class="descclassname">aotools.image_processing.centroiders.</code><code class="descname">cross_correlate</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/image_processing/centroiders.html#cross_correlate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.image_processing.centroiders.cross_correlate" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">aotools.image_processing.centroiders.</code><code class="descname">cross_correlate</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>padding=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/image_processing/centroiders.html#cross_correlate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.image_processing.centroiders.cross_correlate" title="Permalink to this definition">¶</a></dt>
 <dd><p>2D convolution using FFT, use to generate cross-correlations.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -265,6 +266,7 @@ Performs a simple thresholded COM on the correlation.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>x</strong> (<em>array</em>) – subap image</li>
 <li><strong>y</strong> (<em>array</em>) – reference image</li>
+<li><strong>padding</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Factor to zero-pad arrays in Fourier transforms</li>
 </ul>
 </td>
 </tr>
@@ -406,7 +408,7 @@ or
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="zernike.html" class="btn btn-neutral float-right" title="Zernike Modes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="zernike.html" class="btn btn-neutral float-right" title="Circular Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="turbulence.html" class="btn btn-neutral" title="Atmospheric Turbulence" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

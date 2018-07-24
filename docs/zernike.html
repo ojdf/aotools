@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Zernike Modes &mdash; AOtools 0.1.0 documentation</title>
+  <title>Circular Functions &mdash; AOtools 0.1.0 documentation</title>
   
 
   
@@ -94,7 +94,14 @@
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="turbulence.html">Atmospheric Turbulence</a></li>
 <li class="toctree-l1"><a class="reference internal" href="image_processing.html">Image Processing</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Zernike Modes</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Circular Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-aotools.functions.zernike">Zernike Modes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-aotools.functions.karhunenLoeve">Karhunen Loeve Modes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="pupil.html">Telescope Pupils</a></li>
 <li class="toctree-l1"><a class="reference internal" href="wfs.html">Wavefront Sensors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="opticalpropagation.html">Optical Propagation</a></li>
@@ -145,7 +152,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Zernike Modes</li>
+      <li>Circular Functions</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -164,8 +171,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-aotools.functions.zernike">
-<span id="zernike-modes"></span><h1>Zernike Modes<a class="headerlink" href="#module-aotools.functions.zernike" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="circular-functions">
+<h1>Circular Functions<a class="headerlink" href="#circular-functions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-aotools.functions.zernike">
+<span id="zernike-modes"></span><h2>Zernike Modes<a class="headerlink" href="#module-aotools.functions.zernike" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="aotools.functions.zernike.makegammas">
 <code class="descclassname">aotools.functions.zernike.</code><code class="descname">makegammas</code><span class="sig-paren">(</span><em>nzrad</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/zernike.html#makegammas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.zernike.makegammas" title="Permalink to this definition">¶</a></dt>
@@ -329,6 +338,359 @@ where j = 1 corresponds to piston.</p>
 </table>
 </dd></dl>
 
+</div>
+<div class="section" id="module-aotools.functions.karhunenLoeve">
+<span id="karhunen-loeve-modes"></span><h2>Karhunen Loeve Modes<a class="headerlink" href="#module-aotools.functions.karhunenLoeve" title="Permalink to this headline">¶</a></h2>
+<p>Collection of routines related to Karhunen-Loeve modes.</p>
+<p>The theory is based on the paper
+“Optimal bases for wave-front simulation and
+reconstruction on annular apertures”, Robert C. Cannon, 1996, JOSAA, 13, 4</p>
+<p>The present implementation is based on the IDL package of R. Cannon
+(wavefront modelling and reconstruction).
+A closely similar implementation can also be find in Yorick in the YAO package.</p>
+<div class="section" id="usage">
+<h3>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h3>
+<p>Main routine is ‘make_kl’ to generate KL basis of dimension <code class="docutils literal notranslate"><span class="pre">[dim,</span> <span class="pre">dim,</span> <span class="pre">nmax]</span></code>.</p>
+<p>For Kolmogorov statistics, e.g.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kl</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">make_kl</span><span class="p">(</span><span class="mi">150</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="n">ri</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">stf</span><span class="o">=</span><span class="s1">&#39;kolmogorov&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">make_kl with von Karman stf fails. It has been implemented but KL generation failed in ‘while loop’ of gkl_fcom…</p>
+</div>
+<p><em>Code author: Gilles Orban de Xivry (ULieve)</em></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">date:</th><td class="field-body">November 2017</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="aotools.functions.karhunenLoeve.gkl_azimuthal">
+<code class="descclassname">aotools.functions.karhunenLoeve.</code><code class="descname">gkl_azimuthal</code><span class="sig-paren">(</span><em>nord</em>, <em>npp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#gkl_azimuthal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.gkl_azimuthal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the azimuthal function of the KL basis.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>nord</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – number of azimuthal orders</li>
+<li><strong>npp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – grid of point sampling the azimuthal coordinate</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>gklazi</strong> – azimuthal function of the KL basis.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="aotools.functions.karhunenLoeve.gkl_basis">
+<code class="descclassname">aotools.functions.karhunenLoeve.</code><code class="descname">gkl_basis</code><span class="sig-paren">(</span><em>ri=0.25</em>, <em>nr=40</em>, <em>npp=None</em>, <em>nfunc=500</em>, <em>stf='kolstf'</em>, <em>outerscale=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#gkl_basis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.gkl_basis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper to create the radial and azimuthal K-L functions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ri</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – normalized internal radius</li>
+<li><strong>nr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – number of radial resolution elements</li>
+<li><strong>np</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – number of azimuthal resolution elements</li>
+<li><strong>nfunc</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – number of generated K-L function</li>
+<li><strong>stf</strong> (<em>string</em>) – structure function tag describing the atmospheric statistics</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>gklbasis</strong> – dictionary containing the radial and azimuthal basis + other
+relevant information</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dic</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="aotools.functions.karhunenLoeve.gkl_fcom">
+<code class="descclassname">aotools.functions.karhunenLoeve.</code><code class="descname">gkl_fcom</code><span class="sig-paren">(</span><em>ri</em>, <em>kernels</em>, <em>nfunc</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#gkl_fcom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.gkl_fcom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computation of the radial eigenvectors of the KL basis.</p>
+<p>Obtained by taking the eigenvectors from the matrix L^p.
+The final function corresponds to the ‘nfunc’ largest eigenvalues.
+See eq. 16-18 in Cannon 1996.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ri</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – radius of central obscuration radius (normalized by D/2; &lt;1)</li>
+<li><strong>kernels</strong> (<em>ndarray</em>) – kernel L^p of dimension (nr, nr, nth), where nth is the
+azimuthal discretization (5 * nr)</li>
+<li><strong>nfunc</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – number of final KL functions</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>evals</strong> (<em>1darray</em>) – eigenvalues</li>
+<li><strong>nord</strong> (<em>int</em>) – resulting number of azimuthal orders</li>
+<li><strong>npo</strong> (<em>int</em>)</li>
+<li><strong>ord</strong> (<em>1darray</em>)</li>
+<li><strong>rabas</strong> (<em>ndarray</em>) – radial eigenvectors of the KL basis</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="aotools.functions.karhunenLoeve.gkl_kernel">
+<code class="descclassname">aotools.functions.karhunenLoeve.</code><code class="descname">gkl_kernel</code><span class="sig-paren">(</span><em>ri</em>, <em>nr</em>, <em>rad</em>, <em>stfunc='kolmogorov'</em>, <em>outerscale=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#gkl_kernel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.gkl_kernel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculation of the kernel L^p</p>
+<p>The kernel constructed here should be simply a discretization
+of the continuous kernel.
+It needs rescaling before it is treated as a matrix for finding
+the eigen-values</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ri</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – radius of central obscuration radius (normalized by D/2; &lt;1)</li>
+<li><strong>nr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – number of resolution elements</li>
+<li><strong>rad</strong> (<em>1d-array</em>) – grid of points where the kernel is evaluated</li>
+<li><strong>stfunc</strong> (<em>string</em>) – string tag of the structure function on which the kernel are
+computed</li>
+<li><strong>outerscale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – in unit of telescope diameter.
+Outer-scale for von Karman structure function.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>L^p</strong> – kernel L^p of dimension (nr, nr, nth), where nth is the
+azimuthal discretization (5 * nr)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="aotools.functions.karhunenLoeve.gkl_radii">
+<code class="descclassname">aotools.functions.karhunenLoeve.</code><code class="descname">gkl_radii</code><span class="sig-paren">(</span><em>ri</em>, <em>nr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#gkl_radii"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.gkl_radii" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate n points evenly spaced in r^2 between r_i^2 and 1</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>nr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – number of resolution elements</li>
+<li><strong>ri</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – radius of central obscuration radius (normalized; &lt;1)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>r</strong> – grid of point to calculate the appropriate kernels.
+correspond to ‘sqrt(s)’ wrt the paper.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">1d-array, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="aotools.functions.karhunenLoeve.gkl_sfi">
+<code class="descclassname">aotools.functions.karhunenLoeve.</code><code class="descname">gkl_sfi</code><span class="sig-paren">(</span><em>kl_basis</em>, <em>i</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#gkl_sfi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.gkl_sfi" title="Permalink to this definition">¶</a></dt>
+<dd><p>return the i’th function from the generalized KL basis ‘bas’.
+‘bas’ must be generated by ‘gkl_basis’</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="aotools.functions.karhunenLoeve.make_kl">
+<code class="descclassname">aotools.functions.karhunenLoeve.</code><code class="descname">make_kl</code><span class="sig-paren">(</span><em>nmax</em>, <em>dim</em>, <em>ri=0.0</em>, <em>nr=40</em>, <em>stf='kolmogorov'</em>, <em>outerscale=None</em>, <em>mask=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#make_kl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.make_kl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main routine to generatre a KL basis of dimension [nmax, dim, dim].</p>
+<p>For Kolmogorov statistics, e.g.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kl</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">make_kl</span><span class="p">(</span><span class="mi">150</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="n">ri</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">stf</span><span class="o">=</span><span class="s1">&#39;kolmogorov&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">As a rule of thumb</div>
+<div class="line-block">
+<div class="line">nr x npp = 50 x 250 is fine up to 500 functions</div>
+<div class="line">60 x 300 for a thousand</div>
+<div class="line">80 x 400 for three thousands.</div>
+</div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>nmax</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – number of KL function to generate</li>
+<li><strong>dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – size of the KL arrays</li>
+<li><strong>ri</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – radial central obscuration normalized by D/2</li>
+<li><strong>nr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – number of point on radius. npp (number of azimuthal pts) is  =2 pi * nr</li>
+<li><strong>stf</strong> (<em>string</em>) – structure function tag. Default is ‘kolmogorov’</li>
+<li><strong>outerscale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – outer scale in units of telescope diameter. Releveant if von vonKarman
+stf. (not implemented yet)</li>
+<li><strong>mask</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – pupil masking. Default is True</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>kl</strong> (<em>ndarray (nmax, dim, dim)</em>) – KL basis in cartesian coordinates</li>
+<li><strong>varKL</strong> (<em>1darray</em>) – associated variance</li>
+<li><strong>pupil</strong> (<em>2darray</em>) – pupil</li>
+<li><strong>polar_base</strong> (<em>dictionary</em>) – polar base dictionary used for the KL basis computation.
+as returned by ‘gkl_basis’</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#aotools.functions.karhunenLoeve.gkl_basis" title="aotools.functions.karhunenLoeve.gkl_basis"><code class="xref py py-func docutils literal notranslate"><span class="pre">gkl_basis()</span></code></a>, <a class="reference internal" href="#aotools.functions.karhunenLoeve.set_pctr" title="aotools.functions.karhunenLoeve.set_pctr"><code class="xref py py-func docutils literal notranslate"><span class="pre">set_pctr()</span></code></a>, <a class="reference internal" href="#aotools.functions.karhunenLoeve.pol2car" title="aotools.functions.karhunenLoeve.pol2car"><code class="xref py py-func docutils literal notranslate"><span class="pre">pol2car()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="aotools.functions.karhunenLoeve.pcgeom">
+<code class="descclassname">aotools.functions.karhunenLoeve.</code><code class="descname">pcgeom</code><span class="sig-paren">(</span><em>nr</em>, <em>npp</em>, <em>ncp</em>, <em>ri</em>, <em>ncmar</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#pcgeom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.pcgeom" title="Permalink to this definition">¶</a></dt>
+<dd><p>This routine builds a geom dic.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>py</strong> (<em>px</em><em>,</em>) – the x, y coordinates of points in the polar arrays.</li>
+<li><strong>cp</strong> (<em>cr</em><em>,</em>) – the r, phi coordinates of points in the cartesian grids.</li>
+<li><strong>ncmar</strong> – allows the possibility that there is a margin of ncmar points in the
+cartesian arrays outside the region of interest.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="aotools.functions.karhunenLoeve.piston_orth">
+<code class="descclassname">aotools.functions.karhunenLoeve.</code><code class="descname">piston_orth</code><span class="sig-paren">(</span><em>nr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#piston_orth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.piston_orth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unitary matrix used to filter out piston term.
+Eq. 19 in Cannon 1996.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>nr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – number of resolution elements</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>U</strong> – Unitary matrix</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">2d array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="aotools.functions.karhunenLoeve.pol2car">
+<code class="descclassname">aotools.functions.karhunenLoeve.</code><code class="descname">pol2car</code><span class="sig-paren">(</span><em>cpgeom</em>, <em>pol</em>, <em>mask=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#pol2car"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.pol2car" title="Permalink to this definition">¶</a></dt>
+<dd><p>Polar to cartesian conversion.</p>
+<p>(points not in the aperture are treated as though they were at
+the first or last radial polar value…)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="aotools.functions.karhunenLoeve.polang">
+<code class="descclassname">aotools.functions.karhunenLoeve.</code><code class="descname">polang</code><span class="sig-paren">(</span><em>r</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#polang"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.polang" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate an array with the same dimensions as r, but containing the
+azimuthal values for a polar coordinate system.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="aotools.functions.karhunenLoeve.radii">
+<code class="descclassname">aotools.functions.karhunenLoeve.</code><code class="descname">radii</code><span class="sig-paren">(</span><em>nr</em>, <em>npp</em>, <em>ri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#radii"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.radii" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use to generate a polar coordinate system.</p>
+<p>Generate an nr x npp array with npp copies of the radial coordinate
+array.
+Radial coordinate span the range from r=ri to r=1 with
+successive annuli having equal areas.</p>
+<p>ie, the area between ri and 1 is divided into nr equal rings, and
+the points are positioned at the half-area mark on each ring;
+there are no points on the border</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#aotools.functions.karhunenLoeve.polang" title="aotools.functions.karhunenLoeve.polang"><code class="xref py py-func docutils literal notranslate"><span class="pre">polang()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="aotools.functions.karhunenLoeve.rebin">
+<code class="descclassname">aotools.functions.karhunenLoeve.</code><code class="descname">rebin</code><span class="sig-paren">(</span><em>a</em>, <em>newshape</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#rebin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.rebin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rebin an array to a new shape.
+See scipy cookbook.
+It is intended to be similar to ‘rebin’ of IDL</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="aotools.functions.karhunenLoeve.set_pctr">
+<code class="descclassname">aotools.functions.karhunenLoeve.</code><code class="descname">set_pctr</code><span class="sig-paren">(</span><em>bas</em>, <em>ncp=None</em>, <em>ncmar=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#set_pctr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.set_pctr" title="Permalink to this definition">¶</a></dt>
+<dd><p>call pcgeom to build the dic geom_struct with the
+right initializtions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>bas</strong> (<em>dic</em>) – gkl_basis dic built with the gkl_bas routine</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="aotools.functions.karhunenLoeve.setpincs">
+<code class="descclassname">aotools.functions.karhunenLoeve.</code><code class="descname">setpincs</code><span class="sig-paren">(</span><em>ax</em>, <em>ay</em>, <em>px</em>, <em>py</em>, <em>ri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#setpincs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.setpincs" title="Permalink to this definition">¶</a></dt>
+<dd><p>determine a set of squares for interpolating from cartesian
+to polar coordinates,
+using only those points with ri &lt;= r &lt;= 1</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="aotools.functions.karhunenLoeve.stf_kolmogorov">
+<code class="descclassname">aotools.functions.karhunenLoeve.</code><code class="descname">stf_kolmogorov</code><span class="sig-paren">(</span><em>r</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#stf_kolmogorov"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.stf_kolmogorov" title="Permalink to this definition">¶</a></dt>
+<dd><p>Kolmogorov structure function with r = (D/r0)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="aotools.functions.karhunenLoeve.stf_vonKarman">
+<code class="descclassname">aotools.functions.karhunenLoeve.</code><code class="descname">stf_vonKarman</code><span class="sig-paren">(</span><em>r</em>, <em>L0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#stf_vonKarman"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.stf_vonKarman" title="Permalink to this definition">¶</a></dt>
+<dd><p>von Karman structure function with r = (D / r0)
+L0 is in unit of telescope diameter, typically a few (3; or 20m)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="aotools.functions.karhunenLoeve.stf_vonKarman_yao">
+<code class="descclassname">aotools.functions.karhunenLoeve.</code><code class="descname">stf_vonKarman_yao</code><span class="sig-paren">(</span><em>r</em>, <em>L</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#stf_vonKarman_yao"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.stf_vonKarman_yao" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
 </div>
 
 

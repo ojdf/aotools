@@ -93,7 +93,7 @@
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="turbulence.html">Atmospheric Turbulence</a></li>
 <li class="toctree-l1"><a class="reference internal" href="image_processing.html">Image Processing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="zernike.html">Zernike Modes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zernike.html">Circular Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pupil.html">Telescope Pupils</a></li>
 <li class="toctree-l1"><a class="reference internal" href="wfs.html">Wavefront Sensors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="opticalpropagation.html">Optical Propagation</a></li>
@@ -193,6 +193,8 @@
 </li>
       <li><a href="fft.html#module-aotools.fouriertransform">aotools.fouriertransform (module)</a>
 </li>
+      <li><a href="zernike.html#module-aotools.functions.karhunenLoeve">aotools.functions.karhunenLoeve (module)</a>
+</li>
       <li><a href="pupil.html#module-aotools.functions.pupil">aotools.functions.pupil (module)</a>
 </li>
       <li><a href="zernike.html#module-aotools.functions.zernike">aotools.functions.zernike (module)</a>
@@ -203,10 +205,10 @@
 </li>
       <li><a href="image_processing.html#module-aotools.image_processing.psf">aotools.image_processing.psf (module)</a>
 </li>
-      <li><a href="interpolation.html#module-aotools.interpolation">aotools.interpolation (module)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="interpolation.html#module-aotools.interpolation">aotools.interpolation (module)</a>
+</li>
       <li><a href="opticalpropagation.html#module-aotools.opticalpropagation">aotools.opticalpropagation (module)</a>
 </li>
       <li><a href="turbulence.html#module-aotools.turbulence">aotools.turbulence (module)</a>
@@ -315,9 +317,21 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="turbulence.html#aotools.turbulence.infinitephasescreen.PhaseScreenKolmogorov.get_new_row">get_new_row() (aotools.turbulence.infinitephasescreen.PhaseScreenKolmogorov method)</a>
 </li>
+      <li><a href="turbulence.html#aotools.turbulence.temporal_ps.get_tps_time_axis">get_tps_time_axis() (in module aotools.turbulence.temporal_ps)</a>
+</li>
+      <li><a href="zernike.html#aotools.functions.karhunenLoeve.gkl_azimuthal">gkl_azimuthal() (in module aotools.functions.karhunenLoeve)</a>
+</li>
+      <li><a href="zernike.html#aotools.functions.karhunenLoeve.gkl_basis">gkl_basis() (in module aotools.functions.karhunenLoeve)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="turbulence.html#aotools.turbulence.temporal_ps.get_tps_time_axis">get_tps_time_axis() (in module aotools.turbulence.temporal_ps)</a>
+      <li><a href="zernike.html#aotools.functions.karhunenLoeve.gkl_fcom">gkl_fcom() (in module aotools.functions.karhunenLoeve)</a>
+</li>
+      <li><a href="zernike.html#aotools.functions.karhunenLoeve.gkl_kernel">gkl_kernel() (in module aotools.functions.karhunenLoeve)</a>
+</li>
+      <li><a href="zernike.html#aotools.functions.karhunenLoeve.gkl_radii">gkl_radii() (in module aotools.functions.karhunenLoeve)</a>
+</li>
+      <li><a href="zernike.html#aotools.functions.karhunenLoeve.gkl_sfi">gkl_sfi() (in module aotools.functions.karhunenLoeve)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -361,10 +375,12 @@
 </li>
       <li><a href="turbulence.html#aotools.turbulence.slopecovariance.CovarianceMatrix.make_covariance_matrix">make_covariance_matrix() (aotools.turbulence.slopecovariance.CovarianceMatrix method)</a>
 </li>
-      <li><a href="wfs.html#aotools.wfs.make_subaps_2d">make_subaps_2d() (in module aotools.wfs)</a>
+      <li><a href="zernike.html#aotools.functions.karhunenLoeve.make_kl">make_kl() (in module aotools.functions.karhunenLoeve)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="wfs.html#aotools.wfs.make_subaps_2d">make_subaps_2d() (in module aotools.wfs)</a>
+</li>
       <li><a href="turbulence.html#aotools.turbulence.slopecovariance.CovarianceMatrix.make_tomographic_reconstructor">make_tomographic_reconstructor() (aotools.turbulence.slopecovariance.CovarianceMatrix method)</a>
 </li>
       <li><a href="zernike.html#aotools.functions.zernike.makegammas">makegammas() (in module aotools.functions.zernike)</a>
@@ -385,21 +401,29 @@
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="zernike.html#aotools.functions.karhunenLoeve.pcgeom">pcgeom() (in module aotools.functions.karhunenLoeve)</a>
+</li>
       <li><a href="turbulence.html#aotools.turbulence.phase_covariance">phase_covariance() (in module aotools.turbulence)</a>
 </li>
       <li><a href="zernike.html#aotools.functions.zernike.phaseFromZernikes">phaseFromZernikes() (in module aotools.functions.zernike)</a>
 </li>
       <li><a href="turbulence.html#aotools.turbulence.infinitephasescreen.PhaseScreenKolmogorov">PhaseScreenKolmogorov (class in aotools.turbulence.infinitephasescreen)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="turbulence.html#aotools.turbulence.infinitephasescreen.PhaseScreenVonKarman">PhaseScreenVonKarman (class in aotools.turbulence.infinitephasescreen)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="astronomy.html#aotools.astronomy.photons_per_band">photons_per_band() (in module aotools.astronomy)</a>
 </li>
       <li><a href="astronomy.html#aotools.astronomy.photons_per_mag">photons_per_mag() (in module aotools.astronomy)</a>
 </li>
+      <li><a href="zernike.html#aotools.functions.karhunenLoeve.piston_orth">piston_orth() (in module aotools.functions.karhunenLoeve)</a>
+</li>
       <li><a href="turbulence.html#aotools.turbulence.temporal_ps.plot_tps">plot_tps() (in module aotools.turbulence.temporal_ps)</a>
+</li>
+      <li><a href="zernike.html#aotools.functions.karhunenLoeve.pol2car">pol2car() (in module aotools.functions.karhunenLoeve)</a>
+</li>
+      <li><a href="zernike.html#aotools.functions.karhunenLoeve.polang">polang() (in module aotools.functions.karhunenLoeve)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -421,8 +445,12 @@
 </li>
       <li><a href="turbulence.html#aotools.turbulence.atmos_conversions.r0_to_seeing">r0_to_seeing() (in module aotools.turbulence.atmos_conversions)</a>
 </li>
+      <li><a href="zernike.html#aotools.functions.karhunenLoeve.radii">radii() (in module aotools.functions.karhunenLoeve)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="zernike.html#aotools.functions.karhunenLoeve.rebin">rebin() (in module aotools.functions.karhunenLoeve)</a>
+</li>
       <li><a href="fft.html#aotools.fouriertransform.rft">rft() (in module aotools.fouriertransform)</a>
 </li>
       <li><a href="fft.html#aotools.fouriertransform.rft2">rft2() (in module aotools.fouriertransform)</a>
@@ -439,15 +467,25 @@
 </li>
       <li><a href="turbulence.html#aotools.turbulence.atmos_conversions.seeing_to_r0">seeing_to_r0() (in module aotools.turbulence.atmos_conversions)</a>
 </li>
+      <li><a href="zernike.html#aotools.functions.karhunenLoeve.set_pctr">set_pctr() (in module aotools.functions.karhunenLoeve)</a>
+</li>
       <li><a href="turbulence.html#aotools.turbulence.infinitephasescreen.PhaseScreenKolmogorov.set_stencil_coords">set_stencil_coords() (aotools.turbulence.infinitephasescreen.PhaseScreenKolmogorov method)</a>
 
       <ul>
         <li><a href="turbulence.html#aotools.turbulence.infinitephasescreen.PhaseScreenVonKarman.set_stencil_coords">(aotools.turbulence.infinitephasescreen.PhaseScreenVonKarman method)</a>
 </li>
       </ul></li>
+      <li><a href="zernike.html#aotools.functions.karhunenLoeve.setpincs">setpincs() (in module aotools.functions.karhunenLoeve)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="turbulence.html#aotools.turbulence.atmos_conversions.slope_variance_from_r0">slope_variance_from_r0() (in module aotools.turbulence.atmos_conversions)</a>
+</li>
+      <li><a href="zernike.html#aotools.functions.karhunenLoeve.stf_kolmogorov">stf_kolmogorov() (in module aotools.functions.karhunenLoeve)</a>
+</li>
+      <li><a href="zernike.html#aotools.functions.karhunenLoeve.stf_vonKarman">stf_vonKarman() (in module aotools.functions.karhunenLoeve)</a>
+</li>
+      <li><a href="zernike.html#aotools.functions.karhunenLoeve.stf_vonKarman_yao">stf_vonKarman_yao() (in module aotools.functions.karhunenLoeve)</a>
 </li>
       <li><a href="turbulence.html#aotools.turbulence.slopecovariance.structure_function_kolmogorov">structure_function_kolmogorov() (in module aotools.turbulence.slopecovariance)</a>
 </li>

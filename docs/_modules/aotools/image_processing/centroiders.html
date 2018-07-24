@@ -93,7 +93,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../turbulence.html">Atmospheric Turbulence</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../image_processing.html">Image Processing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../zernike.html">Zernike Modes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../zernike.html">Circular Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../pupil.html">Telescope Pupils</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../wfs.html">Wavefront Sensors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../opticalpropagation.html">Optical Propagation</a></li>
@@ -175,7 +175,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span>
 
 
-<div class="viewcode-block" id="correlation_centroid"><a class="viewcode-back" href="../../../image_processing.html#aotools.image_processing.centroiders.correlation_centroid">[docs]</a><span class="k">def</span> <span class="nf">correlation_centroid</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.</span><span class="p">):</span>
+<div class="viewcode-block" id="correlation_centroid"><a class="viewcode-back" href="../../../image_processing.html#aotools.image_processing.centroiders.correlation_centroid">[docs]</a><span class="k">def</span> <span class="nf">correlation_centroid</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Correlation Centroider, currently only works for 3d im shape.</span>
 <span class="sd">    Performs a simple thresholded COM on the correlation.</span>
@@ -184,6 +184,7 @@
 <span class="sd">        im: sub-aperture images (t, y, x)</span>
 <span class="sd">        ref: reference image (y, x)</span>
 <span class="sd">        threshold: fractional threshold for COM (0=all pixels, 1=brightest pixel)</span>
+<span class="sd">        padding: factor to zero-pad arrays in Fourier transforms</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        ndarray: centroids of im (2, t), given in order x, y</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -204,7 +205,7 @@
     <span class="n">centroids</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="n">nt</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">frame</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nt</span><span class="p">):</span>
         <span class="c1"># Correlate frame with reference image</span>
-        <span class="n">corr</span> <span class="o">=</span> <span class="n">cross_correlate</span><span class="p">(</span><span class="n">im</span><span class="p">[</span><span class="n">frame</span><span class="p">],</span> <span class="n">ref</span><span class="p">)</span>
+        <span class="n">corr</span> <span class="o">=</span> <span class="n">cross_correlate</span><span class="p">(</span><span class="n">im</span><span class="p">[</span><span class="n">frame</span><span class="p">],</span> <span class="n">ref</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="n">padding</span><span class="p">)</span>
 
         <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span> <span class="o">=</span> <span class="n">centreOfGravity</span><span class="p">(</span><span class="n">corr</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="n">threshold</span><span class="p">)</span>
 
@@ -214,7 +215,7 @@
 
 
 <div class="viewcode-block" id="centreOfGravity"><a class="viewcode-back" href="../../../image_processing.html#aotools.image_processing.centroiders.centreOfGravity">[docs]</a><span class="k">def</span> <span class="nf">centreOfGravity</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Centroids an image, or an array of images.</span>
 <span class="sd">    Centroids over the last 2 dimensions.</span>
 <span class="sd">    Sets all values under &quot;threshold*max_value&quot; to zero before centroiding</span>
@@ -227,22 +228,22 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        ndarray: Array of centroid values (2[, n])</span>
 
-<span class="sd">    &#39;&#39;&#39;</span>
-    <span class="k">if</span> <span class="n">threshold</span><span class="o">!=</span><span class="mi">0</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">==</span><span class="mi">2</span><span class="p">:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">threshold</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
             <span class="n">img</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">img</span><span class="o">&gt;</span><span class="n">threshold</span><span class="o">*</span><span class="n">img</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">img</span><span class="p">,</span> <span class="mi">0</span> <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">img_temp</span> <span class="o">=</span> <span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">T</span> <span class="o">-</span> <span class="n">threshold</span><span class="o">*</span><span class="n">img</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
-            <span class="n">zero_coords</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">img_temp</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">zero_coords</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">img_temp</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
             <span class="n">img</span><span class="p">[</span><span class="n">zero_coords</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">==</span><span class="mi">2</span><span class="p">:</span>
-        <span class="n">y_cent</span><span class="p">,</span><span class="n">x_cent</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">indices</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">y_cent</span><span class="p">,</span> <span class="n">x_cent</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">indices</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
         <span class="n">y_centroid</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_cent</span><span class="o">*</span><span class="n">img</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="n">img</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
         <span class="n">x_centroid</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_cent</span><span class="o">*</span><span class="n">img</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="n">img</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">y_cent</span><span class="p">,</span> <span class="n">x_cent</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">indices</span><span class="p">((</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="n">y_cent</span><span class="p">,</span> <span class="n">x_cent</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">indices</span><span class="p">((</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
         <span class="n">y_centroid</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_cent</span><span class="o">*</span><span class="n">img</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="n">img</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">x_centroid</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_cent</span><span class="o">*</span><span class="n">img</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="n">img</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 
@@ -270,31 +271,32 @@
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">==</span><span class="mi">2</span><span class="p">:</span>
         <span class="n">pxlValue</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">flatten</span><span class="p">())[</span><span class="o">-</span><span class="n">nPxls</span><span class="p">]</span>
         <span class="n">img</span><span class="o">-=</span><span class="n">pxlValue</span>
-        <span class="n">img</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
 
     <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">==</span><span class="mi">3</span><span class="p">:</span>
         <span class="n">pxlValues</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span>
                         <span class="n">img</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
                         <span class="p">)[:,</span><span class="o">-</span><span class="n">nPxls</span><span class="p">]</span>
         <span class="n">img</span><span class="p">[:]</span>  <span class="o">=</span> <span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">T</span> <span class="o">-</span> <span class="n">pxlValues</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
-        <span class="n">img</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">out</span><span class="o">=</span><span class="n">img</span><span class="p">)</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">out</span><span class="o">=</span><span class="n">img</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">centreOfGravity</span><span class="p">(</span><span class="n">img</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="cross_correlate"><a class="viewcode-back" href="../../../image_processing.html#aotools.image_processing.centroiders.cross_correlate">[docs]</a><span class="k">def</span> <span class="nf">cross_correlate</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<div class="viewcode-block" id="cross_correlate"><a class="viewcode-back" href="../../../image_processing.html#aotools.image_processing.centroiders.cross_correlate">[docs]</a><span class="k">def</span> <span class="nf">cross_correlate</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    2D convolution using FFT, use to generate cross-correlations.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        x (array): subap image</span>
 <span class="sd">        y (array): reference image</span>
+<span class="sd">        padding (int): Factor to zero-pad arrays in Fourier transforms</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        ndarray: cross-correlation of x and y</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">reference_image</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">conjugate</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft2</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+    <span class="n">reference_image</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">conjugate</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft2</span><span class="p">(</span><span class="n">y</span><span class="p">))</span> <span class="c1"># , s=[y.shape[0]*padding, y.shape[1]*padding]))</span>
 
-    <span class="n">frame</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">frame</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1"># , s=[x.shape[0]*padding, x.shape[1]*padding])</span>
     <span class="n">cross_correlation</span> <span class="o">=</span> <span class="n">frame</span> <span class="o">*</span> <span class="n">reference_image</span>
     <span class="n">cross_correlation</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftshift</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft2</span><span class="p">(</span><span class="n">cross_correlation</span><span class="p">)))</span>
 
