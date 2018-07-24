@@ -9,27 +9,22 @@ The present implementation is based on the IDL package of R. Cannon
 (wavefront modelling and reconstruction).
 A closely similar implementation can also be find in Yorick in the YAO package.
 
-USAGE
+Usage
 -----
-Main routine is 'make_kl' to generate KL basis of dimension [dim, dim, nmax].
+Main routine is 'make_kl' to generate KL basis of dimension ``[dim, dim, nmax]``.
 
-For Kolmogorov statistics, e.g.:
+For Kolmogorov statistics, e.g. ::
+
     kl, _, _, _ = make_kl(150, 128, ri = 0.2, stf='kolmogorov')
 
-REQUIREMENTS
-------------
-numpy
-scipy
+.. warning::
 
-TO FIX
-------
- - make_kl with von Karman stf fails:
-    -> implemented but KL generation failed in 'while loop' of gkl_fcom...
+    make_kl with von Karman stf fails. It has been implemented but KL generation failed in 'while loop' of gkl_fcom...
 
-@author: Gilles Orban de Xivry (ULiege)
-@date: November 2017
-
+.. codeauthor:: Gilles Orban de Xivry (ULieve)
+:date: November 2017
 '''
+
 import numpy as np
 import scipy
 from scipy.ndimage.interpolation import map_coordinates
@@ -449,8 +444,8 @@ def set_pctr(bas, ncp=None, ncmar=None):
 
     Parameters
     ----------
-    bas : dic
-        gkl_basis dic built with the gkl_bas routine
+        bas : dic
+            gkl_basis dic built with the gkl_bas routine
     '''
     if ncmar is None:
         ncmar = 2
@@ -505,11 +500,15 @@ def pcgeom(nr, npp, ncp, ri, ncmar):
     '''
     This routine builds a geom dic.
 
-    px, py : the x, y coordinates of points in the polar arrays.
-    cr, cp : the r, phi coordinates of points in the cartesian grids.
-    ncmar : allows the possibility that there is a margin of
-        ncmar points in the cartesian arrays outside the region of
-        interest.
+    Parameters
+    ----------
+        px, py : int
+            the x, y coordinates of points in the polar arrays.
+        cr, cp :
+            the r, phi coordinates of points in the cartesian grids.
+        ncmar :
+            allows the possibility that there is a margin of ncmar points in the
+            cartesian arrays outside the region of interest.
     '''
     nused = ncp - 2 * ncmar
     ff = 0.5 * nused
@@ -571,13 +570,14 @@ def make_kl(nmax, dim, ri=0.0, nr=40,
     '''
     Main routine to generatre a KL basis of dimension [nmax, dim, dim].
 
-    For Kolmogorov statistics, e.g.:
+    For Kolmogorov statistics, e.g. ::
+
         kl, _, _, _ = make_kl(150, 128, ri = 0.2, stf='kolmogorov')
 
-    As a rule of thumb
-        nr x npp = 50 x 250 is fine up to 500 functions
-        60 x 300 for a thousand
-        80 x 400 for three thousands.
+    | As a rule of thumb
+    |     nr x npp = 50 x 250 is fine up to 500 functions
+    |     60 x 300 for a thousand
+    |     80 x 400 for three thousands.
 
     Parameters
     ----------
