@@ -1,5 +1,7 @@
 language: python
-sudo: false
+sudo: true
+dist: xenial
+
 branches:
   only:
   - master
@@ -8,7 +10,7 @@ branches:
 python:
 - 2.7
 - 3.6
-# - 3.7
+- 3.7
 
 addons:
   apt:
