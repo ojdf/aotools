@@ -21,9 +21,16 @@ def test_encircledEnergy():
 
 
 def test_encircledEnergy_func():
-        data = numpy.random.rand(32, 32)
-        x, y = functions.encircledEnergy(data, eeDiameter=False)
-        print(y.min(), y.max())
-        assert len(x) == len(y)
-        assert numpy.max(y) <= 1
-        assert numpy.min(y) >= 0
+    data = numpy.random.rand(32, 32)
+    x, y = functions.encircledEnergy(data, eeDiameter=False)
+    print(y.min(), y.max())
+    assert len(x) == len(y)
+    assert numpy.max(y) <= 1
+    assert numpy.min(y) >= 0
+
+
+def test_aziAvg():
+    data = numpy.random.rand(32, 32)
+    azi = functions.aziAvg(data)
+    print(azi.shape)
+    assert azi.shape == (16,)

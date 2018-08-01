@@ -1,8 +1,7 @@
-Zernike Modes
+Interpolation
 =============
 
-.. automodule:: aotools.functions.zernike
+.. automodule:: aotools.interpolation
     :members:
     :undoc-members:
     :show-inheritance:
-

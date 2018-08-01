@@ -1,4 +1,7 @@
 """
+Infinite Phase Screens
+----------------------
+
 An implementation of the "infinite phase screen", as deduced by Francois Assemat and Richard W. Wilson, 2006.
 """
 

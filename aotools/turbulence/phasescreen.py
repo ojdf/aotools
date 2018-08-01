@@ -1,3 +1,11 @@
+"""
+Finite Phase Screens
+--------------------
+
+Creation of phase screens with Von Karmen Statistics.
+
+"""
+
 import numpy
 from numpy import fft
 import time
@@ -81,8 +89,6 @@ def ft_sh_phase_screen(r0, N, delta, L0, l0, FFT=None, seed=None):
     return phs
 
 
-
-
 def ift2(G, delta_f ,FFT=None):
     """
     Wrapper for inverse fourier transform
@@ -101,6 +107,7 @@ def ift2(G, delta_f ,FFT=None):
         g = fft.ifftshift( fft.ifft2( fft.fftshift(G) ) ) * (N * delta_f)**2
 
     return g
+
 
 def ft_phase_screen(r0, N, delta, L0, l0, FFT=None, seed=None):
     '''
