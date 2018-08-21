@@ -24,8 +24,8 @@ before_install:
 - conda update --yes conda
 install:
 - conda install --yes python=$TRAVIS_PYTHON_VERSION numpy scipy nose matplotlib
-- python setup.py install
 - pip install codecov pypandoc
+- python setup.py install
 script:
 - nosetests --verbosity=3 --with-coverage --cover-package=aotools test/
 after_success:
