@@ -20,7 +20,6 @@ setup(
               'aotools.image_processing',
               'aotools.turbulence',
               'aotools.wfs',
-              'aotools.optical_propagation')
               ],
     description='A set of useful functions for Adaptive Optics in Python',
     long_description=long_description,
