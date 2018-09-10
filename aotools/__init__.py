@@ -1,4 +1,4 @@
-from . import astronomy, functions, image_processing, wfs, turbulence
+from . import astronomy, functions, image_processing, wfs, turbulence, opticalpropagation
 
 from .astronomy import *
 from .functions import *
