@@ -50,7 +50,7 @@ def test_quadCell_many():
 def test_convolution():
     im = numpy.random.random((10, 10))
     ref = numpy.random.random((10, 10))
-    corr = image_processing.cross_correlate(im, ref)
+    corr = image_processing.cross_correlate(im, ref, padding=1)
     assert(corr.shape == im.shape)
 
 
