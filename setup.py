@@ -1,19 +1,14 @@
 from distutils.core import setup
 import versioneer
 
-# I really prefer Markdown to reStructuredText.  PyPi does not.  This allows me
-# to have things how I'd like, but not throw complaints when people are trying
-# to install the package and they don't have pypandoc or the README in the
-# right place.
-try:
-   import pypandoc
-   long_description = pypandoc.convert('README.md', 'rst')
-except (IOError, ImportError):
-   long_description = ''
+
+with open("README.rst", "r") as readme:
+    long_description = readme.read()
 
 setup(
     name='aotools',
     author_email='a.p.reeves@durham.ac.uk',
+    url='https://github.com/aotools/aotools',
     packages=['aotools',
               'aotools.astronomy',
               'aotools.functions',
@@ -28,5 +23,14 @@ setup(
     install_requires=[
         'numpy',
         'scipy',
+    ],
+    classifiers=[
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
     ],
 )
