@@ -382,38 +382,6 @@ class PhaseScreenKolmogorov(PhaseScreen):
         self.makeBMatrix()
         self.make_initial_screen()
 
-    def set_stencil_coords(self):
-        """
-        Sets the Z coordinates, sections of the phase screen that will be used to create new phase
-
-        """
-        self.stencil = numpy.zeros((self.stencil_length, self.nx_size))
-
-        max_n = 1
-        while True:
-            if 2 ** (max_n - 1) + 1 >= self.nx_size:
-                max_n -= 1
-                break
-            max_n += 1
-
-        for n in range(0, max_n + 1):
-            col = int((2 ** (n - 1)) + 1)
-            n_points = (2 ** (max_n - n)) + 1
-
-            coords = numpy.round(numpy.linspace(0, self.nx_size - 1, n_points)).astype('int32')
-            self.stencil[col - 1][coords] = 1
-
-        # Now fill in tail of stencil
-        for n in range(1, self.stencil_length_factor + 1):
-            col = n * self.nx_size - 1
-            self.stencil[col, self.nx_size // 2] = 1
-
-        self.stencil_coords = numpy.array(numpy.where(self.stencil == 1)).T
-        self.stencil_positions = self.stencil_coords * self.pixel_scale
-
-        self.n_stencils = len(self.stencil_coords)
-
-
     def get_new_row(self):
         random_data = numpy.random.normal(0, 1, size=self.nx_size)
 
