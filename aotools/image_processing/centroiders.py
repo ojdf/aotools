@@ -68,7 +68,7 @@ def centreOfGravity(img, threshold=0, **kwargs):
     """
     if threshold != 0:
         if len(img.shape) == 2:
-            img = numpy.where(img>threshold*img.max(), img, 0 )
+            img = numpy.where(img > threshold*img.max(), img - threshold*img.max(), 0)
         else:
             img_temp = (img.T - threshold*img.max(-1).max(-1)).T
             zero_coords = numpy.where(img_temp < 0)
