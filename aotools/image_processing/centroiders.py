@@ -51,7 +51,7 @@ def correlation_centroid(im, ref, threshold=0., padding=1):
     return centroids
 
 
-def centreOfGravity(img, threshold=0, **kwargs):
+def centreOfGravity(img, threshold=0, minThreshold=0, **kwargs):
     """
     Centroids an image, or an array of images.
     Centroids over the last 2 dimensions.
@@ -66,11 +66,16 @@ def centreOfGravity(img, threshold=0, **kwargs):
         ndarray: Array of centroid values (2[, n])
 
     """
+
     if threshold != 0:
         if len(img.shape) == 2:
-            img = numpy.where(img > threshold*img.max(), img - threshold*img.max(), 0)
+            thres = numpy.max((threshold*img.max(), minThreshold))
+            #img = numpy.where(img > threshold*img.max(), img - threshold*img.max(), 0)
+            img = numpy.where(img > thres, img - thres, 0)
         else:
-            img_temp = (img.T - threshold*img.max(-1).max(-1)).T
+            thres = numpy.maximum(threshold*img.max(-1).max(-1), [minThreshold]*img.shape[0])
+            #img_temp = (img.T - threshold*img.max(-1).max(-1)).T
+            img_temp = (img.T - thres).T
             zero_coords = numpy.where(img_temp < 0)
             img[zero_coords] = 0
 
