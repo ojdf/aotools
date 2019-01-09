@@ -5,6 +5,11 @@ from .. import functions
 
 def r0fromSlopes(slopes, wavelength, subapDiam):
     """
+
+    .. warning::
+
+        This function will be removed in version 0.7, instead use aotools.turbulence.r0_from_slopes
+        
     Measures the value of R0 from a set of WFS slopes.
 
     Uses the equation in Saint Jaques, 1998, PhD Thesis, Appendix A to calculate the value of atmospheric seeing parameter, r0, that would result in the variance of the given slopes.
@@ -18,7 +23,7 @@ def r0fromSlopes(slopes, wavelength, subapDiam):
         float: An estimate of r0 for that dataset.
 
     """
-    warnings.warn("This function will be removed in version 0.5, instead use aotools.turbulence.r0_from_slopes", DeprecationWarning)
+    warnings.warn("This function will be removed in version 0.7, instead use aotools.turbulence.r0_from_slopes", DeprecationWarning)
 
     slopeVar = slopes.var(axis=(-1))
 
@@ -35,7 +40,7 @@ def slopeVarfromR0(r0, wavelength, subapDiam):
     Uses the equation in Saint Jaques, 1998, PhD Thesis, Appendix A to calculate the slope variance resulting from a value of r0.
 
     """
-    warnings.warn("This function will be removed in version 0.5, instead use aotools.turbulence.slope_variance_from_r0",
+    warnings.warn("This function will be removed in version 0.7, instead use aotools.turbulence.slope_variance_from_r0",
                   DeprecationWarning)
 
     slope_var = 0.162 * (wavelength ** 2) * r0 ** (-5. / 3) * subapDiam ** (-1. / 3)
