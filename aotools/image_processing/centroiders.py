@@ -75,6 +75,27 @@ def centreOfGravity(img, threshold=0, **kwargs):
     warnings.warn("This function will be removed in version 0.7, instead use aotools.centroiders.centre_of_gravity",
                   DeprecationWarning)
 
+    centroids = centre_of_gravity(img, threshold)
+
+    return centroids
+
+
+def centre_of_gravity(img, threshold=0, **kwargs):
+    """
+    Centroids an image, or an array of images.
+    Centroids over the last 2 dimensions.
+    Sets all values under "threshold*max_value" to zero before centroiding
+    Origin at 0,0 index of img.
+
+    Parameters:
+        img (ndarray): ([n, ]y, x) 2d or greater rank array of imgs to centroid
+        threshold (float): Percentage of max value under which pixels set to 0
+
+    Returns:
+        ndarray: Array of centroid values (2[, n])
+
+    """
+
     if threshold != 0:
         if len(img.shape) == 2:
             img = numpy.where(img>threshold*img.max(), img, 0 )
