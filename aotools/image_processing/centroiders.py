@@ -58,9 +58,13 @@ def centreOfGravity(img, threshold=0, minThreshold=0, **kwargs):
     Sets all values under "threshold*max_value" to zero before centroiding
     Origin at 0,0 index of img.
 
+    The value under which pixels are set to 0
+     is max(threshold*max_value, minThreshold)
+
     Parameters:
         img (ndarray): ([n, ]y, x) 2d or greater rank array of imgs to centroid
         threshold (float): Percentage of max value under which pixels set to 0
+        minThreshold (float): Absolute max value under which pixels set to 0
 
     Returns:
         ndarray: Array of centroid values (2[, n])
