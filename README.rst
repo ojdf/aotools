@@ -1,7 +1,7 @@
 AOtools
 =======
 
-Useful tools for Adaptive Optics analysis for the Python Programming Language. If using this code for a publication please cite the `aotools paper <https://www.osapublishing.org/oe/abstract.cfm?uri=oe-27-22-31316>`_(M. J. Townson, O. J. D. Farley, G. Orban de Xivry, J. Osborn, and A. P. Reeves, "AOtools: a Python package for adaptive optics modelling and analysis," Opt. Express 27, 31316-31329 (2019))
+Useful tools for Adaptive Optics analysis for the Python Programming Language. If using this code for a publication please cite the `aotools paper <https://www.osapublishing.org/oe/abstract.cfm?uri=oe-27-22-31316>`_ (M. J. Townson, O. J. D. Farley, G. Orban de Xivry, J. Osborn, and A. P. Reeves, "AOtools: a Python package for adaptive optics modelling and analysis," Opt. Express 27, 31316-31329 (2019))
 
 .. image:: https://travis-ci.org/AOtools/aotools.svg?branch=master
    :target: https://travis-ci.org/AOtools/aotools
