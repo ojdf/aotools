@@ -32,7 +32,7 @@ def test_zernike_nm():
 
 
 def test_zernike():
-    zernike_array = functions.zernike(9, 32)
+    zernike_array = functions.zernike_noll(9, 32)
     assert(zernike_array.shape == (32, 32))
 
 

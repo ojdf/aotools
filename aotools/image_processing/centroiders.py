@@ -7,7 +7,6 @@ Functions for centroiding images.
 """
 
 import numpy
-import warnings
 
 
 def correlation_centroid(im, ref, threshold=0., padding=1):
@@ -52,38 +51,6 @@ def correlation_centroid(im, ref, threshold=0., padding=1):
     return centroids
 
 
-def centreOfGravity(img, threshold=0, minThreshold=0, **kwargs):
-    """
-
-    .. warning::
-
-        This function will be removed in version 0.7, instead use aotools.centroiders.centre_of_gravity
-
-    Centroids an image, or an array of images.
-    Centroids over the last 2 dimensions.
-    Sets all values under "threshold*max_value" to zero before centroiding
-    Origin at 0,0 index of img.
-
-    The value under which pixels are set to 0
-     is max(threshold*max_value, minThreshold)
-
-    Parameters:
-        img (ndarray): ([n, ]y, x) 2d or greater rank array of imgs to centroid
-        threshold (float): Percentage of max value under which pixels set to 0
-        minThreshold (float): Absolute max value under which pixels set to 0
-
-    Returns:
-        ndarray: Array of centroid values (2[, n])
-
-    """
-    warnings.warn("This function will be removed in version 0.7, instead use aotools.centroiders.centre_of_gravity",
-                  DeprecationWarning)
-
-    centroids = centre_of_gravity(img, threshold)
-
-    return centroids
-
-
 def centre_of_gravity(img, threshold=0, **kwargs):
     """
     Centroids an image, or an array of images.
@@ -121,35 +88,6 @@ def centre_of_gravity(img, threshold=0, **kwargs):
         x_centroid = (x_cent*img).sum(-1).sum(-1)/img.sum(-1).sum(-1)
 
     return numpy.array([x_centroid, y_centroid])
-
-
-def brightestPxl(img, threshold, **kwargs):
-    """
-
-    .. warning::
-
-        This function will be removed in version 0.7, instead use aotools.centroiders.brightest_pixel
-
-    Centroids using brightest Pixel Algorithm
-    (A. G. Basden et al,  MNRAS, 2011)
-
-    Finds the nPxlsth brightest pixel, subtracts that value from frame,
-    sets anything below 0 to 0, and finally takes centroid.
-
-    Parameters:
-        img (ndarray): 2d or greater rank array of imgs to centroid
-        threshold (float): Fraction of pixels to use for centroid
-
-    Returns:
-        ndarray: Array of centroid values
-    """
-
-    warnings.warn("This function will be removed in version 0.7, instead use aotools.centroiders.brightest_pixel",
-                  DeprecationWarning)
-
-    centroid = brightest_pixel(img, threshold)
-
-    return centroid
 
 
 def brightest_pixel(img, threshold, **kwargs):

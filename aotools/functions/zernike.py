@@ -28,7 +28,7 @@ def phaseFromZernikes(zCoeffs, size, norm="noll"):
     return phase
 
 
-def zernike(j, N):
+def zernike_noll(j, N):
     """
      Creates the Zernike polynomial with mode index j,
      where j = 1 corresponds to piston.
@@ -143,7 +143,7 @@ def zernikeArray(J, N, norm="noll"):
         nJ = len(J)
         Zs = numpy.empty((nJ, N, N))
         for i in xrange(nJ):
-            Zs[i] = zernike(J[i], N)
+            Zs[i] = zernike_noll(J[i], N)
 
     # Else, cast to int and create up to that number
     except TypeError:
@@ -154,7 +154,7 @@ def zernikeArray(J, N, norm="noll"):
         Zs = numpy.empty((maxJ, N, N))
 
         for j in xrange(1, maxJ+1):
-            Zs[j-1] = zernike(j, N)
+            Zs[j-1] = zernike_noll(j, N)
 
 
     if norm=="p2v":
