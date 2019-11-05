@@ -15,13 +15,11 @@ given some actual measurements in other directions (where the some suitable guid
 
 """
 
-import time
 import multiprocessing
 
 import numpy
 import scipy.special
 
-from ..functions import circle
 
 class CovarianceMatrix(object):
     """
