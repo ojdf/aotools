@@ -17,10 +17,6 @@ Useful tools for Adaptive Optics analysis for the Python Programming Language. I
 
 .. image:: http://readthedocs.org/projects/aotools/badge/?version=latest
    :target: http://aotools.readthedocs.org/en/latest/?badge=latest
-  
-.. image:: https://img.shields.io/badge/dynamic/json.svg?color=bright%20green&label=Downloads%2FMonth&query=%24.data.last_month&url=https%3A%2F%2Fpypistats.org%2Fapi%2Fpackages%2Faotools%2Frecent
-   :target: https://pypistats.org/packages/aotools
-
 
 Required libraries
 ------------------
@@ -72,3 +68,15 @@ Alternatively, to install the tools to your system python distribution from sour
 Documentation
 +++++++++++++
 Full documentation is hosted by  `Read the Docs <http://aotools.readthedocs.io/en/stable/>`_
+
+Usage Stats
+-----------
+Pip
++++
+.. image:: https://img.shields.io/badge/dynamic/json.svg?color=bright%20green&label=Downloads%2FMonth&query=%24.data.last_month&url=https%3A%2F%2Fpypistats.org%2Fapi%2Fpackages%2Faotools%2Frecent
+   :target: https://pypistats.org/packages/aotools
+   
+Anaconda
+++++++++
+.. image:: https://anaconda.org/aotools/aotools/badges/downloads.svg
+   :target: https://anaconda.org/aotools/aotools
