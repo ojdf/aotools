@@ -7,7 +7,7 @@ of uses, though they are especially useful for creating 'tomographic reconstruct
 WFS measurements in a required direction (where there might be an interesting science target but no guide stars),
 given some actual measurements in other directions (where the some suitable guide stars are).
 
-.. note::
+.. warning::
     This code has been tested qualitatively and seems OK, but needs more rigorous testing.
 
 .. codeauthor::

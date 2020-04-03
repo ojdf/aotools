@@ -1,6 +1,6 @@
 language: python
 sudo: true
-dist: xenial
+dist: bionic
 
 branches:
   only:
@@ -12,6 +12,7 @@ python:
 #- 3.5 Not in travis repositories
 - 3.6
 - 3.7
+- 3.8
 
 addons:
   apt:
