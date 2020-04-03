@@ -15,14 +15,15 @@ from . import phasescreen, turb
 
 __all__ = ["PhaseScreenVonKarman", "PhaseScreenKolmogorov"]
 
+
 class PhaseScreen(object):
     """
     A "Phase Screen" for use in AO simulation.  Can be extruded infinitely.
 
     This represents the phase addition light experiences when passing through atmospheric 
     turbulence. Unlike other phase screen generation techniques that translate a large static 
-    screen, this method keeps a small section of phase, and extends it as neccessary for as many 
-    steps as required. This can significantly reduce memory consuption at the expense of more 
+    screen, this method keeps a small section of phase, and extends it as necessary for as many
+    steps as required. This can significantly reduce memory consumption at the expense of more
     processing power required.
 
     The technique is described in a paper by Assemat and Wilson, 2006 and expanded upon by Fried, 2008.
@@ -55,7 +56,7 @@ class PhaseScreen(object):
     L is a diagonal matrix where the diagonal elements are w^(1/2).    
 
     On initialisation an initial phase screen is calculated using an FFT based method.
-    When 'addRows' is called, a new vector of phase is added to the phase screen.
+    When 'add_row' is called, a new vector of phase is added to the phase screen.
 
     Existing points to use are defined by a "stencil", than is set to 0 for points not to use
     and 1 for points to use. This makes this a generalised base class that can be used by 
@@ -180,11 +181,7 @@ class PhaseScreen(object):
 
     def add_row(self):
         """
-        Adds new rows to the phase screen and removes old ones.
-
-        Parameters:
-            nRows (int): Number of rows to add
-            axis (int): Axis to add new rows (can be 0 (default) or 1)
+        Adds a new row to the phase screen and removes old ones.
         """
 
         new_row = self.get_new_row()
@@ -195,6 +192,9 @@ class PhaseScreen(object):
 
     @property
     def scrn(self):
+        """
+        The current phase map held in the PhaseScreen object.
+        """
         return self._scrn[:self.requested_nx_size, :self.requested_nx_size]
 
 
@@ -204,8 +204,8 @@ class PhaseScreenVonKarman(PhaseScreen):
 
     This represents the phase addition light experiences when passing through atmospheric
     turbulence. Unlike other phase screen generation techniques that translate a large static
-    screen, this method keeps a small section of phase, and extends it as neccessary for as many
-    steps as required. This can significantly reduce memory consuption at the expense of more
+    screen, this method keeps a small section of phase, and extends it as necessary for as many
+    steps as required. This can significantly reduce memory consumption at the expense of more
     processing power required.
 
     The technique is described in a paper by Assemat and Wilson, 2006. It essentially assumes that
@@ -237,9 +237,9 @@ class PhaseScreenVonKarman(PhaseScreen):
     L is a diagonal matrix where the diagonal elements are w^(1/2).
 
     On initialisation an initial phase screen is calculated using an FFT based method.
-    When 'addRows' is called, a new vector of phase is added to the phase screen using `nCols`
+    When ``add_row`` is called, a new vector of phase is added to the phase screen using `nCols`
     columns of previous phase. Assemat & Wilson claim that two columns are adequate for good
-    atmospheric statistics. The phase in the screen data is always accessed as `<phasescreen>.scrn`.
+    atmospheric statistics. The phase in the screen data is always accessed as ``<phasescreen>.scrn``.
 
     Parameters:
         nx_size (int): Size of phase screen (NxN)
@@ -346,7 +346,8 @@ class PhaseScreenKolmogorov(PhaseScreen):
     and applied on each iteration such that the new phase equation becomes:
     
     On initialisation an initial phase screen is calculated using an FFT based method.
-    When 'addRows' is called, a new vector of phase is added to the phase screen.
+    When ``add_row`` is called, a new vector of phase is added to the phase screen. The phase in the screen data
+    is always accessed as ``<phasescreen>.scrn``.
 
     Parameters:
         nx_size (int): Size of phase screen (NxN)

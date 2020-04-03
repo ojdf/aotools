@@ -2,7 +2,7 @@
 Finite Phase Screens
 --------------------
 
-Creation of phase screens with Von Karmen Statistics.
+Creation of phase screens of a defined size with Von Karmen Statistics.
 
 """
 
@@ -18,7 +18,8 @@ except NameError:
     xrange = range
 
 def ft_sh_phase_screen(r0, N, delta, L0, l0, FFT=None, seed=None):
-    '''
+
+    """
     Creates a random phase screen with Von Karmen statistics with added
     sub-harmonics to augment tip-tilt modes.
     (Schmidt 2010)
@@ -32,7 +33,7 @@ def ft_sh_phase_screen(r0, N, delta, L0, l0, FFT=None, seed=None):
 
     Returns:
         ndarray: numpy array representing phase screen
-    '''
+    """
     R = random.SystemRandom(time.time())
     if seed is None:
         seed = int(R.random()*100000)
@@ -60,7 +61,7 @@ def ft_sh_phase_screen(r0, N, delta, L0, l0, FFT=None, seed=None):
         f = numpy.sqrt(fx**2 +  fy**2) # polar grid
 
         fm = 5.92/l0/(2*numpy.pi) # inner scale frequency [1/m]
-        f0 = 1./L0;
+        f0 = 1./L0
 
         # outer scale frequency [1/m]
         # modified von Karman atmospheric phase PSD
@@ -89,28 +90,8 @@ def ft_sh_phase_screen(r0, N, delta, L0, l0, FFT=None, seed=None):
     return phs
 
 
-def ift2(G, delta_f ,FFT=None):
-    """
-    Wrapper for inverse fourier transform
-
-    Parameters:
-        G: data to transform
-        delta_f: pixel seperation
-        FFT (FFT object, optional): An accelerated FFT object
-    """
-        
-    N = G.shape[0]
-
-    if FFT:
-        g = numpy.fft.fftshift( FFT( numpy.fft.fftshift(G) ) ) * (N * delta_f)**2
-    else:
-        g = fft.ifftshift( fft.ifft2( fft.fftshift(G) ) ) * (N * delta_f)**2
-
-    return g
-
-
 def ft_phase_screen(r0, N, delta, L0, l0, FFT=None, seed=None):
-    '''
+    """
     Creates a random phase screen with Von Karmen statistics.
     (Schmidt 2010)
     
@@ -123,7 +104,7 @@ def ft_phase_screen(r0, N, delta, L0, l0, FFT=None, seed=None):
 
     Returns:
         ndarray: numpy array representing phase screen
-    '''
+    """
     delta = float(delta)
     r0 = float(r0)
     L0 = float(L0)
@@ -136,22 +117,40 @@ def ft_phase_screen(r0, N, delta, L0, l0, FFT=None, seed=None):
 
     del_f = 1./(N*delta)
 
-    fx = numpy.arange(-N/2.,N/2.) * del_f
+    fx = numpy.arange(-N/2., N/2.) * del_f
 
-    (fx,fy) = numpy.meshgrid(fx,fx)
-    f = numpy.sqrt(fx**2 + fy**2)
+    (fx, fy) = numpy.meshgrid(fx,fx)
+    f = numpy.sqrt(fx**2. + fy**2.)
 
     fm = 5.92/l0/(2*numpy.pi)
     f0 = 1./L0
 
-    PSD_phi  = (0.023*r0**(-5./3.) * numpy.exp(-1*((f/fm)**2)) /
-                ( ( (f**2) + (f0**2) )**(11./6) ) )
+    PSD_phi = (0.023*r0**(-5./3.) * numpy.exp(-1*((f/fm)**2)) / (((f**2) + (f0**2))**(11./6)))
 
     PSD_phi[int(N/2), int(N/2)] = 0
 
-    cn = ( (numpy.random.normal(size=(N,N)) + 1j* numpy.random.normal(size=(N,N)) )
-                * numpy.sqrt(PSD_phi)*del_f )
+    cn = ((numpy.random.normal(size=(N, N))+1j * numpy.random.normal(size=(N, N))) * numpy.sqrt(PSD_phi)*del_f)
 
-    phs = ift2(cn,1, FFT).real
+    phs = ift2(cn, 1, FFT).real
 
     return phs
+
+
+def ift2(G, delta_f, FFT=None):
+    """
+    Wrapper for inverse fourier transform
+
+    Parameters:
+        G: data to transform
+        delta_f: pixel seperation
+        FFT (FFT object, optional): An accelerated FFT object
+    """
+
+    N = G.shape[0]
+
+    if FFT:
+        g = numpy.fft.fftshift(FFT(numpy.fft.fftshift(G))) * (N * delta_f) ** 2
+    else:
+        g = fft.ifftshift(fft.ifft2(fft.fftshift(G))) * (N * delta_f) ** 2
+
+    return g
