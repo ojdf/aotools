@@ -41,7 +41,7 @@ def correlation_centroid(im, ref, threshold=0., padding=1):
         # Correlate frame with reference image
         corr = cross_correlate(im[frame], ref, padding=padding)
 
-        cx, cy = centreOfGravity(corr, threshold=threshold)
+        cx, cy = centre_of_gravity(corr, threshold=threshold)
 
         cy -= float(ny) / 2. * (float(padding) - 1)
         cx -= float(nx) / 2. * (float(padding) - 1)
@@ -51,7 +51,7 @@ def correlation_centroid(im, ref, threshold=0., padding=1):
     return centroids
 
 
-def centreOfGravity(img, threshold=0, **kwargs):
+def centre_of_gravity(img, threshold=0, min_threshold=0, **kwargs):
     """
     Centroids an image, or an array of images.
     Centroids over the last 2 dimensions.
@@ -66,11 +66,14 @@ def centreOfGravity(img, threshold=0, **kwargs):
         ndarray: Array of centroid values (2[, n])
 
     """
+
     if threshold != 0:
         if len(img.shape) == 2:
-            img = numpy.where(img>threshold*img.max(), img, 0 )
+            thres = numpy.max((threshold*img.max(), min_threshold))
+            img = numpy.where(img > thres, img - thres, 0)
         else:
-            img_temp = (img.T - threshold*img.max(-1).max(-1)).T
+            thres = numpy.maximum(threshold*img.max(-1).max(-1), [min_threshold]*img.shape[0])
+            img_temp = (img.T - thres).T
             zero_coords = numpy.where(img_temp < 0)
             img[zero_coords] = 0
 
@@ -87,7 +90,7 @@ def centreOfGravity(img, threshold=0, **kwargs):
     return numpy.array([x_centroid, y_centroid])
 
 
-def brightestPxl(img, threshold, **kwargs):
+def brightest_pixel(img, threshold, **kwargs):
     """
     Centroids using brightest Pixel Algorithm
     (A. G. Basden et al,  MNRAS, 2011)
@@ -117,7 +120,7 @@ def brightestPxl(img, threshold, **kwargs):
         img[:]  = (img.T - pxlValues).T
         img = img.clip(0, img.max(), out=img)
 
-    return centreOfGravity(img)
+    return centre_of_gravity(img)
 
 
 def cross_correlate(x, y, padding=1):
