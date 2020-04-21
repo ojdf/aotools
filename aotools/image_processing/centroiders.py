@@ -9,7 +9,7 @@ Functions for centroiding images.
 import numpy
 
 
-def correlation_centroid(im, ref, threshold=0.):
+def correlation_centroid(im, ref, threshold=0., padding=1):
     """
     Correlation Centroider, currently only works for 3d im shape.
     Performs a simple thresholded COM on the correlation.
@@ -18,6 +18,7 @@ def correlation_centroid(im, ref, threshold=0.):
         im: sub-aperture images (t, y, x)
         ref: reference image (y, x)
         threshold: fractional threshold for COM (0=all pixels, 1=brightest pixel)
+        padding: factor to zero-pad arrays in Fourier transforms
     Returns:
         ndarray: centroids of im (2, t), given in order x, y
     """
@@ -38,17 +39,20 @@ def correlation_centroid(im, ref, threshold=0.):
     centroids = numpy.zeros((2, nt))
     for frame in range(nt):
         # Correlate frame with reference image
-        corr = cross_correlate(im[frame], ref)
+        corr = cross_correlate(im[frame], ref, padding=padding)
 
-        cx, cy = centreOfGravity(corr, threshold=threshold)
+        cx, cy = centre_of_gravity(corr, threshold=threshold)
+
+        cy -= float(ny) / 2. * (float(padding) - 1)
+        cx -= float(nx) / 2. * (float(padding) - 1)
 
         centroids[:, frame] = cx, cy
 
     return centroids
 
 
-def centreOfGravity(img, threshold=0, **kwargs):
-    '''
+def centre_of_gravity(img, threshold=0, min_threshold=0, **kwargs):
+    """
     Centroids an image, or an array of images.
     Centroids over the last 2 dimensions.
     Sets all values under "threshold*max_value" to zero before centroiding
@@ -61,29 +65,32 @@ def centreOfGravity(img, threshold=0, **kwargs):
     Returns:
         ndarray: Array of centroid values (2[, n])
 
-    '''
-    if threshold!=0:
-        if len(img.shape)==2:
-            img = numpy.where(img>threshold*img.max(), img, 0 )
+    """
+
+    if threshold != 0:
+        if len(img.shape) == 2:
+            thres = numpy.max((threshold*img.max(), min_threshold))
+            img = numpy.where(img > thres, img - thres, 0)
         else:
-            img_temp = (img.T - threshold*img.max(-1).max(-1)).T
-            zero_coords = numpy.where(img_temp<0)
+            thres = numpy.maximum(threshold*img.max(-1).max(-1), [min_threshold]*img.shape[0])
+            img_temp = (img.T - thres).T
+            zero_coords = numpy.where(img_temp < 0)
             img[zero_coords] = 0
 
-    if len(img.shape)==2:
-        y_cent,x_cent = numpy.indices(img.shape)
+    if len(img.shape) == 2:
+        y_cent, x_cent = numpy.indices(img.shape)
         y_centroid = (y_cent*img).sum()/img.sum()
         x_centroid = (x_cent*img).sum()/img.sum()
 
     else:
-        y_cent, x_cent = numpy.indices((img.shape[-2],img.shape[-1]))
+        y_cent, x_cent = numpy.indices((img.shape[-2], img.shape[-1]))
         y_centroid = (y_cent*img).sum(-1).sum(-1)/img.sum(-1).sum(-1)
         x_centroid = (x_cent*img).sum(-1).sum(-1)/img.sum(-1).sum(-1)
 
     return numpy.array([x_centroid, y_centroid])
 
 
-def brightestPxl(img, threshold, **kwargs):
+def brightest_pixel(img, threshold, **kwargs):
     """
     Centroids using brightest Pixel Algorithm
     (A. G. Basden et al,  MNRAS, 2011)
@@ -113,22 +120,23 @@ def brightestPxl(img, threshold, **kwargs):
         img[:]  = (img.T - pxlValues).T
         img = img.clip(0, img.max(), out=img)
 
-    return centreOfGravity(img)
+    return centre_of_gravity(img)
 
 
-def cross_correlate(x, y):
+def cross_correlate(x, y, padding=1):
     """
     2D convolution using FFT, use to generate cross-correlations.
 
     Args:
         x (array): subap image
         y (array): reference image
+        padding (int): Factor to zero-pad arrays in Fourier transforms
     Returns:
         ndarray: cross-correlation of x and y
     """
-    reference_image = numpy.conjugate(numpy.fft.fft2(y))
+    reference_image = numpy.conjugate(numpy.fft.fft2(y, s=[y.shape[0] * padding, y.shape[1] * padding]))
+    frame = numpy.fft.fft2(x, s=[x.shape[0] * padding, x.shape[1] * padding])
 
-    frame = numpy.fft.fft2(x)
     cross_correlation = frame * reference_image
     cross_correlation = numpy.fft.fftshift(numpy.abs(numpy.fft.ifft2(cross_correlation)))
 
