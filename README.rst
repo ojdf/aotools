@@ -15,9 +15,6 @@ Useful tools for Adaptive Optics analysis for the Python Programming Language. I
 .. image:: https://codecov.io/gh/AOtools/aotools/branch/master/graph/badge.svg
    :target: https://codecov.io/gh/AOtools/aotools
 
-.. image:: http://readthedocs.org/projects/aotools/badge/?version=latest
-   :target: http://aotools.readthedocs.org/en/latest/?badge=latest
-
 Required libraries
 ------------------
 
@@ -67,7 +64,7 @@ Alternatively, to install the tools to your system python distribution from sour
 
 Documentation
 +++++++++++++
-Full documentation is hosted by  `Read the Docs <http://aotools.readthedocs.io/en/stable/>`_
+Full documentation is hosted on  `GitHub Pagess <https://matthewtownson.github.io/aotools/index.html>`_
 
 Usage Stats
 -----------
