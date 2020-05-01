@@ -64,7 +64,7 @@ Alternatively, to install the tools to your system python distribution from sour
 
 Documentation
 +++++++++++++
-Full documentation is hosted on  `GitHub Pagess <https://matthewtownson.github.io/aotools/index.html>`_
+Full documentation is hosted on  `GitHub Pages <https://aotools.github.io/aotools/aotools.html>`_
 
 Usage Stats
 -----------
