@@ -10,8 +10,8 @@ def gaussian2d(size, width, amplitude=1., cent=None):
         size (tuple, float): Dimensions of Array to place gaussian (y, x)
         width (tuple, float): Width of distribution.
                                 Accepts tuple for x and y values in order (y, x).
-        amplitude (float): Amplitude of guassian distribution
-        cent (tuple): Centre of distribution on grid in order (y, x).
+        amplitude (float, optional): Amplitude of guassian distribution. default is 1.
+        cent (tuple, optional): Centre of distribution on grid in order (y, x). Default is middle
     '''
 
     try:
@@ -25,8 +25,9 @@ def gaussian2d(size, width, amplitude=1., cent=None):
         xWidth = float(width[1])
     except (TypeError, IndexError):
         xWidth = yWidth = float(width)
-
-    if not cent:
+    
+    # If a centre point not given, centre is centre of array
+    if cent is None:
         xCent = xSize/2.
         yCent = ySize/2.
     else:
