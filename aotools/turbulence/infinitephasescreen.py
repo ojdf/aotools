@@ -11,6 +11,13 @@ from scipy.interpolate import interp2d
 import numpy
 from numpy import pi
 
+# Numba compiles python code to machine code for faster execution
+try:
+    import numba
+except:
+    numba = None    
+
+
 from . import phasescreen, turb
 
 __all__ = ["PhaseScreenVonKarman", "PhaseScreenKolmogorov"]
@@ -109,14 +116,19 @@ class PhaseScreen(object):
         positions = numpy.append(self.stencil_positions, self.X_positions, axis=0)
         self.seperations = numpy.zeros((len(positions), len(positions)))
 
-        for i, (x1, y1) in enumerate(positions):
-            for j, (x2, y2) in enumerate(positions):
-                delta_x = x2 - x1
-                delta_y = y2 - y1
+        if numba:
+            calc_seperations_fast(positions, self.seperations)
+        else:
+            for i, (x1, y1) in enumerate(positions):
+                for j, (x2, y2) in enumerate(positions):
+                    delta_x = x2 - x1
+                    delta_y = y2 - y1
 
-                delta_r = numpy.sqrt(delta_x ** 2 + delta_y ** 2)
+                    delta_r = numpy.sqrt(delta_x ** 2 + delta_y ** 2)
 
-                self.seperations[i, j] = delta_r
+                    self.seperations[i, j] = delta_r
+
+
 
     def make_covmats(self):
         """
@@ -139,7 +151,9 @@ class PhaseScreen(object):
             cf = linalg.cho_factor(self.cov_mat_zz)
             inv_cov_zz = linalg.cho_solve(cf, numpy.identity(self.cov_mat_zz.shape[0]))
         except linalg.LinAlgError:
-            raise linalg.LinAlgError("Could not invert Covariance Matrix to for A and B Matrices. Try with a larger pixel scale")
+            # print("Cholesky solve failed. Performing SVD inversion...")
+            # inv_cov_zz = numpy.linalg.pinv(self.cov_mat_zz)
+            raise linalg.LinAlgError("Could not invert Covariance Matrix to for A and B Matrices. Try with a larger pixel scale or smaller L0")
 
         self.A_mat = self.cov_mat_xz.dot(inv_cov_zz)
 
@@ -399,3 +413,18 @@ class PhaseScreenKolmogorov(PhaseScreen):
     def __repr__(self):
         return str(self.scrn)
     
+
+
+@numba.jit(nopython=True, parallel=True)
+def calc_seperations_fast(positions, seperations):
+
+    for i in numba.prange(len(positions)):
+        x1, y1 = positions[i]
+        for j in range(len(positions)):
+            x2, y2 = positions[j]
+            delta_x = x2 - x1
+            delta_y = y2 - y1
+
+            delta_r = numpy.sqrt(delta_x ** 2 + delta_y ** 2)
+
+            seperations[i, j] = delta_r
