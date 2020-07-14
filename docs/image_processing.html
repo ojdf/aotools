@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Image Processing &mdash; AOtools 1.0+8.ge99069b.dirty documentation</title>
+  <title>Image Processing &mdash; AOtools 1.0.3 documentation</title>
   
 
   
@@ -169,9 +169,9 @@
 <div class="section" id="centroiders">
 <h2>Centroiders<a class="headerlink" href="#centroiders" title="Permalink to this headline">¶</a></h2>
 <p>Functions for centroiding images.</p>
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.image_processing.centroiders.brightest_pixel">
-<code class="sig-prename descclassname">aotools.image_processing.centroiders.</code><code class="sig-name descname">brightest_pixel</code><span class="sig-paren">(</span><em class="sig-param">img</em>, <em class="sig-param">threshold</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/image_processing/centroiders.html#brightest_pixel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.image_processing.centroiders.brightest_pixel" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.image_processing.centroiders.</code><code class="sig-name descname">brightest_pixel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">img</span></em>, <em class="sig-param"><span class="n">threshold</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/image_processing/centroiders.html#brightest_pixel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.image_processing.centroiders.brightest_pixel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Centroids using brightest Pixel Algorithm
 (A. G. Basden et al,  MNRAS, 2011)</p>
 <p>Finds the nPxlsth brightest pixel, subtracts that value from frame,
@@ -192,9 +192,9 @@ sets anything below 0 to 0, and finally takes centroid.</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.image_processing.centroiders.centre_of_gravity">
-<code class="sig-prename descclassname">aotools.image_processing.centroiders.</code><code class="sig-name descname">centre_of_gravity</code><span class="sig-paren">(</span><em class="sig-param">img</em>, <em class="sig-param">threshold=0</em>, <em class="sig-param">min_threshold=0</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/image_processing/centroiders.html#centre_of_gravity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.image_processing.centroiders.centre_of_gravity" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.image_processing.centroiders.</code><code class="sig-name descname">centre_of_gravity</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">img</span></em>, <em class="sig-param"><span class="n">threshold</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">min_threshold</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/image_processing/centroiders.html#centre_of_gravity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.image_processing.centroiders.centre_of_gravity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Centroids an image, or an array of images.
 Centroids over the last 2 dimensions.
 Sets all values under “threshold*max_value” to zero before centroiding
@@ -215,9 +215,9 @@ Origin at 0,0 index of img.</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.image_processing.centroiders.correlation_centroid">
-<code class="sig-prename descclassname">aotools.image_processing.centroiders.</code><code class="sig-name descname">correlation_centroid</code><span class="sig-paren">(</span><em class="sig-param">im</em>, <em class="sig-param">ref</em>, <em class="sig-param">threshold=0.0</em>, <em class="sig-param">padding=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/image_processing/centroiders.html#correlation_centroid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.image_processing.centroiders.correlation_centroid" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.image_processing.centroiders.</code><code class="sig-name descname">correlation_centroid</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">im</span></em>, <em class="sig-param"><span class="n">ref</span></em>, <em class="sig-param"><span class="n">threshold</span><span class="o">=</span><span class="default_value">0.0</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/image_processing/centroiders.html#correlation_centroid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.image_processing.centroiders.correlation_centroid" title="Permalink to this definition">¶</a></dt>
 <dd><p>Correlation Centroider, currently only works for 3d im shape.
 Performs a simple thresholded COM on the correlation.</p>
 <dl class="field-list simple">
@@ -238,9 +238,9 @@ Performs a simple thresholded COM on the correlation.</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.image_processing.centroiders.cross_correlate">
-<code class="sig-prename descclassname">aotools.image_processing.centroiders.</code><code class="sig-name descname">cross_correlate</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">padding=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/image_processing/centroiders.html#cross_correlate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.image_processing.centroiders.cross_correlate" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.image_processing.centroiders.</code><code class="sig-name descname">cross_correlate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/image_processing/centroiders.html#cross_correlate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.image_processing.centroiders.cross_correlate" title="Permalink to this definition">¶</a></dt>
 <dd><p>2D convolution using FFT, use to generate cross-correlations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -259,9 +259,9 @@ Performs a simple thresholded COM on the correlation.</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.image_processing.centroiders.quadCell">
-<code class="sig-prename descclassname">aotools.image_processing.centroiders.</code><code class="sig-name descname">quadCell</code><span class="sig-paren">(</span><em class="sig-param">img</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/image_processing/centroiders.html#quadCell"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.image_processing.centroiders.quadCell" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.image_processing.centroiders.</code><code class="sig-name descname">quadCell</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">img</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/image_processing/centroiders.html#quadCell"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.image_processing.centroiders.quadCell" title="Permalink to this definition">¶</a></dt>
 <dd><p>Centroider to be used for 2x2 images.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -280,9 +280,9 @@ Performs a simple thresholded COM on the correlation.</p>
 <span class="target" id="module-aotools.image_processing.contrast"></span><div class="section" id="contrast">
 <h2>Contrast<a class="headerlink" href="#contrast" title="Permalink to this headline">¶</a></h2>
 <p>Functions for calculating the contrast of an image.</p>
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.image_processing.contrast.image_contrast">
-<code class="sig-prename descclassname">aotools.image_processing.contrast.</code><code class="sig-name descname">image_contrast</code><span class="sig-paren">(</span><em class="sig-param">image</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/image_processing/contrast.html#image_contrast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.image_processing.contrast.image_contrast" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.image_processing.contrast.</code><code class="sig-name descname">image_contrast</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/image_processing/contrast.html#image_contrast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.image_processing.contrast.image_contrast" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the ‘Michelson’ contrast.</p>
 <dl class="simple">
 <dt>Uses a method by Michelson (Michelson, A. (1927). Studies in Optics. U. of Chicago Press.), to calculate the contrast ratio of an image. Uses the formula:</dt><dd><p>(img_max - img_min)/(img_max + img_min)</p>
@@ -301,9 +301,9 @@ Performs a simple thresholded COM on the correlation.</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.image_processing.contrast.rms_contrast">
-<code class="sig-prename descclassname">aotools.image_processing.contrast.</code><code class="sig-name descname">rms_contrast</code><span class="sig-paren">(</span><em class="sig-param">image</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/image_processing/contrast.html#rms_contrast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.image_processing.contrast.rms_contrast" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.image_processing.contrast.</code><code class="sig-name descname">rms_contrast</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/image_processing/contrast.html#rms_contrast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.image_processing.contrast.rms_contrast" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the RMS contrast - basically the standard deviation of the image</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -322,9 +322,9 @@ Performs a simple thresholded COM on the correlation.</p>
 <span class="target" id="module-aotools.image_processing.psf"></span><div class="section" id="psf-analysis">
 <h2>PSF Analysis<a class="headerlink" href="#psf-analysis" title="Permalink to this headline">¶</a></h2>
 <p>Functions for analysing PSFs.</p>
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.image_processing.psf.azimuthal_average">
-<code class="sig-prename descclassname">aotools.image_processing.psf.</code><code class="sig-name descname">azimuthal_average</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/image_processing/psf.html#azimuthal_average"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.image_processing.psf.azimuthal_average" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.image_processing.psf.</code><code class="sig-name descname">azimuthal_average</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/image_processing/psf.html#azimuthal_average"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.image_processing.psf.azimuthal_average" title="Permalink to this definition">¶</a></dt>
 <dd><p>Measure the azimuthal average of a 2d array</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -339,9 +339,9 @@ Performs a simple thresholded COM on the correlation.</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.image_processing.psf.encircled_energy">
-<code class="sig-prename descclassname">aotools.image_processing.psf.</code><code class="sig-name descname">encircled_energy</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">fraction=0.5</em>, <em class="sig-param">center=None</em>, <em class="sig-param">eeDiameter=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/image_processing/psf.html#encircled_energy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.image_processing.psf.encircled_energy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.image_processing.psf.</code><code class="sig-name descname">encircled_energy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">fraction</span><span class="o">=</span><span class="default_value">0.5</span></em>, <em class="sig-param"><span class="n">center</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">eeDiameter</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/image_processing/psf.html#encircled_energy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.image_processing.psf.encircled_energy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the encircled energy diameter for a given fraction
 (default is ee50d).
 Can also return the encircled energy function.
