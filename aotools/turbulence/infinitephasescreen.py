@@ -193,7 +193,7 @@ class PhaseScreen(object):
     @property
     def scrn(self):
         """
-        The current phase map held in the PhaseScreen object.
+        The current phase map held in the PhaseScreen object in radians.
         """
         return self._scrn[:self.requested_nx_size, :self.requested_nx_size]
 
@@ -239,7 +239,7 @@ class PhaseScreenVonKarman(PhaseScreen):
     On initialisation an initial phase screen is calculated using an FFT based method.
     When ``add_row`` is called, a new vector of phase is added to the phase screen using `nCols`
     columns of previous phase. Assemat & Wilson claim that two columns are adequate for good
-    atmospheric statistics. The phase in the screen data is always accessed as ``<phasescreen>.scrn``.
+    atmospheric statistics. The phase in the screen data is always accessed as ``<phasescreen>.scrn`` and is in radians.
 
     Parameters:
         nx_size (int): Size of phase screen (NxN)
@@ -347,7 +347,7 @@ class PhaseScreenKolmogorov(PhaseScreen):
     
     On initialisation an initial phase screen is calculated using an FFT based method.
     When ``add_row`` is called, a new vector of phase is added to the phase screen. The phase in the screen data
-    is always accessed as ``<phasescreen>.scrn``.
+    is always accessed as ``<phasescreen>.scrn`` and is in radians.
 
     Parameters:
         nx_size (int): Size of phase screen (NxN)
