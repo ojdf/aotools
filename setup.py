@@ -23,7 +23,8 @@ setup(
     install_requires=[
         'numpy',
         'scipy',
-        'matplotlib'
+        'matplotlib',
+        'numba',
     ],
     classifiers=[
         "Programming Language :: Python",
