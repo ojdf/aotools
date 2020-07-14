@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Atmospheric Turbulence &mdash; AOtools 1.0.3 documentation</title>
+  <title>Atmospheric Turbulence &mdash; AOtools 1.0.3+10.gdaed0a5.dirty documentation</title>
   
 
   
@@ -266,7 +266,7 @@ An additional “reference point” is also considered, that is picked from a po
 and applied on each iteration such that the new phase equation becomes:</p>
 <p>On initialisation an initial phase screen is calculated using an FFT based method.
 When <code class="docutils literal notranslate"><span class="pre">add_row</span></code> is called, a new vector of phase is added to the phase screen. The phase in the screen data
-is always accessed as <code class="docutils literal notranslate"><span class="pre">&lt;phasescreen&gt;.scrn</span></code>.</p>
+is always accessed as <code class="docutils literal notranslate"><span class="pre">&lt;phasescreen&gt;.scrn</span></code> and is in radians.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -288,7 +288,7 @@ is always accessed as <code class="docutils literal notranslate"><span class="pr
 <dl class="py method">
 <dt id="aotools.turbulence.infinitephasescreen.PhaseScreenKolmogorov.scrn">
 <em class="property">property </em><code class="sig-name descname">scrn</code><a class="headerlink" href="#aotools.turbulence.infinitephasescreen.PhaseScreenKolmogorov.scrn" title="Permalink to this definition">¶</a></dt>
-<dd><p>The current phase map held in the PhaseScreen object.</p>
+<dd><p>The current phase map held in the PhaseScreen object in radians.</p>
 </dd></dl>
 
 </dd></dl>
@@ -332,7 +332,7 @@ is initialised. Calculating A is straightforward through the relationship:</p>
 <p>On initialisation an initial phase screen is calculated using an FFT based method.
 When <code class="docutils literal notranslate"><span class="pre">add_row</span></code> is called, a new vector of phase is added to the phase screen using <cite>nCols</cite>
 columns of previous phase. Assemat &amp; Wilson claim that two columns are adequate for good
-atmospheric statistics. The phase in the screen data is always accessed as <code class="docutils literal notranslate"><span class="pre">&lt;phasescreen&gt;.scrn</span></code>.</p>
+atmospheric statistics. The phase in the screen data is always accessed as <code class="docutils literal notranslate"><span class="pre">&lt;phasescreen&gt;.scrn</span></code> and is in radians.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -353,7 +353,7 @@ atmospheric statistics. The phase in the screen data is always accessed as <code
 <dl class="py method">
 <dt id="aotools.turbulence.infinitephasescreen.PhaseScreenVonKarman.scrn">
 <em class="property">property </em><code class="sig-name descname">scrn</code><a class="headerlink" href="#aotools.turbulence.infinitephasescreen.PhaseScreenVonKarman.scrn" title="Permalink to this definition">¶</a></dt>
-<dd><p>The current phase map held in the PhaseScreen object.</p>
+<dd><p>The current phase map held in the PhaseScreen object in radians.</p>
 </dd></dl>
 
 </dd></dl>
