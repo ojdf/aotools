@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Wavefront Sensors &mdash; AOtools 1.0+8.ge99069b.dirty documentation</title>
+  <title>Wavefront Sensors &mdash; AOtools 1.0.3 documentation</title>
   
 
   
@@ -161,9 +161,9 @@
             
   <div class="section" id="module-aotools.wfs">
 <span id="wavefront-sensors"></span><h1>Wavefront Sensors<a class="headerlink" href="#module-aotools.wfs" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.wfs.computeFillFactor">
-<code class="sig-prename descclassname">aotools.wfs.</code><code class="sig-name descname">computeFillFactor</code><span class="sig-paren">(</span><em class="sig-param">mask</em>, <em class="sig-param">subapPos</em>, <em class="sig-param">subapSpacing</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/wfs/wfslib.html#computeFillFactor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.wfs.computeFillFactor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.wfs.</code><code class="sig-name descname">computeFillFactor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mask</span></em>, <em class="sig-param"><span class="n">subapPos</span></em>, <em class="sig-param"><span class="n">subapSpacing</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/wfs/wfslib.html#computeFillFactor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.wfs.computeFillFactor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the fill factor of a set of sub-aperture co-ordinates with a given
 pupil mask.</p>
 <dl class="field-list simple">
@@ -183,9 +183,9 @@ pupil mask.</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.wfs.findActiveSubaps">
-<code class="sig-prename descclassname">aotools.wfs.</code><code class="sig-name descname">findActiveSubaps</code><span class="sig-paren">(</span><em class="sig-param">subaps</em>, <em class="sig-param">mask</em>, <em class="sig-param">threshold</em>, <em class="sig-param">returnFill=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/wfs/wfslib.html#findActiveSubaps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.wfs.findActiveSubaps" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.wfs.</code><code class="sig-name descname">findActiveSubaps</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subaps</span></em>, <em class="sig-param"><span class="n">mask</span></em>, <em class="sig-param"><span class="n">threshold</span></em>, <em class="sig-param"><span class="n">returnFill</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/wfs/wfslib.html#findActiveSubaps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.wfs.findActiveSubaps" title="Permalink to this definition">¶</a></dt>
 <dd><p>Finds the subapertures which are “seen” be through the
 pupil function. Returns the coords of those subapertures</p>
 <dl class="field-list simple">
@@ -206,9 +206,9 @@ pupil function. Returns the coords of those subapertures</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.wfs.make_subaps_2d">
-<code class="sig-prename descclassname">aotools.wfs.</code><code class="sig-name descname">make_subaps_2d</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">mask</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/wfs/wfslib.html#make_subaps_2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.wfs.make_subaps_2d" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.wfs.</code><code class="sig-name descname">make_subaps_2d</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">mask</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/wfs/wfslib.html#make_subaps_2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.wfs.make_subaps_2d" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fills in a pupil shape with 2-d sub-apertures</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Astronomical Functions &mdash; AOtools 1.0+8.ge99069b.dirty documentation</title>
+  <title>Astronomical Functions &mdash; AOtools 1.0.3 documentation</title>
   
 
   
@@ -166,9 +166,9 @@
 <h1>Astronomical Functions<a class="headerlink" href="#astronomical-functions" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="module-aotools.astronomy">
 <span id="magnitude-and-flux-calculations"></span><h2>Magnitude and Flux Calculations<a class="headerlink" href="#module-aotools.astronomy" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.astronomy.flux_to_magnitude">
-<code class="sig-prename descclassname">aotools.astronomy.</code><code class="sig-name descname">flux_to_magnitude</code><span class="sig-paren">(</span><em class="sig-param">flux</em>, <em class="sig-param">waveband='V'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/astronomy/_astronomy.html#flux_to_magnitude"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.astronomy.flux_to_magnitude" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.astronomy.</code><code class="sig-name descname">flux_to_magnitude</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">flux</span></em>, <em class="sig-param"><span class="n">waveband</span><span class="o">=</span><span class="default_value">'V'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/astronomy/_astronomy.html#flux_to_magnitude"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.astronomy.flux_to_magnitude" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts incident flux of photons to the apparent magnitude</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -186,9 +186,9 @@
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.astronomy.magnitude_to_flux">
-<code class="sig-prename descclassname">aotools.astronomy.</code><code class="sig-name descname">magnitude_to_flux</code><span class="sig-paren">(</span><em class="sig-param">magnitude</em>, <em class="sig-param">waveband='V'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/astronomy/_astronomy.html#magnitude_to_flux"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.astronomy.magnitude_to_flux" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.astronomy.</code><code class="sig-name descname">magnitude_to_flux</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">magnitude</span></em>, <em class="sig-param"><span class="n">waveband</span><span class="o">=</span><span class="default_value">'V'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/astronomy/_astronomy.html#magnitude_to_flux"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.astronomy.magnitude_to_flux" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts apparent magnitude to a flux of photons</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -206,9 +206,9 @@
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.astronomy.photons_per_band">
-<code class="sig-prename descclassname">aotools.astronomy.</code><code class="sig-name descname">photons_per_band</code><span class="sig-paren">(</span><em class="sig-param">mag</em>, <em class="sig-param">mask</em>, <em class="sig-param">pxlScale</em>, <em class="sig-param">expTime</em>, <em class="sig-param">waveband='V'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/astronomy/_astronomy.html#photons_per_band"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.astronomy.photons_per_band" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.astronomy.</code><code class="sig-name descname">photons_per_band</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mag</span></em>, <em class="sig-param"><span class="n">mask</span></em>, <em class="sig-param"><span class="n">pxlScale</span></em>, <em class="sig-param"><span class="n">expTime</span></em>, <em class="sig-param"><span class="n">waveband</span><span class="o">=</span><span class="default_value">'V'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/astronomy/_astronomy.html#photons_per_band"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.astronomy.photons_per_band" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the photon flux for a given aperture, star magnitude and wavelength band</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -229,9 +229,9 @@
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.astronomy.photons_per_mag">
-<code class="sig-prename descclassname">aotools.astronomy.</code><code class="sig-name descname">photons_per_mag</code><span class="sig-paren">(</span><em class="sig-param">mag</em>, <em class="sig-param">mask</em>, <em class="sig-param">pixel_scale</em>, <em class="sig-param">wvlBand</em>, <em class="sig-param">exposure_time</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/astronomy/_astronomy.html#photons_per_mag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.astronomy.photons_per_mag" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.astronomy.</code><code class="sig-name descname">photons_per_mag</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mag</span></em>, <em class="sig-param"><span class="n">mask</span></em>, <em class="sig-param"><span class="n">pixel_scale</span></em>, <em class="sig-param"><span class="n">wvlBand</span></em>, <em class="sig-param"><span class="n">exposure_time</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/astronomy/_astronomy.html#photons_per_mag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.astronomy.photons_per_mag" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the photon flux for a given aperture, star magnitude and wavelength band</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

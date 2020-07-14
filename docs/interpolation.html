@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Interpolation &mdash; AOtools 1.0+8.ge99069b.dirty documentation</title>
+  <title>Interpolation &mdash; AOtools 1.0.3 documentation</title>
   
 
   
@@ -160,17 +160,17 @@
             
   <div class="section" id="module-aotools.interpolation">
 <span id="interpolation"></span><h1>Interpolation<a class="headerlink" href="#module-aotools.interpolation" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.interpolation.binImgs">
-<code class="sig-prename descclassname">aotools.interpolation.</code><code class="sig-name descname">binImgs</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">n</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/interpolation.html#binImgs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.interpolation.binImgs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.interpolation.</code><code class="sig-name descname">binImgs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">n</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/interpolation.html#binImgs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.interpolation.binImgs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bins one or more images down by the given factor
 bins. n must be a factor of data.shape, who knows what happens
 otherwise……</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.interpolation.zoom">
-<code class="sig-prename descclassname">aotools.interpolation.</code><code class="sig-name descname">zoom</code><span class="sig-paren">(</span><em class="sig-param">array</em>, <em class="sig-param">newSize</em>, <em class="sig-param">order=3</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/interpolation.html#zoom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.interpolation.zoom" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.interpolation.</code><code class="sig-name descname">zoom</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">array</span></em>, <em class="sig-param"><span class="n">newSize</span></em>, <em class="sig-param"><span class="n">order</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/interpolation.html#zoom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.interpolation.zoom" title="Permalink to this definition">¶</a></dt>
 <dd><p>A Class to zoom 2-dimensional arrays using interpolation</p>
 <p>Uses the scipy <cite>Interp2d</cite> interpolation routine to zoom into an array. Can cope with real of complex data.</p>
 <dl class="field-list simple">
@@ -190,9 +190,9 @@ otherwise……</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.interpolation.zoom_rbs">
-<code class="sig-prename descclassname">aotools.interpolation.</code><code class="sig-name descname">zoom_rbs</code><span class="sig-paren">(</span><em class="sig-param">array</em>, <em class="sig-param">newSize</em>, <em class="sig-param">order=3</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/interpolation.html#zoom_rbs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.interpolation.zoom_rbs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.interpolation.</code><code class="sig-name descname">zoom_rbs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">array</span></em>, <em class="sig-param"><span class="n">newSize</span></em>, <em class="sig-param"><span class="n">order</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/interpolation.html#zoom_rbs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.interpolation.zoom_rbs" title="Permalink to this definition">¶</a></dt>
 <dd><p>A Class to zoom 2-dimensional arrays using RectBivariateSpline interpolation</p>
 <p>Uses the scipy <code class="docutils literal notranslate"><span class="pre">RectBivariateSpline</span></code> interpolation routine to zoom into an array. Can cope with real of complex data. May be slower than above <code class="docutils literal notranslate"><span class="pre">zoom</span></code>, as RBS routine copies data.</p>
 <dl class="field-list simple">

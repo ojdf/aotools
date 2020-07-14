@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Circular Functions &mdash; AOtools 1.0+8.ge99069b.dirty documentation</title>
+  <title>Circular Functions &mdash; AOtools 1.0.3 documentation</title>
   
 
   
@@ -170,9 +170,9 @@
 <h1>Circular Functions<a class="headerlink" href="#circular-functions" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="module-aotools.functions.zernike">
 <span id="zernike-modes"></span><h2>Zernike Modes<a class="headerlink" href="#module-aotools.functions.zernike" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.functions.zernike.makegammas">
-<code class="sig-prename descclassname">aotools.functions.zernike.</code><code class="sig-name descname">makegammas</code><span class="sig-paren">(</span><em class="sig-param">nzrad</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/zernike.html#makegammas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.zernike.makegammas" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.functions.zernike.</code><code class="sig-name descname">makegammas</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">nzrad</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/zernike.html#makegammas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.zernike.makegammas" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make “Gamma” matrices which can be used to determine first derivative
 of Zernike matrices (Noll 1976).</p>
 <dl class="field-list simple">
@@ -188,9 +188,9 @@ of Zernike matrices (Noll 1976).</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.functions.zernike.phaseFromZernikes">
-<code class="sig-prename descclassname">aotools.functions.zernike.</code><code class="sig-name descname">phaseFromZernikes</code><span class="sig-paren">(</span><em class="sig-param">zCoeffs</em>, <em class="sig-param">size</em>, <em class="sig-param">norm='noll'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/zernike.html#phaseFromZernikes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.zernike.phaseFromZernikes" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.functions.zernike.</code><code class="sig-name descname">phaseFromZernikes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">zCoeffs</span></em>, <em class="sig-param"><span class="n">size</span></em>, <em class="sig-param"><span class="n">norm</span><span class="o">=</span><span class="default_value">'noll'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/zernike.html#phaseFromZernikes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.zernike.phaseFromZernikes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates an array of the sum of zernike polynomials with specified coefficeints</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -209,9 +209,9 @@ of Zernike matrices (Noll 1976).</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.functions.zernike.zernIndex">
-<code class="sig-prename descclassname">aotools.functions.zernike.</code><code class="sig-name descname">zernIndex</code><span class="sig-paren">(</span><em class="sig-param">j</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/zernike.html#zernIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.zernike.zernIndex" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.functions.zernike.</code><code class="sig-name descname">zernIndex</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">j</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/zernike.html#zernIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.zernike.zernIndex" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find the [n,m] list giving the radial order n and azimuthal order
 of the Zernike polynomial of Noll index j.</p>
 <dl class="field-list simple">
@@ -227,9 +227,9 @@ of the Zernike polynomial of Noll index j.</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.functions.zernike.zernikeArray">
-<code class="sig-prename descclassname">aotools.functions.zernike.</code><code class="sig-name descname">zernikeArray</code><span class="sig-paren">(</span><em class="sig-param">J</em>, <em class="sig-param">N</em>, <em class="sig-param">norm='noll'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/zernike.html#zernikeArray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.zernike.zernikeArray" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.functions.zernike.</code><code class="sig-name descname">zernikeArray</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">J</span></em>, <em class="sig-param"><span class="n">N</span></em>, <em class="sig-param"><span class="n">norm</span><span class="o">=</span><span class="default_value">'noll'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/zernike.html#zernikeArray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.zernike.zernikeArray" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates an array of Zernike Polynomials</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -248,9 +248,9 @@ of the Zernike polynomial of Noll index j.</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.functions.zernike.zernikeRadialFunc">
-<code class="sig-prename descclassname">aotools.functions.zernike.</code><code class="sig-name descname">zernikeRadialFunc</code><span class="sig-paren">(</span><em class="sig-param">n</em>, <em class="sig-param">m</em>, <em class="sig-param">r</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/zernike.html#zernikeRadialFunc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.zernike.zernikeRadialFunc" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.functions.zernike.</code><code class="sig-name descname">zernikeRadialFunc</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n</span></em>, <em class="sig-param"><span class="n">m</span></em>, <em class="sig-param"><span class="n">r</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/zernike.html#zernikeRadialFunc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.zernike.zernikeRadialFunc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fucntion to calculate the Zernike radial function</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -269,9 +269,9 @@ of the Zernike polynomial of Noll index j.</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.functions.zernike.zernike_nm">
-<code class="sig-prename descclassname">aotools.functions.zernike.</code><code class="sig-name descname">zernike_nm</code><span class="sig-paren">(</span><em class="sig-param">n</em>, <em class="sig-param">m</em>, <em class="sig-param">N</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/zernike.html#zernike_nm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.zernike.zernike_nm" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.functions.zernike.</code><code class="sig-name descname">zernike_nm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n</span></em>, <em class="sig-param"><span class="n">m</span></em>, <em class="sig-param"><span class="n">N</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/zernike.html#zernike_nm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.zernike.zernike_nm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the Zernike polynomial with radial index, n, and azimuthal index, m.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -290,9 +290,9 @@ of the Zernike polynomial of Noll index j.</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.functions.zernike.zernike_noll">
-<code class="sig-prename descclassname">aotools.functions.zernike.</code><code class="sig-name descname">zernike_noll</code><span class="sig-paren">(</span><em class="sig-param">j</em>, <em class="sig-param">N</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/zernike.html#zernike_noll"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.zernike.zernike_noll" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.functions.zernike.</code><code class="sig-name descname">zernike_noll</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">j</span></em>, <em class="sig-param"><span class="n">N</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/zernike.html#zernike_noll"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.zernike.zernike_noll" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the Zernike polynomial with mode index j,
 where j = 1 corresponds to piston.</p>
 <dl class="field-list simple">
@@ -337,9 +337,9 @@ A closely similar implementation can also be find in Yorick in the YAO package.<
 <dd class="field-odd"><p>November 2017</p>
 </dd>
 </dl>
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.functions.karhunenLoeve.gkl_azimuthal">
-<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">gkl_azimuthal</code><span class="sig-paren">(</span><em class="sig-param">nord</em>, <em class="sig-param">npp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#gkl_azimuthal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.gkl_azimuthal" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">gkl_azimuthal</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">nord</span></em>, <em class="sig-param"><span class="n">npp</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#gkl_azimuthal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.gkl_azimuthal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the azimuthal function of the KL basis.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -357,9 +357,9 @@ A closely similar implementation can also be find in Yorick in the YAO package.<
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.functions.karhunenLoeve.gkl_basis">
-<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">gkl_basis</code><span class="sig-paren">(</span><em class="sig-param">ri=0.25</em>, <em class="sig-param">nr=40</em>, <em class="sig-param">npp=None</em>, <em class="sig-param">nfunc=500</em>, <em class="sig-param">stf='kolstf'</em>, <em class="sig-param">outerscale=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#gkl_basis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.gkl_basis" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">gkl_basis</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ri</span><span class="o">=</span><span class="default_value">0.25</span></em>, <em class="sig-param"><span class="n">nr</span><span class="o">=</span><span class="default_value">40</span></em>, <em class="sig-param"><span class="n">npp</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">nfunc</span><span class="o">=</span><span class="default_value">500</span></em>, <em class="sig-param"><span class="n">stf</span><span class="o">=</span><span class="default_value">'kolstf'</span></em>, <em class="sig-param"><span class="n">outerscale</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#gkl_basis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.gkl_basis" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper to create the radial and azimuthal K-L functions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -381,9 +381,9 @@ relevant information</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.functions.karhunenLoeve.gkl_fcom">
-<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">gkl_fcom</code><span class="sig-paren">(</span><em class="sig-param">ri</em>, <em class="sig-param">kernels</em>, <em class="sig-param">nfunc</em>, <em class="sig-param">verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#gkl_fcom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.gkl_fcom" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">gkl_fcom</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ri</span></em>, <em class="sig-param"><span class="n">kernels</span></em>, <em class="sig-param"><span class="n">nfunc</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#gkl_fcom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.gkl_fcom" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computation of the radial eigenvectors of the KL basis.</p>
 <p>Obtained by taking the eigenvectors from the matrix L^p.
 The final function corresponds to the ‘nfunc’ largest eigenvalues.
@@ -410,9 +410,9 @@ azimuthal discretization (5 * nr)</p></li>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.functions.karhunenLoeve.gkl_kernel">
-<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">gkl_kernel</code><span class="sig-paren">(</span><em class="sig-param">ri</em>, <em class="sig-param">nr</em>, <em class="sig-param">rad</em>, <em class="sig-param">stfunc='kolmogorov'</em>, <em class="sig-param">outerscale=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#gkl_kernel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.gkl_kernel" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">gkl_kernel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ri</span></em>, <em class="sig-param"><span class="n">nr</span></em>, <em class="sig-param"><span class="n">rad</span></em>, <em class="sig-param"><span class="n">stfunc</span><span class="o">=</span><span class="default_value">'kolmogorov'</span></em>, <em class="sig-param"><span class="n">outerscale</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#gkl_kernel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.gkl_kernel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculation of the kernel L^p</p>
 <p>The kernel constructed here should be simply a discretization
 of the continuous kernel.
@@ -440,9 +440,9 @@ azimuthal discretization (5 * nr)</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.functions.karhunenLoeve.gkl_radii">
-<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">gkl_radii</code><span class="sig-paren">(</span><em class="sig-param">ri</em>, <em class="sig-param">nr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#gkl_radii"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.gkl_radii" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">gkl_radii</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ri</span></em>, <em class="sig-param"><span class="n">nr</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#gkl_radii"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.gkl_radii" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate n points evenly spaced in r^2 between r_i^2 and 1</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -461,16 +461,16 @@ correspond to ‘sqrt(s)’ wrt the paper.</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.functions.karhunenLoeve.gkl_sfi">
-<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">gkl_sfi</code><span class="sig-paren">(</span><em class="sig-param">kl_basis</em>, <em class="sig-param">i</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#gkl_sfi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.gkl_sfi" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">gkl_sfi</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">kl_basis</span></em>, <em class="sig-param"><span class="n">i</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#gkl_sfi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.gkl_sfi" title="Permalink to this definition">¶</a></dt>
 <dd><p>return the i’th function from the generalized KL basis ‘bas’.
 ‘bas’ must be generated by ‘gkl_basis’</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.functions.karhunenLoeve.make_kl">
-<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">make_kl</code><span class="sig-paren">(</span><em class="sig-param">nmax</em>, <em class="sig-param">dim</em>, <em class="sig-param">ri=0.0</em>, <em class="sig-param">nr=40</em>, <em class="sig-param">stf='kolmogorov'</em>, <em class="sig-param">outerscale=None</em>, <em class="sig-param">mask=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#make_kl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.make_kl" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">make_kl</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">nmax</span></em>, <em class="sig-param"><span class="n">dim</span></em>, <em class="sig-param"><span class="n">ri</span><span class="o">=</span><span class="default_value">0.0</span></em>, <em class="sig-param"><span class="n">nr</span><span class="o">=</span><span class="default_value">40</span></em>, <em class="sig-param"><span class="n">stf</span><span class="o">=</span><span class="default_value">'kolmogorov'</span></em>, <em class="sig-param"><span class="n">outerscale</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">mask</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#make_kl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.make_kl" title="Permalink to this definition">¶</a></dt>
 <dd><p>Main routine to generatre a KL basis of dimension [nmax, dim, dim].</p>
 <p>For Kolmogorov statistics, e.g.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kl</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">make_kl</span><span class="p">(</span><span class="mi">150</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="n">ri</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">stf</span><span class="o">=</span><span class="s1">&#39;kolmogorov&#39;</span><span class="p">)</span>
@@ -514,9 +514,9 @@ as returned by ‘gkl_basis’</p></li>
 </div>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.functions.karhunenLoeve.pcgeom">
-<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">pcgeom</code><span class="sig-paren">(</span><em class="sig-param">nr</em>, <em class="sig-param">npp</em>, <em class="sig-param">ncp</em>, <em class="sig-param">ri</em>, <em class="sig-param">ncmar</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#pcgeom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.pcgeom" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">pcgeom</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">nr</span></em>, <em class="sig-param"><span class="n">npp</span></em>, <em class="sig-param"><span class="n">ncp</span></em>, <em class="sig-param"><span class="n">ri</span></em>, <em class="sig-param"><span class="n">ncmar</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#pcgeom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.pcgeom" title="Permalink to this definition">¶</a></dt>
 <dd><p>This routine builds a geom dic.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -530,9 +530,9 @@ cartesian arrays outside the region of interest.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.functions.karhunenLoeve.piston_orth">
-<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">piston_orth</code><span class="sig-paren">(</span><em class="sig-param">nr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#piston_orth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.piston_orth" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">piston_orth</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">nr</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#piston_orth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.piston_orth" title="Permalink to this definition">¶</a></dt>
 <dd><p>Unitary matrix used to filter out piston term.
 Eq. 19 in Cannon 1996.</p>
 <dl class="field-list simple">
@@ -548,24 +548,24 @@ Eq. 19 in Cannon 1996.</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.functions.karhunenLoeve.pol2car">
-<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">pol2car</code><span class="sig-paren">(</span><em class="sig-param">cpgeom</em>, <em class="sig-param">pol</em>, <em class="sig-param">mask=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#pol2car"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.pol2car" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">pol2car</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cpgeom</span></em>, <em class="sig-param"><span class="n">pol</span></em>, <em class="sig-param"><span class="n">mask</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#pol2car"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.pol2car" title="Permalink to this definition">¶</a></dt>
 <dd><p>Polar to cartesian conversion.</p>
 <p>(points not in the aperture are treated as though they were at
 the first or last radial polar value…)</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.functions.karhunenLoeve.polang">
-<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">polang</code><span class="sig-paren">(</span><em class="sig-param">r</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#polang"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.polang" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">polang</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">r</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#polang"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.polang" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate an array with the same dimensions as r, but containing the
 azimuthal values for a polar coordinate system.</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.functions.karhunenLoeve.radii">
-<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">radii</code><span class="sig-paren">(</span><em class="sig-param">nr</em>, <em class="sig-param">npp</em>, <em class="sig-param">ri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#radii"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.radii" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">radii</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">nr</span></em>, <em class="sig-param"><span class="n">npp</span></em>, <em class="sig-param"><span class="n">ri</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#radii"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.radii" title="Permalink to this definition">¶</a></dt>
 <dd><p>Use to generate a polar coordinate system.</p>
 <p>Generate an nr x npp array with npp copies of the radial coordinate
 array.
@@ -580,17 +580,17 @@ there are no points on the border</p>
 </div>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.functions.karhunenLoeve.rebin">
-<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">rebin</code><span class="sig-paren">(</span><em class="sig-param">a</em>, <em class="sig-param">newshape</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#rebin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.rebin" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">rebin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">a</span></em>, <em class="sig-param"><span class="n">newshape</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#rebin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.rebin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Rebin an array to a new shape.
 See scipy cookbook.
 It is intended to be similar to ‘rebin’ of IDL</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.functions.karhunenLoeve.set_pctr">
-<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">set_pctr</code><span class="sig-paren">(</span><em class="sig-param">bas</em>, <em class="sig-param">ncp=None</em>, <em class="sig-param">ncmar=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#set_pctr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.set_pctr" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">set_pctr</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">bas</span></em>, <em class="sig-param"><span class="n">ncp</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ncmar</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#set_pctr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.set_pctr" title="Permalink to this definition">¶</a></dt>
 <dd><p>call pcgeom to build the dic geom_struct with the
 right initializtions.</p>
 <dl class="field-list simple">
@@ -600,30 +600,30 @@ right initializtions.</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.functions.karhunenLoeve.setpincs">
-<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">setpincs</code><span class="sig-paren">(</span><em class="sig-param">ax</em>, <em class="sig-param">ay</em>, <em class="sig-param">px</em>, <em class="sig-param">py</em>, <em class="sig-param">ri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#setpincs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.setpincs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">setpincs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ax</span></em>, <em class="sig-param"><span class="n">ay</span></em>, <em class="sig-param"><span class="n">px</span></em>, <em class="sig-param"><span class="n">py</span></em>, <em class="sig-param"><span class="n">ri</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#setpincs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.setpincs" title="Permalink to this definition">¶</a></dt>
 <dd><p>determine a set of squares for interpolating from cartesian
 to polar coordinates,
 using only those points with ri &lt;= r &lt;= 1</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.functions.karhunenLoeve.stf_kolmogorov">
-<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">stf_kolmogorov</code><span class="sig-paren">(</span><em class="sig-param">r</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#stf_kolmogorov"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.stf_kolmogorov" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">stf_kolmogorov</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">r</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#stf_kolmogorov"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.stf_kolmogorov" title="Permalink to this definition">¶</a></dt>
 <dd><p>Kolmogorov structure function with r = (D/r0)</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.functions.karhunenLoeve.stf_vonKarman">
-<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">stf_vonKarman</code><span class="sig-paren">(</span><em class="sig-param">r</em>, <em class="sig-param">L0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#stf_vonKarman"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.stf_vonKarman" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">stf_vonKarman</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">r</span></em>, <em class="sig-param"><span class="n">L0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#stf_vonKarman"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.stf_vonKarman" title="Permalink to this definition">¶</a></dt>
 <dd><p>von Karman structure function with r = (D / r0)
 L0 is in unit of telescope diameter, typically a few (3; or 20m)</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="aotools.functions.karhunenLoeve.stf_vonKarman_yao">
-<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">stf_vonKarman_yao</code><span class="sig-paren">(</span><em class="sig-param">r</em>, <em class="sig-param">L</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#stf_vonKarman_yao"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.stf_vonKarman_yao" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">aotools.functions.karhunenLoeve.</code><code class="sig-name descname">stf_vonKarman_yao</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">r</span></em>, <em class="sig-param"><span class="n">L</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aotools/functions/karhunenLoeve.html#stf_vonKarman_yao"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aotools.functions.karhunenLoeve.stf_vonKarman_yao" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
