@@ -28,6 +28,7 @@ Required libraries
    SciPy
    NumPy
    matplotlib
+   numba
 
 Installation
 ------------
