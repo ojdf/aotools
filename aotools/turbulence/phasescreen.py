@@ -75,8 +75,8 @@ def ft_sh_phase_screen(r0, N, delta, L0, l0, FFT=None, seed=None):
                         * numpy.sqrt(PSD_phi)*del_f )
         SH = numpy.zeros((N,N),dtype="complex")
         # loop over frequencies on this grid
-        for i in xrange(0,2):
-            for j in xrange(0,2):
+        for i in xrange(0, 3):
+            for j in xrange(0, 3):
 
                 SH += cn[i,j] * numpy.exp(1j*2*numpy.pi*(fx[i,j]*x+fy[i,j]*y))
 
