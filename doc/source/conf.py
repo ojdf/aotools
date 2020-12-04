@@ -91,7 +91,7 @@ author = u'AOtools'
 full_version = aotools.__version__
 version_parts = full_version.split('.')
 print(version_parts)
-version = u'0.5'
+version = u'1.0'
 # The full version, including alpha/beta/rc tags.
 release = aotools.__version__  # '0.1.0'
 

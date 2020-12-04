@@ -158,9 +158,17 @@ def r0_from_slopes(slopes, wavelength, subapDiam):
 
 
 def slope_variance_from_r0(r0, wavelength, subapDiam):
-    """Returns the expected slope variance for a given r0 ValueError
+    """
+    Uses the equation in Saint Jaques, 1998, PhD Thesis, Appendix A to calculate the slope variance resulting from a
+    value of r0.
 
-    Uses the equation in Saint Jaques, 1998, PhD Thesis, Appendix A to calculate the slope variance resulting from a value of r0.
+    Parameters:
+        r0 (float): Fried papamerter of turubulence in metres
+        wavelength (float): Wavelength of light in metres (where 1e-9 is 1nm)
+        subapDiam (float): Diameter of the aperture in metres
+
+    Returns:
+        The expected slope variance for a given r0 ValueError
 
     """
 

@@ -11,9 +11,17 @@ from scipy.interpolate import interp2d
 import numpy
 from numpy import pi
 
+# Numba compiles python code to machine code for faster execution
+try:
+    import numba
+except:
+    numba = None    
+
+
 from . import phasescreen, turb
 
 __all__ = ["PhaseScreenVonKarman", "PhaseScreenKolmogorov"]
+
 
 class PhaseScreen(object):
     """
@@ -21,8 +29,8 @@ class PhaseScreen(object):
 
     This represents the phase addition light experiences when passing through atmospheric 
     turbulence. Unlike other phase screen generation techniques that translate a large static 
-    screen, this method keeps a small section of phase, and extends it as neccessary for as many 
-    steps as required. This can significantly reduce memory consuption at the expense of more 
+    screen, this method keeps a small section of phase, and extends it as necessary for as many
+    steps as required. This can significantly reduce memory consumption at the expense of more
     processing power required.
 
     The technique is described in a paper by Assemat and Wilson, 2006 and expanded upon by Fried, 2008.
@@ -55,7 +63,7 @@ class PhaseScreen(object):
     L is a diagonal matrix where the diagonal elements are w^(1/2).    
 
     On initialisation an initial phase screen is calculated using an FFT based method.
-    When 'addRows' is called, a new vector of phase is added to the phase screen.
+    When 'add_row' is called, a new vector of phase is added to the phase screen.
 
     Existing points to use are defined by a "stencil", than is set to 0 for points not to use
     and 1 for points to use. This makes this a generalised base class that can be used by 
@@ -108,14 +116,19 @@ class PhaseScreen(object):
         positions = numpy.append(self.stencil_positions, self.X_positions, axis=0)
         self.seperations = numpy.zeros((len(positions), len(positions)))
 
-        for i, (x1, y1) in enumerate(positions):
-            for j, (x2, y2) in enumerate(positions):
-                delta_x = x2 - x1
-                delta_y = y2 - y1
+        if numba:
+            calc_seperations_fast(positions, self.seperations)
+        else:
+            for i, (x1, y1) in enumerate(positions):
+                for j, (x2, y2) in enumerate(positions):
+                    delta_x = x2 - x1
+                    delta_y = y2 - y1
 
-                delta_r = numpy.sqrt(delta_x ** 2 + delta_y ** 2)
+                    delta_r = numpy.sqrt(delta_x ** 2 + delta_y ** 2)
 
-                self.seperations[i, j] = delta_r
+                    self.seperations[i, j] = delta_r
+
+
 
     def make_covmats(self):
         """
@@ -138,7 +151,9 @@ class PhaseScreen(object):
             cf = linalg.cho_factor(self.cov_mat_zz)
             inv_cov_zz = linalg.cho_solve(cf, numpy.identity(self.cov_mat_zz.shape[0]))
         except linalg.LinAlgError:
-            raise linalg.LinAlgError("Could not invert Covariance Matrix to for A and B Matrices. Try with a larger pixel scale")
+            # print("Cholesky solve failed. Performing SVD inversion...")
+            # inv_cov_zz = numpy.linalg.pinv(self.cov_mat_zz)
+            raise linalg.LinAlgError("Could not invert Covariance Matrix to for A and B Matrices. Try with a larger pixel scale or smaller L0")
 
         self.A_mat = self.cov_mat_xz.dot(inv_cov_zz)
 
@@ -180,11 +195,7 @@ class PhaseScreen(object):
 
     def add_row(self):
         """
-        Adds new rows to the phase screen and removes old ones.
-
-        Parameters:
-            nRows (int): Number of rows to add
-            axis (int): Axis to add new rows (can be 0 (default) or 1)
+        Adds a new row to the phase screen and removes old ones.
         """
 
         new_row = self.get_new_row()
@@ -195,6 +206,9 @@ class PhaseScreen(object):
 
     @property
     def scrn(self):
+        """
+        The current phase map held in the PhaseScreen object in radians.
+        """
         return self._scrn[:self.requested_nx_size, :self.requested_nx_size]
 
 
@@ -204,8 +218,8 @@ class PhaseScreenVonKarman(PhaseScreen):
 
     This represents the phase addition light experiences when passing through atmospheric
     turbulence. Unlike other phase screen generation techniques that translate a large static
-    screen, this method keeps a small section of phase, and extends it as neccessary for as many
-    steps as required. This can significantly reduce memory consuption at the expense of more
+    screen, this method keeps a small section of phase, and extends it as necessary for as many
+    steps as required. This can significantly reduce memory consumption at the expense of more
     processing power required.
 
     The technique is described in a paper by Assemat and Wilson, 2006. It essentially assumes that
@@ -237,9 +251,9 @@ class PhaseScreenVonKarman(PhaseScreen):
     L is a diagonal matrix where the diagonal elements are w^(1/2).
 
     On initialisation an initial phase screen is calculated using an FFT based method.
-    When 'addRows' is called, a new vector of phase is added to the phase screen using `nCols`
+    When ``add_row`` is called, a new vector of phase is added to the phase screen using `nCols`
     columns of previous phase. Assemat & Wilson claim that two columns are adequate for good
-    atmospheric statistics. The phase in the screen data is always accessed as `<phasescreen>.scrn`.
+    atmospheric statistics. The phase in the screen data is always accessed as ``<phasescreen>.scrn`` and is in radians.
 
     Parameters:
         nx_size (int): Size of phase screen (NxN)
@@ -346,7 +360,8 @@ class PhaseScreenKolmogorov(PhaseScreen):
     and applied on each iteration such that the new phase equation becomes:
     
     On initialisation an initial phase screen is calculated using an FFT based method.
-    When 'addRows' is called, a new vector of phase is added to the phase screen.
+    When ``add_row`` is called, a new vector of phase is added to the phase screen. The phase in the screen data
+    is always accessed as ``<phasescreen>.scrn`` and is in radians.
 
     Parameters:
         nx_size (int): Size of phase screen (NxN)
@@ -398,3 +413,18 @@ class PhaseScreenKolmogorov(PhaseScreen):
     def __repr__(self):
         return str(self.scrn)
     
+
+
+@numba.jit(nopython=True, parallel=True)
+def calc_seperations_fast(positions, seperations):
+
+    for i in numba.prange(len(positions)):
+        x1, y1 = positions[i]
+        for j in range(len(positions)):
+            x2, y2 = positions[j]
+            delta_x = x2 - x1
+            delta_y = y2 - y1
+
+            delta_r = numpy.sqrt(delta_x ** 2 + delta_y ** 2)
+
+            seperations[i, j] = delta_r

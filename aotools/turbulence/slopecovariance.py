@@ -7,7 +7,7 @@ of uses, though they are especially useful for creating 'tomographic reconstruct
 WFS measurements in a required direction (where there might be an interesting science target but no guide stars),
 given some actual measurements in other directions (where the some suitable guide stars are).
 
-.. note::
+.. warning::
     This code has been tested qualitatively and seems OK, but needs more rigorous testing.
 
 .. codeauthor::
@@ -67,7 +67,7 @@ class CovarianceMatrix(object):
         self.layer_altitudes = layer_altitudes
         self.layer_r0s = layer_r0s
         self.layer_L0s = layer_L0s
-        print("n_layers: {}".format(n_layers))
+        # print("n_layers: {}".format(n_layers))
 
         self.n_subaps = []
         self.total_subaps = 0
@@ -147,7 +147,7 @@ class CovarianceMatrix(object):
         # Now compile the covariance matrix
         self.covariance_matrix = numpy.zeros((2 * self.total_subaps, 2 * self.total_subaps)).astype("float32")
         for layer_n in range(self.n_layers):
-            print("Compute Layer {}".format(layer_n))
+            # print("Compute Layer {}".format(layer_n))
 
             subap_ni = 0
             for wfs_i in range(self.n_wfs):
