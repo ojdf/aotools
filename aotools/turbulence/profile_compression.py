@@ -15,8 +15,12 @@ Optimal Grouping in particular relies on numba to run fast. If you are compressi
 multiple turbulence profiles, it is advised to have numba installed.
 '''
 import numpy
-from numba import njit
 from scipy.optimize import minimize
+try:
+    from numba import njit
+    _numba = True
+except:
+    _numba = False
 
 def equivalent_layers(h, p, L):
     '''
@@ -79,7 +83,7 @@ def optimal_grouping(R, L, h, p):
     for groups in _convert_splits_to_groups(gamma_best,N):
         cn2.append(p[groups].sum())
 
-    return hmin_best, cn2
+    return numpy.array(hmin_best), numpy.array(cn2)
 
 def optimal_grouping_numba(R, L, h, p):
     '''
@@ -114,7 +118,7 @@ def optimal_grouping_numba(R, L, h, p):
     for groups in _convert_splits_to_groups(gamma_best,N):
         cn2.append(p[groups].sum())
 
-    return hmin_best, cn2
+    return numpy.array(hmin_best), numpy.array(cn2)
 
 def GCTM(h, p, L, h_scaling=10000., cn2_scaling=100e-15):
     '''

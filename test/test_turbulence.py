@@ -16,3 +16,38 @@ def test_slopeVarfromR0():
     subapDiam = 0.5
     variance = turbulence.slope_variance_from_r0(r0, wavelength, subapDiam)
     assert type(variance) == float
+
+def test_equivalent_layers():
+    h = numpy.arange(0,25000,250)
+    p = numpy.ones(len(h)) * 100e-17
+    L = 5
+    h_el, p_el = turbulence.equivalent_layers(h, p, L)
+    assert type(h_el) and type(p_el) == numpy.ndarray
+    assert len(h_el) and len(p_el) == L
+
+def test_optimal_grouping():
+    h = numpy.arange(0,25000,250)
+    p = numpy.ones(len(h)) * 100e-17
+    L = 5
+    R = 1
+    h_el, p_el = turbulence.optimal_grouping(R, L, h, p)
+    assert type(h_el) and type(p_el) == numpy.ndarray
+    assert len(h_el) and len(p_el) == L
+
+def test_optimal_grouping_numba():
+    h = numpy.arange(0,25000,250)
+    p = numpy.ones(len(h)) * 100e-17
+    L = 5
+    R = 1
+    h_el, p_el = turbulence.optimal_grouping_numba(R, L, h, p)
+    assert type(h_el) and type(p_el) == numpy.ndarray
+    assert len(h_el) and len(p_el) == L
+
+def test_GCTM():
+    h = numpy.arange(0,25000,250)
+    p = numpy.ones(len(h)) * 100e-17
+    L = 5
+    h_el, p_el = turbulence.GCTM(h, p, L)
+    assert type(h_el) and type(p_el) == numpy.ndarray
+    assert len(h_el) and len(p_el) == L
+
