@@ -30,15 +30,6 @@ def test_optimal_grouping():
     p = numpy.ones(len(h)) * 100e-17
     L = 5
     R = 1
-    h_el, p_el = turbulence.optimal_grouping(R, L, h, p)
-    assert type(h_el) and type(p_el) == numpy.ndarray
-    assert len(h_el) and len(p_el) == L
-
-def test_optimal_grouping_numba():
-    h = numpy.arange(0,25000,250)
-    p = numpy.ones(len(h)) * 100e-17
-    L = 5
-    R = 1
     h_el, p_el = turbulence.optimal_grouping_numba(R, L, h, p)
     assert type(h_el) and type(p_el) == numpy.ndarray
     assert len(h_el) and len(p_el) == L

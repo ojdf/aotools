@@ -11,16 +11,11 @@ Three methods here:
     Generalised Conservation of Turbulence Moments (GCTM) - conserves arbitrary 
         turbulence moments (Saxenhuber 2017, DOI: 10.1364/AO.56.002621)
 
-Optimal Grouping in particular relies on numba to run fast. If you are compressing 
-multiple turbulence profiles, it is advised to have numba installed.
+Optimal Grouping in particular relies on numba to run fast.
 '''
 import numpy
 from scipy.optimize import minimize
-try:
-    from numba import njit
-    _numba = True
-except:
-    _numba = False
+from numba import njit
 
 def equivalent_layers(h, p, L):
     '''
@@ -56,41 +51,7 @@ def optimal_grouping(R, L, h, p):
     '''
     Python implementation of algorithm 2 from Saxenhuber et al (2017). Performs the 
     "optimal grouping" algorithm , which finds the grouping that minimises the 
-    cost function given in Eq. 7 of that paper.
-
-    Parameters
-        R (int): number of random starting groupings (recommended 10?)
-        L (int): number of layers to compress down to
-        h (numpy.ndarray): input profile heights
-        p (numpy.ndarray): input profile cn2dh per layer
-
-    Returns
-        h_L (numpy.ndarray): compressed profile heights
-        cn2_L (numpy.ndarray): compressed profile cn2dh per layer
-    '''
-    N = len(p)
-
-    # set initial best grouping to be (approx) equal splits 
-    gamma_best = numpy.linspace(0,N,L+1,dtype=int)[1:-1]    
-    G_best = _G(_convert_splits_to_groups(gamma_best,N), h, p, return_hmin=False)
-    for r in range(R):
-        gamma_new, G_new = _optGroupingMinimizationSlow(_random_grouping(N,L), h, p)
-        if G_new < G_best:
-            gamma_best = gamma_new
-
-    cn2 = []
-    hmin_best = _G(_convert_splits_to_groups(gamma_best,N), h, p, return_hmin=True)[1]
-    for groups in _convert_splits_to_groups(gamma_best,N):
-        cn2.append(p[groups].sum())
-
-    return numpy.array(hmin_best), numpy.array(cn2)
-
-def optimal_grouping_numba(R, L, h, p):
-    '''
-    Python implementation of algorithm 2 from Saxenhuber et al (2017). Performs the 
-    "optimal grouping" algorithm , which finds the grouping that minimises the 
-    cost function given in Eq. 7 of that paper. This is the fast version which 
-    relies on numba.
+    cost function given in Eq. 7 of that paper. Requires numba.
 
     Parameters
         R (int): number of random starting groupings (recommended 10?)
@@ -250,25 +211,6 @@ def _optGroupingMinimization(start_grouping,h,p,maxiter=200):
         Gvals = numpy.zeros(len(V))
         for j,v in enumerate(V):
             Gvals[j] = _Gjit(v,h,p)
-        Gopt_ix = numpy.argmin(Gvals)
-        G_new = Gvals[Gopt_ix]
-        gamma_new = V[Gopt_ix]
-        if (gamma_new == gamma_old).all():
-            break
-    return gamma_new, G_new
-
-def _optGroupingMinimizationSlow(start_grouping,h,p,maxiter=200):
-    '''
-    Minimisation of G (fast numba version)
-    '''
-    gamma_new = start_grouping
-    N = len(p)
-    for i in range(maxiter):
-        gamma_old = gamma_new
-        V = numpy.array(_vicinity(gamma_old, N))
-        Gvals = []
-        for v in V:
-            Gvals.append(_G(_convert_splits_to_groups(v,N),h,p))
         Gopt_ix = numpy.argmin(Gvals)
         G_new = Gvals[Gopt_ix]
         gamma_new = V[Gopt_ix]
