@@ -178,8 +178,15 @@ class PhaseScreen(object):
         Makes the initial screen usign FFT method that can be extended 
         """
 
+        # phase screen will make it *really* random if no seed at all given.
+        # If a seed is here, screen must be repeatable wiht same seed
+        if self.random_seed is not None:
+            seed = numpy.random.randint(0, 2**32 -1)
+        else:
+            seed = None
+
         self._scrn = phasescreen.ft_phase_screen(
-            self.r0, self.stencil_length, self.pixel_scale, self.L0, 1e-10
+            self.r0, self.stencil_length, self.pixel_scale, self.L0, 1e-10, seed=seed
         )
 
         self._scrn = self._scrn[:, :self.nx_size]
@@ -273,6 +280,8 @@ class PhaseScreenVonKarman(PhaseScreen):
         self.L0 = L0
         self.stencil_length_factor = 1
         self.stencil_length = self.nx_size
+
+        self.random_seed = random_seed
 
         if random_seed is not None:
             numpy.random.seed(random_seed)
@@ -380,6 +389,7 @@ class PhaseScreenKolmogorov(PhaseScreen):
         self.L0 = L0
         self.stencil_length_factor = stencil_length_factor
         self.stencil_length = stencil_length_factor * self.nx_size
+        self.random_seed = random_seed
 
         if random_seed is not None:
             numpy.random.seed(random_seed)
