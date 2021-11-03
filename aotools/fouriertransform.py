@@ -35,7 +35,7 @@ def ift(data, delta_f):
 
     DATA = numpy.fft.ifftshift(
             numpy.fft.ifft(
-                    numpy.fft.ifftshift(DATA, axes=(-1))),
+                    numpy.fft.ifftshift(data, axes=(-1))),
             axes=(-1)) * data.shape[-1] * delta_f
 
     return DATA
