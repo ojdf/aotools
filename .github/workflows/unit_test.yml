@@ -40,7 +40,8 @@ jobs:
     - name: Test with pytest
       run: |
         coverage run -m pytest
+        coverage xml -o .coverage.xml
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v2
       with:
-        files: .coverage
+        files: .coverage.xml
