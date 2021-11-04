@@ -6,8 +6,8 @@ Useful tools for Adaptive Optics analysis for the Python Programming Language. I
 .. image:: https://anaconda.org/aotools/aotools/badges/installer/conda.svg
    :target: https://conda.anaconda.org/aotools
 
-.. image:: https://travis-ci.org/AOtools/aotools.svg?branch=master
-   :target: https://travis-ci.org/AOtools/aotools
+.. image:: https://github.com/AOtools/aotools/actions/workflows/unit_test.yml/badge.svg
+   :target: https://github.com/AOtools/aotools/actions/workflows/unit_test.yml
 
 .. image:: https://ci.appveyor.com/api/projects/status/hru9gl4jekcwtm6l/branch/master?svg=true
    :target: https://ci.appveyor.com/project/Soapy/aotools/branch/master
