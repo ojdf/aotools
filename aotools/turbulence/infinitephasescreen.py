@@ -69,6 +69,12 @@ class PhaseScreen(object):
     and 1 for points to use. This makes this a generalised base class that can be used by 
     other infinite phase screen creation schemes, such as for Von Karmon turbulence or 
     Kolmogorov turbulence.
+
+    .. note::
+        The phase screen is returned on each iteration as a 2d array, with each element representing the phase 
+        change in **radians**. This means that to obtain the physical phase distortion in nanometres, 
+        it must be multiplied by (wavelength / (2*pi)), (where `wavellength` here is the same wavelength
+        in which r0 is given in the function arguments)
     """
     def set_X_coords(self):
         """
@@ -262,6 +268,12 @@ class PhaseScreenVonKarman(PhaseScreen):
     columns of previous phase. Assemat & Wilson claim that two columns are adequate for good
     atmospheric statistics. The phase in the screen data is always accessed as ``<phasescreen>.scrn`` and is in radians.
 
+        .. note::
+        The phase screen is returned on each iteration as a 2d array, with each element representing the phase 
+        change in **radians**. This means that to obtain the physical phase distortion in nanometres, 
+        it must be multiplied by (wavelength / (2*pi)), (where `wavellength` here is the same wavelength
+        in which r0 is given in the function arguments)
+
     Parameters:
         nx_size (int): Size of phase screen (NxN)
         pixel_scale(float): Size of each phase pixel in metres
@@ -371,6 +383,12 @@ class PhaseScreenKolmogorov(PhaseScreen):
     On initialisation an initial phase screen is calculated using an FFT based method.
     When ``add_row`` is called, a new vector of phase is added to the phase screen. The phase in the screen data
     is always accessed as ``<phasescreen>.scrn`` and is in radians.
+
+    .. note::
+        The phase screen is returned on each iteration as a 2d array, with each element representing the phase 
+        change in **radians**. This means that to obtain the physical phase distortion in nanometres, 
+        it must be multiplied by (wavelength / (2*pi)), (where `wavellength` here is the same wavelength
+        in which r0 is given in the function arguments)
 
     Parameters:
         nx_size (int): Size of phase screen (NxN)
