@@ -15,9 +15,9 @@ Useful tools for Adaptive Optics analysis for the Python Programming Language. I
 .. image:: https://codecov.io/gh/AOtools/aotools/branch/master/graph/badge.svg
    :target: https://codecov.io/gh/AOtools/aotools
   
-.. image:: https://readthedocs.org/projects/aotools/badge/?version=v1.0.1
-   :target: https://aotools.readthedocs.io/en/v1.0.1/?badge=v1.0.1
-   :alt: Documentation Status
+.. image:: https://readthedocs.org/projects/aotools/badge/?version=latest
+:target: https://aotools.readthedocs.io/en/latest/?badge=latest
+:alt: Documentation Status
 
 Required libraries
 ------------------
