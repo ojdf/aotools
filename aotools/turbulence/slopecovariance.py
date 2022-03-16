@@ -133,7 +133,7 @@ class CovarianceMatrix(object):
             self.subap_layer_positions.append(wfs_pos)
 
 
-        if self.threads is 1:
+        if self.threads == 1:
             self._make_covariance_matrix()
         else:
 

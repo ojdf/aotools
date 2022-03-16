@@ -50,7 +50,7 @@ def cn2_to_r0(cn2, lamda=500.E-9):
         lamda : wavelength
 
     Returns:
-        r0 in cm
+        r0 in m
     """
     r0=(0.423*(2*numpy.pi/lamda)**2*cn2)**(-3./5.)
     return r0

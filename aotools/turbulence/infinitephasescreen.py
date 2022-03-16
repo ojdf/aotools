@@ -69,6 +69,12 @@ class PhaseScreen(object):
     and 1 for points to use. This makes this a generalised base class that can be used by 
     other infinite phase screen creation schemes, such as for Von Karmon turbulence or 
     Kolmogorov turbulence.
+
+    .. note::
+        The phase screen is returned on each iteration as a 2d array, with each element representing the phase 
+        change in **radians**. This means that to obtain the physical phase distortion in nanometres, 
+        it must be multiplied by (wavelength / (2*pi)), (where `wavellength` here is the same wavelength
+        in which r0 is given in the function arguments)
     """
     def set_X_coords(self):
         """
@@ -178,8 +184,15 @@ class PhaseScreen(object):
         Makes the initial screen usign FFT method that can be extended 
         """
 
+        # phase screen will make it *really* random if no seed at all given.
+        # If a seed is here, screen must be repeatable wiht same seed
+        if self.random_seed is not None:
+            seed = numpy.random.randint(0, 2**32 -1)
+        else:
+            seed = None
+
         self._scrn = phasescreen.ft_phase_screen(
-            self.r0, self.stencil_length, self.pixel_scale, self.L0, 1e-10
+            self.r0, self.stencil_length, self.pixel_scale, self.L0, 1e-10, seed=seed
         )
 
         self._scrn = self._scrn[:, :self.nx_size]
@@ -255,6 +268,12 @@ class PhaseScreenVonKarman(PhaseScreen):
     columns of previous phase. Assemat & Wilson claim that two columns are adequate for good
     atmospheric statistics. The phase in the screen data is always accessed as ``<phasescreen>.scrn`` and is in radians.
 
+        .. note::
+        The phase screen is returned on each iteration as a 2d array, with each element representing the phase 
+        change in **radians**. This means that to obtain the physical phase distortion in nanometres, 
+        it must be multiplied by (wavelength / (2*pi)), (where `wavellength` here is the same wavelength
+        in which r0 is given in the function arguments)
+
     Parameters:
         nx_size (int): Size of phase screen (NxN)
         pixel_scale(float): Size of each phase pixel in metres
@@ -273,6 +292,8 @@ class PhaseScreenVonKarman(PhaseScreen):
         self.L0 = L0
         self.stencil_length_factor = 1
         self.stencil_length = self.nx_size
+
+        self.random_seed = random_seed
 
         if random_seed is not None:
             numpy.random.seed(random_seed)
@@ -363,6 +384,12 @@ class PhaseScreenKolmogorov(PhaseScreen):
     When ``add_row`` is called, a new vector of phase is added to the phase screen. The phase in the screen data
     is always accessed as ``<phasescreen>.scrn`` and is in radians.
 
+    .. note::
+        The phase screen is returned on each iteration as a 2d array, with each element representing the phase 
+        change in **radians**. This means that to obtain the physical phase distortion in nanometres, 
+        it must be multiplied by (wavelength / (2*pi)), (where `wavellength` here is the same wavelength
+        in which r0 is given in the function arguments)
+
     Parameters:
         nx_size (int): Size of phase screen (NxN)
         pixel_scale(float): Size of each phase pixel in metres
@@ -380,6 +407,7 @@ class PhaseScreenKolmogorov(PhaseScreen):
         self.L0 = L0
         self.stencil_length_factor = stencil_length_factor
         self.stencil_length = stencil_length_factor * self.nx_size
+        self.random_seed = random_seed
 
         if random_seed is not None:
             numpy.random.seed(random_seed)
