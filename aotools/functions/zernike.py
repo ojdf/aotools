@@ -1,12 +1,6 @@
 import numpy
 from . import circle
 
-# xrange just "range" in python3.
-# This code means fastest implementation used in 2 and 3
-try:
-    xrange
-except NameError:
-    xrange = range
 
 def phaseFromZernikes(zCoeffs, size, norm="noll"):
     """

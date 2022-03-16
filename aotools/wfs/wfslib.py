@@ -4,12 +4,6 @@ A library of functions which may be of use to analyse WFS data
 
 import numpy
 
-# Best range for python2 and 3
-try:
-    range = xrange
-except:
-    pass
-
 
 def findActiveSubaps(subaps, mask, threshold, returnFill=False):
     """

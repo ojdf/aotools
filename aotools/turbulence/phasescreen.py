@@ -11,11 +11,6 @@ from numpy import fft
 import time
 import random
 
-# Fastest range in both python2 and python3
-try:
-    xrange
-except NameError:
-    xrange = range
 
 def ft_sh_phase_screen(r0, N, delta, L0, l0, FFT=None, seed=None):
 

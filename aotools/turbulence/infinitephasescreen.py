@@ -5,18 +5,9 @@ Infinite Phase Screens
 An implementation of the "infinite phase screen", as deduced by Francois Assemat and Richard W. Wilson, 2006.
 """
 
-from scipy.special import gamma, kv
 from scipy import linalg
-from scipy.interpolate import interp2d
 import numpy
-from numpy import pi
-
-# Numba compiles python code to machine code for faster execution
-try:
-    import numba
-except:
-    numba = None    
-
+import numba
 
 from . import phasescreen, turb
 
