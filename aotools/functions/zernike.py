@@ -16,7 +16,7 @@ def phaseFromZernikes(zCoeffs, size, norm="noll"):
     """
     Zs = zernikeArray(len(zCoeffs), size, norm=norm)
     phase = numpy.zeros((size, size))
-    for z in xrange(len(zCoeffs)):
+    for z in range(len(zCoeffs)):
         phase += Zs[z] * zCoeffs[z]
 
     return phase
@@ -84,7 +84,7 @@ def zernikeRadialFunc(n, m, r):
 
     R = numpy.zeros(r.shape)
     # Can cast the below to "int", n,m are always *both* either even or odd
-    for i in xrange(0, int((n - m) / 2) + 1):
+    for i in range(0, int((n - m) / 2) + 1):
 
         R += numpy.array(r**(n - 2 * i) * (((-1)**(i)) *
                          numpy.math.factorial(n - i)) /
@@ -137,7 +137,7 @@ def zernikeArray(J, N, norm="noll"):
     try:
         nJ = len(J)
         Zs = numpy.empty((nJ, N, N))
-        for i in xrange(nJ):
+        for i in range(nJ):
             Zs[i] = zernike_noll(J[i], N)
 
     # Else, cast to int and create up to that number
@@ -148,16 +148,16 @@ def zernikeArray(J, N, norm="noll"):
 
         Zs = numpy.empty((maxJ, N, N))
 
-        for j in xrange(1, maxJ+1):
+        for j in range(1, maxJ+1):
             Zs[j-1] = zernike_noll(j, N)
 
 
     if norm=="p2v":
-        for z in xrange(len(Zs)):
+        for z in range(len(Zs)):
             Zs[z] /= (Zs[z].max()-Zs[z].min())
 
     elif norm=="rms":
-        for z in xrange(len(Zs)):
+        for z in range(len(Zs)):
             # Norm by RMS. Remember only to include circle elements in mean
             Zs[z] /= numpy.sqrt(
                     numpy.sum(Zs[z]**2)/numpy.sum(circle(N/2., N)))
