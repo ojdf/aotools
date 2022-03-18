@@ -11,11 +11,6 @@ from numpy import fft
 import time
 import random
 
-# Fastest range in both python2 and python3
-try:
-    xrange
-except NameError:
-    xrange = range
 
 def ft_sh_phase_screen(r0, N, delta, L0, l0, FFT=None, seed=None):
 
@@ -57,7 +52,7 @@ def ft_sh_phase_screen(r0, N, delta, L0, l0, FFT=None, seed=None):
     phs_lo = numpy.zeros(phs_hi.shape)
 
     # loop over frequency grids with spacing 1/(3^p*L)
-    for p in xrange(1,4):
+    for p in range(1,4):
         # setup the PSD
         del_f = 1 / (3**p*D) #frequency grid spacing [1/m]
         fx = numpy.arange(-1,2) * del_f
@@ -81,8 +76,8 @@ def ft_sh_phase_screen(r0, N, delta, L0, l0, FFT=None, seed=None):
                         * numpy.sqrt(PSD_phi)*del_f )
         SH = numpy.zeros((N,N),dtype="complex")
         # loop over frequencies on this grid
-        for i in xrange(0, 3):
-            for j in xrange(0, 3):
+        for i in range(0, 3):
+            for j in range(0, 3):
 
                 SH += cn[i,j] * numpy.exp(1j*2*numpy.pi*(fx[i,j]*x+fy[i,j]*y))
 
