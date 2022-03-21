@@ -35,10 +35,7 @@ def ft_sh_phase_screen(r0, N, delta, L0, l0, FFT=None, seed=None):
     Returns:
         ndarray: numpy array representing phase screen in radians
     """
-    R = random.SystemRandom(time.time())
-    if seed is None:
-        seed = int(R.random()*100000)
-    numpy.random.seed(seed)
+    R = numpy.random.default_rng(seed)
 
     D = N * delta
     # high-frequency screen from FFT method
@@ -71,8 +68,8 @@ def ft_sh_phase_screen(r0, N, delta, L0, l0, FFT=None, seed=None):
         PSD_phi[1,1] = 0
 
         # random draws of Fourier coefficients
-        cn = ( (numpy.random.normal(size=(3,3))
-            + 1j*numpy.random.normal(size=(3,3)) )
+        cn = ( (R.normal(size=(3,3))
+            + 1j*R.normal(size=(3,3)) )
                         * numpy.sqrt(PSD_phi)*del_f )
         SH = numpy.zeros((N,N),dtype="complex")
         # loop over frequencies on this grid
@@ -117,10 +114,7 @@ def ft_phase_screen(r0, N, delta, L0, l0, FFT=None, seed=None):
     L0 = float(L0)
     l0 = float(l0)
 
-    R = random.SystemRandom(time.time())
-    if seed is None:
-        seed = int(R.random()*100000)
-    numpy.random.seed(seed)
+    R = numpy.random.default_rng(seed)
 
     del_f = 1./(N*delta)
 
@@ -136,7 +130,7 @@ def ft_phase_screen(r0, N, delta, L0, l0, FFT=None, seed=None):
 
     PSD_phi[int(N/2), int(N/2)] = 0
 
-    cn = ((numpy.random.normal(size=(N, N))+1j * numpy.random.normal(size=(N, N))) * numpy.sqrt(PSD_phi)*del_f)
+    cn = ((R.normal(size=(N, N))+1j * R.normal(size=(N, N))) * numpy.sqrt(PSD_phi)*del_f)
 
     phs = ift2(cn, 1, FFT).real
 
