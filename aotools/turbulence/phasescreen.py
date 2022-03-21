@@ -31,6 +31,8 @@ def ft_sh_phase_screen(r0, N, delta, L0, l0, FFT=None, seed=None):
         delta (float): size in Metres of each pxl
         L0 (float): Size of outer-scale in metres
         l0 (float): inner scale in metres
+        seed (int, optional): seed for random number generator. If provided, 
+            allows for deterministic screens  
 
     Returns:
         ndarray: numpy array representing phase screen in radians
@@ -99,6 +101,8 @@ def ft_phase_screen(r0, N, delta, L0, l0, FFT=None, seed=None):
         delta (float): size in Metres of each pxl
         L0 (float): Size of outer-scale in metres
         l0 (float): inner scale in metres
+        seed (int, optional): seed for random number generator. If provided, 
+            allows for deterministic screens  
 
     .. note::
         The phase screen is returned as a 2d array, with each element representing the phase 
