@@ -89,7 +89,7 @@ def optimal_grouping(R, L, h, p):
             G_best = G_new
 
     cn2 = []
-    hmin_best = _Gjit(_convert_splits_to_groups(gamma_best,N), h, p, return_hmin=True)[1]
+    hmin_best = _G(_convert_splits_to_groups(gamma_best, N), h, p, return_hmin=True)[1]
     for groups in _convert_splits_to_groups(gamma_best,N):
         cn2.append(p[groups].sum())
 
@@ -185,7 +185,7 @@ def _G(grouping, h, p, return_hmin=False):
     return cost_function_value
 
 @njit
-def _Gjit(splits, h, p, return_hmin=False):
+def _Gjit(splits, h, p):
     '''
     Optimal Grouping cost function (fast numba version)
     '''
@@ -201,7 +201,6 @@ def _Gjit(splits, h, p, return_hmin=False):
         grouping.append(numpy.arange(splits[i]+1, splits[i+1]+1))
         
     cost_function_value = 0.
-    hmin = []
     for group in grouping:
         ptmp = p[group]
         htmp = h[group]
@@ -209,8 +208,7 @@ def _Gjit(splits, h, p, return_hmin=False):
         for i,g in enumerate(group):
             cost_function[i] = ((ptmp * numpy.abs(htmp-h[g])).sum())
         cost_function_value += numpy.min(cost_function)
-        if return_hmin:
-            hmin.append(h[group[numpy.argmin(cost_function)]])
+
     return cost_function_value
 
 def _optGroupingMinimization(start_grouping,h,p,maxiter=200):
