@@ -65,7 +65,7 @@ def optimal_grouping(R, L, h, p):
     '''
     Python implementation of algorithm 2 from Saxenhuber et al (2017). Performs the 
     "optimal grouping" algorithm , which finds the grouping that minimises the 
-    cost function given in Eq. 7 of that paper. Requires numba.
+    cost function given in Eq. 7 of that paper. 
 
     Parameters
         R (int): number of random starting groupings (recommended 10?)
@@ -89,7 +89,7 @@ def optimal_grouping(R, L, h, p):
             G_best = G_new
 
     cn2 = []
-    hmin_best = _G(_convert_splits_to_groups(gamma_best,N), h, p, return_hmin=True)[1]
+    hmin_best = _Gjit(_convert_splits_to_groups(gamma_best,N), h, p, return_hmin=True)[1]
     for groups in _convert_splits_to_groups(gamma_best,N):
         cn2.append(p[groups].sum())
 
@@ -215,7 +215,7 @@ def _Gjit(splits, h, p, return_hmin=False):
 
 def _optGroupingMinimization(start_grouping,h,p,maxiter=200):
     '''
-    Minimisation of G (slow version)
+    Minimisation of G
     '''
     gamma_new = start_grouping
     N = len(p)

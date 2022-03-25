@@ -20,10 +20,11 @@ def test_slopeVarfromR0():
 def test_equivalent_layers():
     h = numpy.arange(0,25000,250)
     p = numpy.ones(len(h)) * 100e-17
+    w = numpy.ones(len(h)) * 10
     L = 5
-    h_el, p_el = turbulence.equivalent_layers(h, p, L)
-    assert type(h_el) and type(p_el) == numpy.ndarray
-    assert len(h_el) and len(p_el) == L
+    h_el, p_el, w_el = turbulence.equivalent_layers(h, p, L, w=w)
+    assert type(h_el) and type(p_el) and type(w_el) == numpy.ndarray
+    assert len(h_el) and len(p_el) and len(w_el) == L
 
 def test_optimal_grouping():
     h = numpy.arange(0,25000,250)
