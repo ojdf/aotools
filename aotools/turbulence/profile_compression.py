@@ -17,7 +17,7 @@ import numpy
 from scipy.optimize import minimize
 from numba import njit
 
-def equivalent_layers(h, p, L):
+def equivalent_layers(h, p, L, w=None):
     '''
     Equivalent layers method of profile compression (Fusco 1999).
 
@@ -25,18 +25,26 @@ def equivalent_layers(h, p, L):
     effective height ((integral cn2(h) * h^{5/3} dh) / integral cn2(h) dh)^(3/5)
     and the cn2 as the sum of cn2 in that slab.
 
+    Can also provide wind speed per layer, in which case the wind speeds are calculated 
+    per layer in a similar fashion ((integral cn2(h) * w^{5/3} dh) / integral cn2(h) dh)^(3/5)
+    for wind speed w. This conserves coherence time as well as isoplanatic angle.
+
     Parameters
         h (numpy.ndarray): heights of input profile layers
         p (numpy.ndarray): cn2dh values of input profile layers
         L (int): number of layers to compress down to
+        w (numpy.ndarray, optional): wind speeds of input profile layers
     
     Returns
         h_L (numpy.ndarray): compressed profile heights
         cn2_L (numpy.ndarray): compressed profile cn2dh per layer 
+        w (numpy.ndarray, optional): compressed profile wind speed per layer
 
     '''
     h_el = numpy.zeros(L)
     cn2_el = numpy.zeros(L)
+    if w is not None:
+        w_el = numpy.zeros(L)
 
     hstep = (h.max()-h.min())/L
     alt_bins = numpy.arange(h.min(), h.max(), hstep)
@@ -45,13 +53,19 @@ def equivalent_layers(h, p, L):
         ix_tmp = ix==i+1
         cn2_el[i] = p[ix_tmp].sum()
         h_el[i] = ((p[ix_tmp] * h[ix_tmp]**(5/3)).sum() / p[ix_tmp].sum())**(3/5)
+        if w is not None:
+            w_el[i] = ((p[ix_tmp] * w[ix_tmp]**(5/3)).sum() / p[ix_tmp].sum())**(3/5)
+
+    if w is not None:
+        return h_el, cn2_el, w_el
+
     return h_el, cn2_el
 
 def optimal_grouping(R, L, h, p):
     '''
     Python implementation of algorithm 2 from Saxenhuber et al (2017). Performs the 
     "optimal grouping" algorithm , which finds the grouping that minimises the 
-    cost function given in Eq. 7 of that paper. Requires numba.
+    cost function given in Eq. 7 of that paper. 
 
     Parameters
         R (int): number of random starting groupings (recommended 10?)
@@ -75,7 +89,7 @@ def optimal_grouping(R, L, h, p):
             G_best = G_new
 
     cn2 = []
-    hmin_best = _G(_convert_splits_to_groups(gamma_best,N), h, p, return_hmin=True)[1]
+    hmin_best = _G(_convert_splits_to_groups(gamma_best, N), h, p, return_hmin=True)[1]
     for groups in _convert_splits_to_groups(gamma_best,N):
         cn2.append(p[groups].sum())
 
@@ -171,7 +185,7 @@ def _G(grouping, h, p, return_hmin=False):
     return cost_function_value
 
 @njit
-def _Gjit(splits, h, p, return_hmin=False):
+def _Gjit(splits, h, p):
     '''
     Optimal Grouping cost function (fast numba version)
     '''
@@ -187,7 +201,6 @@ def _Gjit(splits, h, p, return_hmin=False):
         grouping.append(numpy.arange(splits[i]+1, splits[i+1]+1))
         
     cost_function_value = 0.
-    hmin = []
     for group in grouping:
         ptmp = p[group]
         htmp = h[group]
@@ -195,13 +208,12 @@ def _Gjit(splits, h, p, return_hmin=False):
         for i,g in enumerate(group):
             cost_function[i] = ((ptmp * numpy.abs(htmp-h[g])).sum())
         cost_function_value += numpy.min(cost_function)
-        if return_hmin:
-            hmin.append(h[group[numpy.argmin(cost_function)]])
+
     return cost_function_value
 
 def _optGroupingMinimization(start_grouping,h,p,maxiter=200):
     '''
-    Minimisation of G (slow version)
+    Minimisation of G
     '''
     gamma_new = start_grouping
     N = len(p)
