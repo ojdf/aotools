@@ -71,6 +71,16 @@ Documentation
 +++++++++++++
 Full documentation is hosted by  `Read the Docs <https://aotools.readthedocs.io/en/v1.0.1/>`_
 
+Issues and Contributions
+++++++++++++++++++++++++
+
+Have you found a problem with an AO Tool? Is there something you use often that you think should be included?
+Please have a quick look at the source code and see if you can fix the problem or make an addition.
+AOtools is a collaboration between many AO scientists across the world to try and make a well tested and reliable library 
+of AO based functions. There isn't neccessarily a central "developer" to make significant changes, therefore if you think you can 
+help then please get involved, make an issue, clone the code or make a pull request! Feel free to make an 
+issue for discussion.
+
 Usage Stats
 -----------
 Pip
