@@ -11,11 +11,6 @@ from numpy import fft
 import time
 import random
 
-# Fastest range in both python2 and python3
-try:
-    xrange
-except NameError:
-    xrange = range
 
 def ft_sh_phase_screen(r0, N, delta, L0, l0, FFT=None, seed=None):
 
@@ -23,23 +18,28 @@ def ft_sh_phase_screen(r0, N, delta, L0, l0, FFT=None, seed=None):
     Creates a random phase screen with Von Karmen statistics with added
     sub-harmonics to augment tip-tilt modes.
     (Schmidt 2010)
-    
+
+    .. note::
+        The phase screen is returned as a 2d array, with each element representing the phase 
+        change in **radians**. This means that to obtain the physical phase distortion in nanometres, 
+        it must be multiplied by (wavelength / (2*pi)), (where `wavellength` here is the same wavelength
+        in which r0 is given in the function arguments)
+
     Args:
         r0 (float): r0 parameter of scrn in metres
         N (int): Size of phase scrn in pxls
         delta (float): size in Metres of each pxl
         L0 (float): Size of outer-scale in metres
         l0 (float): inner scale in metres
+        seed (int, optional): seed for random number generator. If provided, 
+            allows for deterministic screens  
 
     Returns:
-        ndarray: numpy array representing phase screen
+        ndarray: numpy array representing phase screen in radians
     """
-    R = random.SystemRandom(time.time())
-    if seed is None:
-        seed = int(R.random()*100000)
-    numpy.random.seed(seed)
+    R = numpy.random.default_rng(seed)
 
-    D = N*delta
+    D = N * delta
     # high-frequency screen from FFT method
     phs_hi = ft_phase_screen(r0, N, delta, L0, l0, FFT, seed=seed)
 
@@ -51,7 +51,7 @@ def ft_sh_phase_screen(r0, N, delta, L0, l0, FFT=None, seed=None):
     phs_lo = numpy.zeros(phs_hi.shape)
 
     # loop over frequency grids with spacing 1/(3^p*L)
-    for p in xrange(1,4):
+    for p in range(1,4):
         # setup the PSD
         del_f = 1 / (3**p*D) #frequency grid spacing [1/m]
         fx = numpy.arange(-1,2) * del_f
@@ -70,13 +70,13 @@ def ft_sh_phase_screen(r0, N, delta, L0, l0, FFT=None, seed=None):
         PSD_phi[1,1] = 0
 
         # random draws of Fourier coefficients
-        cn = ( (numpy.random.normal(size=(3,3))
-            + 1j*numpy.random.normal(size=(3,3)) )
+        cn = ( (R.normal(size=(3,3))
+            + 1j*R.normal(size=(3,3)) )
                         * numpy.sqrt(PSD_phi)*del_f )
         SH = numpy.zeros((N,N),dtype="complex")
         # loop over frequencies on this grid
-        for i in xrange(0,2):
-            for j in xrange(0,2):
+        for i in range(0, 3):
+            for j in range(0, 3):
 
                 SH += cn[i,j] * numpy.exp(1j*2*numpy.pi*(fx[i,j]*x+fy[i,j]*y))
 
@@ -101,19 +101,24 @@ def ft_phase_screen(r0, N, delta, L0, l0, FFT=None, seed=None):
         delta (float): size in Metres of each pxl
         L0 (float): Size of outer-scale in metres
         l0 (float): inner scale in metres
+        seed (int, optional): seed for random number generator. If provided, 
+            allows for deterministic screens  
+
+    .. note::
+        The phase screen is returned as a 2d array, with each element representing the phase 
+        change in **radians**. This means that to obtain the physical phase distortion in nanometres, 
+        it must be multiplied by (wavelength / (2*pi)), (where `wavellength` here is the same wavelength
+        in which r0 is given in the function arguments)
 
     Returns:
-        ndarray: numpy array representing phase screen
+        ndarray: numpy array representing phase screen in radians
     """
     delta = float(delta)
     r0 = float(r0)
     L0 = float(L0)
     l0 = float(l0)
 
-    R = random.SystemRandom(time.time())
-    if seed is None:
-        seed = int(R.random()*100000)
-    numpy.random.seed(seed)
+    R = numpy.random.default_rng(seed)
 
     del_f = 1./(N*delta)
 
@@ -129,7 +134,7 @@ def ft_phase_screen(r0, N, delta, L0, l0, FFT=None, seed=None):
 
     PSD_phi[int(N/2), int(N/2)] = 0
 
-    cn = ((numpy.random.normal(size=(N, N))+1j * numpy.random.normal(size=(N, N))) * numpy.sqrt(PSD_phi)*del_f)
+    cn = ((R.normal(size=(N, N))+1j * R.normal(size=(N, N))) * numpy.sqrt(PSD_phi)*del_f)
 
     phs = ift2(cn, 1, FFT).real
 
