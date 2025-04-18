@@ -1,4 +1,5 @@
 import numpy
+import math
 from . import circle
 
 def phaseFromZernikes(zCoeffs, size, norm="noll", rot=0):
