@@ -140,6 +140,31 @@ def ft_phase_screen(r0, N, delta, L0, l0, FFT=None, seed=None):
 
     return phs
 
+def ft_phase_screen_from_psd(psd, df_psd, FFT=None, seed=None):
+    """
+    Creates a random phase screen from an arbitrary supplied phase power spectral 
+    density (PSD).
+
+    Parameters:
+        psd (numpy.ndarray): PSD, units of rad^2/m^2, same shape as desired screen (2D)
+        df_psd (float): spatial frequency sampling of PSD, in 1/m
+        seed (int, optional): seed for random number generator. If provided, 
+            allows for deterministic screens  
+
+    Returns:
+        ndarray: numpy.array representing phase screen in radians
+
+    """
+    N = psd.shape[-1]
+
+    R = numpy.random.default_rng(seed)
+
+    cn = ((R.normal(size=(N, N))+1j * R.normal(size=(N, N))) * numpy.sqrt(psd)*df_psd)
+
+    phs = ift2(cn, 1, FFT).real
+
+    return phs
+
 
 def ift2(G, delta_f, FFT=None):
     """
