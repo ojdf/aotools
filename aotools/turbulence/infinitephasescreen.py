@@ -5,11 +5,12 @@ Infinite Phase Screens
 An implementation of the "infinite phase screen", as deduced by Francois Assemat and Richard W. Wilson, 2006.
 """
 
-from scipy import linalg
+from scipy import linalg, interpolate
 import numpy
 import numba
 
 from . import phasescreen, turb
+from .. import fouriertransform
 
 __all__ = ["PhaseScreenVonKarman", "PhaseScreenKolmogorov"]
 
@@ -124,8 +125,6 @@ class PhaseScreen(object):
                     delta_r = numpy.sqrt(delta_x ** 2 + delta_y ** 2)
 
                     self.seperations[i, j] = delta_r
-
-
 
     def make_covmats(self):
         """
@@ -425,6 +424,86 @@ class PhaseScreenKolmogorov(PhaseScreen):
         return str(self.scrn)
     
 
+class PhaseScreenPSD(PhaseScreen):
+
+    def __init__(self, nx_size, psd, df_psd, random_seed=None, stencil_length_factor=4):
+        self.requested_nx_size = nx_size
+        self.nx_size = find_allowed_size(nx_size)
+        self.stencil_length_factor = stencil_length_factor
+        self.stencil_length = stencil_length_factor * self.nx_size
+        self.psd = psd
+        self.df_psd = df_psd
+
+        # check that the psd provided is large enough
+        if self.stencil_length != self.psd.shape[-1]:
+            raise ValueError(f"Required psd size is {self.stencil_length}x{self.stencil_length}! Provide this size or change stencil_length_factor. Sorry, I don't make the rules.")
+        
+        self.random_seed = random_seed
+
+        # phase covariance from provided PSD, also defines pixel scale
+        self.cov = fouriertransform.ift2(self.psd, self.df_psd).real
+        self.dx_cov = 1/(self.psd.shape[-1] * df_psd)
+        self.calc_cov_interp()
+        self.pixel_scale = self.dx_cov
+
+        self.set_X_coords()
+        self.set_stencil_coords()
+
+        self.calc_seperations()
+        self.make_covmats()
+
+        self.makeAMatrix()
+        self.makeBMatrix()
+        self.make_initial_screen()
+
+    def make_initial_screen(self):
+        """
+        Makes the initial screen usign FFT method that can be extended 
+        """
+
+        # phase screen will make it *really* random if no seed at all given.
+        # If a seed is here, screen must be repeatable wiht same seed
+        self._R = numpy.random.default_rng(self.random_seed)
+
+        self._scrn = phasescreen.ft_phase_screen_from_psd(self.psd, self.df_psd, seed=self._R)
+
+        self._scrn = self._scrn[:, :self.nx_size]    
+    
+    def get_new_row(self):
+        random_data = self._R.normal(0, 1, size=self.nx_size)
+
+        stencil_data = self._scrn[(self.stencil_coords[:, 0], self.stencil_coords[:, 1])]
+        new_row = self.A_mat.dot(stencil_data) + self.B_mat.dot(random_data)
+
+        new_row.shape = (1, self.nx_size)
+        return new_row
+
+    def calc_cov_interp(self):
+        x = numpy.arange(-self.cov.shape[0]//2, self.cov.shape[0]//2) * self.dx_cov
+        y = numpy.arange(-self.cov.shape[1]//2, self.cov.shape[1]//2) * self.dx_cov
+        self.cov_interp = interpolate.RectBivariateSpline(x, y, self.cov, kx=1, ky=1)
+
+    def calc_seperations(self):
+        positions = numpy.append(self.stencil_positions, self.X_positions, axis=0)
+        self.seperations = numpy.zeros((2, len(positions), len(positions)))
+ 
+        for i, (x1, y1) in enumerate(positions):
+            for j, (x2, y2) in enumerate(positions):
+                self.seperations[0,i,j] = x2 - x1
+                self.seperations[1,i,j] = y2 - y1
+
+    def make_covmats(self):
+        self.cov_mat = self.cov_interp(self.seperations[0], self.seperations[1], grid=False)
+
+        self.cov_mat_zz = self.cov_mat[:self.n_stencils, :self.n_stencils]
+        self.cov_mat_xx = self.cov_mat[self.n_stencils:, self.n_stencils:]
+        self.cov_mat_zx = self.cov_mat[:self.n_stencils, self.n_stencils:]
+        self.cov_mat_xz = self.cov_mat[self.n_stencils:, :self.n_stencils]
+
+
+
+
+
 
 @numba.jit(nopython=True, parallel=True)
 def calc_seperations_fast(positions, seperations):
@@ -439,3 +518,38 @@ def calc_seperations_fast(positions, seperations):
             delta_r = numpy.sqrt(delta_x ** 2 + delta_y ** 2)
 
             seperations[i, j] = delta_r
+
+
+@numba.jit(nopython=True, parallel=True)
+def calc_seperations_fast_xy(positions, seperations):
+
+    for i in numba.prange(len(positions)):
+        x1, y1 = positions[i]
+        for j in range(len(positions)):
+            x2, y2 = positions[j]
+            delta_x = x2 - x1
+            delta_y = y2 - y1
+            seperations[0, i, j] = delta_x
+            seperations[1, i, j] = delta_y
+
+        
+def dist_to_stencil(dist_map):
+    pts = numpy.array(numpy.where(dist_map)).T - dist_map.shape[-1]/2
+    Npts = len(pts)
+
+    # find pairs of +-(x,y) points only 
+    choose = numpy.zeros(Npts, dtype=bool)
+    for i in range(Npts):
+        choose[i] = ((pts + pts[i]).sum(1) == 0).any()
+        
+    pts = pts[choose].astype(int)
+    stencil = numpy.zeros(dist_map.shape, dtype=bool)
+    for i in range(stencil.shape[0]):
+        for p in pts:
+            if p[1] > 0:
+                if i+p[0] < stencil.shape[0]:
+                    stencil[i+p[0],p[1]] = True
+
+    return stencil
+        
+
